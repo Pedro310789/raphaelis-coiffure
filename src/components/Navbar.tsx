@@ -44,15 +44,24 @@ export default function Navbar() {
           ))}
         </nav>
 
-        {/* Logo — center on mobile, center on desktop when scrolled */}
+        {/* Logo — center on mobile (always), center on desktop when scrolled */}
         <div className="lg:absolute lg:left-1/2 lg:-translate-x-1/2 flex-1 lg:flex-none flex justify-center lg:block">
           <Link
             href="/"
-            className={`font-serif text-[22px] lg:text-[24px] tracking-[0.02em] whitespace-nowrap transition-all duration-500 ${
-              scrolled ? "text-heading opacity-100" : "text-white lg:opacity-0"
+            className={`transition-all duration-500 inline-flex items-center ${
+              scrolled ? "opacity-100 translate-y-0" : "lg:opacity-0 lg:-translate-y-1"
             }`}
           >
-            Maison Raphaëlis
+            <img
+              src="/uploads/icone-R-Raphaelis-maison-coiffure.svg"
+              alt="Maison Raphaëlis"
+              className="h-10 w-auto transition-all duration-500"
+              style={{
+                filter: scrolled
+                  ? "brightness(0)"
+                  : "invert(1) brightness(6)",
+              }}
+            />
           </Link>
         </div>
 
@@ -83,9 +92,13 @@ export default function Navbar() {
         <div className="lg:hidden fixed inset-0 z-[100] bg-bg flex flex-col">
           {/* Header */}
           <div className="flex items-center justify-between px-5 h-24">
-            <span className="font-serif text-[22px] text-heading tracking-[0.02em]">
-              Maison Raphaëlis
-            </span>
+            <Link href="/" onClick={() => setMenuOpen(false)}>
+              <img
+                src="/uploads/icone-R-Raphaelis-maison-coiffure.svg"
+                alt="Maison Raphaëlis"
+                className="h-10 w-auto"
+              />
+            </Link>
             <button
               onClick={() => setMenuOpen(false)}
               className="text-heading p-1"
