@@ -8,9 +8,16 @@ export default function Footer() {
       <div className="max-w-[1440px] mx-auto px-5 lg:px-[72px] pt-14 lg:pt-[72px] pb-10 lg:pb-[48px] flex flex-col gap-12 lg:gap-20 items-center">
         {/* Logo + tagline */}
         <div className="flex flex-col items-center gap-5 lg:gap-6 w-full">
-          <h2 className="font-serif text-[40px] lg:text-[56px] text-heading leading-none text-center">
+          {/* Mobile : texte — Desktop : icône R */}
+          <h2 className="font-serif text-[40px] text-heading leading-none text-center lg:hidden">
             Maison Raphaëlis
           </h2>
+          <img
+            src="/uploads/icone-R-Raphaelis-maison-coiffure.svg"
+            alt="Maison Raphaëlis"
+            className="hidden lg:block h-28 w-auto"
+            style={{ filter: "brightness(0)" }}
+          />
           <div className="w-16 h-px bg-secondary" />
           <p className="font-sans text-[11px] lg:text-[12px] text-secondary uppercase tracking-[0.6px] leading-[1.3] text-center">
             {footer.tagline}
