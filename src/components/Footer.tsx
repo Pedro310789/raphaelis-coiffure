@@ -16,7 +16,7 @@ export default function Footer() {
             src="/uploads/icone-R-Raphaelis-maison-coiffure.svg"
             alt="Maison Raphaëlis"
             className="hidden lg:block h-28 w-auto"
-            style={{ filter: "brightness(0)" }}
+            style={{ filter: "brightness(0.15)" }}
           />
           <div className="w-16 h-px bg-secondary" />
           <p className="font-sans text-[11px] lg:text-[12px] text-secondary uppercase tracking-[0.6px] leading-[1.3] text-center">

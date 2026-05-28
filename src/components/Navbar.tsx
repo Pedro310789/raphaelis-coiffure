@@ -58,8 +58,8 @@ export default function Navbar() {
               className="h-10 w-auto transition-all duration-500"
               style={{
                 filter: scrolled
-                  ? "brightness(0)"
-                  : "invert(1) brightness(6)",
+                  ? "brightness(0.15)"          /* fond beige → R très foncé */
+                  : "invert(1) brightness(10)",  /* fond sombre → R blanc vif */
               }}
             />
           </Link>
@@ -97,6 +97,7 @@ export default function Navbar() {
                 src="/uploads/icone-R-Raphaelis-maison-coiffure.svg"
                 alt="Maison Raphaëlis"
                 className="h-10 w-auto"
+                style={{ filter: "brightness(0.15)" }}
               />
             </Link>
             <button
