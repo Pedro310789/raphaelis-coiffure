@@ -51,6 +51,8 @@
  * This is what makes `bg-primary`, `rounded-md`, etc. work.
  */
 @theme inline {
+  --font-condensed: var(--font-condensed);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 

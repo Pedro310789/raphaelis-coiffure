@@ -81,8 +81,8 @@ you install shadcn components they inherit your tokens automatically.
 
 Two Google Fonts are configured via Astro's font API in `astro.config.mjs`:
 
-- **Nunito** (`--font-sans`) — weights 400, 600
-- **Roboto Slab** (`--font-serif`) — weights 400, 600
+- **Inter** (`--font-sans`) — weights 400, 500, 600
+- **Sofia Sans Condensed** (`--font-serif`) — weights 400, 600
 
 Swap or remove them in `astro.config.mjs` under the `fonts` key.
 

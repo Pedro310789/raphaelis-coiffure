@@ -26,15 +26,15 @@ export default defineConfig({
   fonts: [
     {
       provider: fontProviders.google(),
-      name: 'Roboto Slab',
-      cssVariable: '--font-serif',
+      name: 'Sofia Sans Condensed',
+      cssVariable: '--font-condensed',
       weights: [400, 600],
     },
     {
       provider: fontProviders.google(),
-      name: 'Nunito',
+      name: 'Inter',
       cssVariable: '--font-sans',
-      weights: [400, 600],
+      weights: [400, 500, 600],
     },
   ],
 

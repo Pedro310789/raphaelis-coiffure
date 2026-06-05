@@ -11,6 +11,6 @@ export interface Props extends Omit<HTMLAttributes<"div">, "class"> {
 const { class: className, as: Tag = "div", ...rest } = Astro.props;
 ---
 
-<Tag class={cn("leading-none font-semibold font-serif", className)} {...rest}>
+<Tag class={cn("leading-none font-semibold font-condensed", className)} {...rest}>
   <slot />
 </Tag>
