@@ -41,13 +41,12 @@ const {
   class: className,
 } = Astro.props;
 
-// When the panel is inverted, nudge button variants for legibility.
 const primaryVariant =
   surface === "panel"
-    ? (primaryCta.variant ?? "secondary")
-    : (primaryCta.variant ?? "default");
+    ? (primaryCta.variant ?? "main-light")
+    : (primaryCta.variant ?? "main");
 const secondaryVariant =
-  surface === "panel" ? "ghost" : (secondaryCta?.variant ?? "outline");
+  surface === "panel" ? "tertiary-light" : (secondaryCta?.variant ?? "tertiary");
 ---
 
 <section class={cn("py-16 md:py-20", className)}>
@@ -78,7 +77,7 @@ const secondaryVariant =
         <div class="flex flex-wrap justify-center gap-3">
           <a
             href={primaryCta.href}
-            class={buttonVariants({ variant: primaryVariant, size: "lg" })}
+            class={buttonVariants({ variant: primaryVariant })}
             target={primaryCta.external ? "_blank" : undefined}
             rel={primaryCta.external ? "noopener noreferrer" : undefined}
           >
@@ -88,10 +87,7 @@ const secondaryVariant =
             secondaryCta && (
               <a
                 href={secondaryCta.href}
-                class={buttonVariants({
-                  variant: secondaryVariant,
-                  size: "lg",
-                })}
+                class={buttonVariants({ variant: secondaryVariant })}
                 target={secondaryCta.external ? "_blank" : undefined}
                 rel={secondaryCta.external ? "noopener noreferrer" : undefined}
               >

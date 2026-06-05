@@ -26,10 +26,21 @@ Astro 6 static site with MDX, sitemap, and Tailwind CSS v4.
 
 Two-tier hierarchy, all server-rendered Astro components (zero client JS by default):
 
-- **`src/components/primitives/`** — shadcn-style building blocks: `Button`, `Card`, `Input`, `Badge`, `Container`, `Heading`. All variants use `class-variance-authority` (CVA).
+- **`src/components/primitives/`** — building blocks: `Button`, `Card`, `Input`, `Badge`, `Container`, `Heading`. All variants use `class-variance-authority` (CVA).
 - **`src/components/modules/`** — marketing compositions that accept plain typed props: `Hero`, `CTA`, `FeatureGrid`, `FAQ`, `RichText`.
 - **`src/types/modules.ts`** — shared UI types (`CTALink`, `ImageProps`). When adding a CMS, map CMS content shapes to these types in your page.
 - **`src/styles/global.css`** — all design tokens as CSS custom properties (`--primary`, `--background`, etc.). Rebrand by editing this file only.
+
+**Button variants** (Figma style guide node 3354-7766):
+
+| Variant | Surface | Appearance |
+|---|---|---|
+| `main` | Light bg | Dark border (`border-primary`), dark text; hover fills `bg-background` |
+| `main-light` | Dark bg | Light border (`border-border`), white text; hover `bg-white/10` |
+| `tertiary` | Light bg | No border, `text-primary`, `rounded-sm`; hover mutes to `text-muted-foreground` |
+| `tertiary-light` | Dark bg | No border, `text-primary-foreground`, `rounded-sm`; hover fades to 60% |
+
+Size: `h-10 md:h-12 px-8` (40 px mobile / 48 px desktop, 32 px horizontal padding). All disabled states use `opacity-50`. The `buttonVariants()` function is also exported for styling `<a>` tags as buttons.
 
 ## CMS integration (per-project)
 
@@ -69,7 +80,8 @@ Use the `<Heading>` component for all headings — its `size` prop encodes font,
 | Text/L/SemiBold | SemiBold | 18 | 150% | — | `text-lg/[1.5] font-semibold` |
 | Text/M/Regular | Regular | 16 | 150% | — | `text-base/[1.5]` |
 | Text/M/SemiBold | SemiBold | 16 | 150% | — | `text-base/[1.5] font-semibold` |
-| Button | Regular | 14 | 120% | 3% | `text-sm/[1.2] font-normal tracking-[0.03em] uppercase` |
+| Button/Desktop | Regular | 14 | 120% | 3% | `md:text-sm/[1.2] font-normal tracking-[0.03em] uppercase` |
+| Button/Mobile | Regular | 12 | 120% | 3% | `text-xs/[1.2] font-normal tracking-[0.03em] uppercase` |
 | Text/S/Regular | Regular | 14 | 150% | 1% | `text-sm/[1.5] tracking-[0.01em]` |
 | Text/S/SemiBold | SemiBold | 14 | 150% | 1% | `text-sm/[1.5] font-semibold tracking-[0.01em]` |
 | Overline | Regular | 12 | 130% | 5% | `text-xs/[1.3] tracking-wider uppercase` |
