@@ -51,6 +51,80 @@ const enHref = getRelativeLocaleUrl('en', currentPath);
     </div>
   </div>
 
+  {/* Mobile menu overlay */}
+  <div
+    id="mobile-menu"
+    role="dialog"
+    aria-modal="true"
+    aria-label={t('nav.label')}
+    class="fixed inset-0 z-50 hidden flex-col bg-[#181818] md:hidden"
+  >
+    {/* Top bar: close button */}
+    <div class="flex h-24 items-center justify-end px-4">
+      <button
+        id="menu-close"
+        aria-label={t('nav.closeMenu')}
+        class="flex items-center justify-center p-2 text-white/80 transition-colors hover:text-white"
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+          <line x1="4" y1="4" x2="20" y2="20" />
+          <line x1="20" y1="4" x2="4" y2="20" />
+        </svg>
+      </button>
+    </div>
+
+    {/* Nav links — centered */}
+    <nav aria-label={t('nav.label')} class="flex flex-1 flex-col items-center justify-center gap-10">
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class="font-display text-[28px]/none text-white/80 transition-colors hover:text-white"
+        >
+          {link.label}
+        </a>
+      ))}
+    </nav>
+
+    {/* Language selector */}
+    <div class="flex items-center justify-center gap-4 pb-12" aria-label={t('lang.selector')}>
+      {locale === 'fr' ? (
+        <span
+          lang="fr"
+          aria-current="true"
+          class="text-xs/[1.3] font-normal uppercase tracking-[0.05em] text-white cursor-default"
+        >
+          FR
+        </span>
+      ) : (
+        <a
+          href={frHref}
+          lang="fr"
+          class="text-xs/[1.3] font-normal uppercase tracking-[0.05em] text-white/50 transition-colors hover:text-white"
+        >
+          FR
+        </a>
+      )}
+      <div class="h-3 w-px bg-white/30" aria-hidden="true"></div>
+      {locale === 'en' ? (
+        <span
+          lang="en"
+          aria-current="true"
+          class="text-xs/[1.3] font-normal uppercase tracking-[0.05em] text-white cursor-default"
+        >
+          EN
+        </span>
+      ) : (
+        <a
+          href={enHref}
+          lang="en"
+          class="text-xs/[1.3] font-normal uppercase tracking-[0.05em] text-white/50 transition-colors hover:text-white"
+        >
+          EN
+        </a>
+      )}
+    </div>
+  </div>
+
   {/* Navbar */}
   <header class="relative z-10 h-24">
     <Container
@@ -75,43 +149,59 @@ const enHref = getRelativeLocaleUrl('en', currentPath);
         </ul>
       </nav>
 
-      {/* Language selector */}
-      <div class="flex items-center gap-3" aria-label={t('lang.selector')}>
-        {locale === 'fr' ? (
-          <span
-            lang="fr"
-            aria-current="true"
-            class="text-xs/[1.3] font-normal uppercase tracking-[0.05em] text-white cursor-default"
-          >
-            FR
-          </span>
-        ) : (
-          <a
-            href={frHref}
-            lang="fr"
-            class="text-xs/[1.3] font-normal uppercase tracking-[0.05em] text-primary-foreground/60"
-          >
-            FR
-          </a>
-        )}
-        <div class="h-3 w-px bg-primary-foreground/40" aria-hidden="true"></div>
-        {locale === 'en' ? (
-          <span
-            lang="en"
-            aria-current="true"
-            class="text-xs/[1.3] font-normal uppercase tracking-[0.05em] text-white cursor-default"
-          >
-            EN
-          </span>
-        ) : (
-          <a
-            href={enHref}
-            lang="en"
-            class="text-xs/[1.3] font-normal uppercase tracking-[0.05em] text-primary-foreground/60"
-          >
-            EN
-          </a>
-        )}
+      {/* Right side: language selector + hamburger */}
+      <div class="flex items-center gap-5">
+        {/* Language selector */}
+        <div class="flex items-center gap-3" aria-label={t('lang.selector')}>
+          {locale === 'fr' ? (
+            <span
+              lang="fr"
+              aria-current="true"
+              class="text-xs/[1.3] font-normal uppercase tracking-[0.05em] text-white cursor-default"
+            >
+              FR
+            </span>
+          ) : (
+            <a
+              href={frHref}
+              lang="fr"
+              class="text-xs/[1.3] font-normal uppercase tracking-[0.05em] text-primary-foreground/60 transition-colors hover:text-white"
+            >
+              FR
+            </a>
+          )}
+          <div class="h-3 w-px bg-primary-foreground/40" aria-hidden="true"></div>
+          {locale === 'en' ? (
+            <span
+              lang="en"
+              aria-current="true"
+              class="text-xs/[1.3] font-normal uppercase tracking-[0.05em] text-white cursor-default"
+            >
+              EN
+            </span>
+          ) : (
+            <a
+              href={enHref}
+              lang="en"
+              class="text-xs/[1.3] font-normal uppercase tracking-[0.05em] text-primary-foreground/60 transition-colors hover:text-white"
+            >
+              EN
+            </a>
+          )}
+        </div>
+
+        {/* Hamburger — mobile only */}
+        <button
+          id="menu-toggle"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+          aria-label={t('nav.openMenu')}
+          class="flex flex-col items-center justify-center gap-[5px] p-2 text-white md:hidden"
+        >
+          <span class="block h-px w-5 bg-white"></span>
+          <span class="block h-px w-5 bg-white"></span>
+          <span class="block h-px w-5 bg-white"></span>
+        </button>
       </div>
     </Container>
   </header>
@@ -178,3 +268,30 @@ const enHref = getRelativeLocaleUrl('en', currentPath);
     </Container>
   </div>
 </section>
+
+<script>
+  const toggle = document.getElementById('menu-toggle');
+  const closeBtn = document.getElementById('menu-close');
+  const menu = document.getElementById('mobile-menu');
+
+  function openMenu() {
+    menu?.classList.remove('hidden');
+    menu?.classList.add('flex');
+    toggle?.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    menu?.classList.remove('flex');
+    menu?.classList.add('hidden');
+    toggle?.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+
+  toggle?.addEventListener('click', openMenu);
+  closeBtn?.addEventListener('click', closeMenu);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeMenu();
+  });
+</script>
