@@ -63,6 +63,30 @@ Defined in Figma style guide (node 3005-2997). CSS tokens live in `src/styles/gl
 Use `<Container size="page">` for full-width sections that span the design grid (hero, galleries, etc.).
 All other Container sizes (`default`, `lg`, `xl`) keep their existing narrower widths for text-heavy content.
 
+## Spacing scale
+
+Defined in Figma style guide (node 3005-3155). CSS tokens live in `src/styles/global.css`. All values map 1:1 to Tailwind's default 4px-base scale — use the Tailwind class in markup, reference the CSS token when writing raw CSS.
+
+| Token | px | Tailwind (`p-*`, `gap-*`, `m-*`, …) |
+|---|---|---|
+| `--spacing-xxx-sm` | 2 px | `*-0.5` |
+| `--spacing-xx-sm` | 4 px | `*-1` |
+| `--spacing-x-sm` | 8 px | `*-2` |
+| `--spacing-sm` | 12 px | `*-3` |
+| `--spacing-md` | 16 px | `*-4` |
+| `--spacing-big` | 20 px | `*-5` |
+| `--spacing-x-big` | 24 px | `*-6` |
+| `--spacing-xx-big` | 32 px | `*-8` |
+| `--spacing-xxx-big` | 40 px | `*-10` |
+| `--spacing-lg` | 48 px | `*-12` |
+| `--spacing-x-lg` | 64 px | `*-16` |
+| `--spacing-xx-lg` | 80 px | `*-20` |
+| `--spacing-xxx-lg` | 96 px | `*-24` |
+| `--spacing-huge` | 120 px | `*-30` |
+| `--spacing-x-huge` | 144 px | `*-36` |
+| `--spacing-xx-huge` | 160 px | `*-40` |
+| `--spacing-xxx-huge` | 200 px | `*-50` |
+
 ## Linting & Formatting
 
 Biome (not ESLint/Prettier). Key rules enforced:

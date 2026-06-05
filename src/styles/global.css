@@ -53,6 +53,25 @@
   --grid-gutter: 1.5rem;       /* 24px — desktop   → gap-6  */
   --grid-gutter-mobile: 1rem;  /* 16px — mobile    → gap-4  */
   --grid-max-width: 90rem;     /* 1440px                    */
+
+  /* Spacing scale — from Figma style guide node 3005:3155 */
+  --spacing-xxx-sm: 0.125rem;   /* 2px   → *-0.5 */
+  --spacing-xx-sm: 0.25rem;     /* 4px   → *-1   */
+  --spacing-x-sm: 0.5rem;       /* 8px   → *-2   */
+  --spacing-sm: 0.75rem;        /* 12px  → *-3   */
+  --spacing-md: 1rem;           /* 16px  → *-4   */
+  --spacing-big: 1.25rem;       /* 20px  → *-5   */
+  --spacing-x-big: 1.5rem;      /* 24px  → *-6   */
+  --spacing-xx-big: 2rem;       /* 32px  → *-8   */
+  --spacing-xxx-big: 2.5rem;    /* 40px  → *-10  */
+  --spacing-lg: 3rem;           /* 48px  → *-12  */
+  --spacing-x-lg: 4rem;         /* 64px  → *-16  */
+  --spacing-xx-lg: 5rem;        /* 80px  → *-20  */
+  --spacing-xxx-lg: 6rem;       /* 96px  → *-24  */
+  --spacing-huge: 7.5rem;       /* 120px → *-30  */
+  --spacing-x-huge: 9rem;       /* 144px → *-36  */
+  --spacing-xx-huge: 10rem;     /* 160px → *-40  */
+  --spacing-xxx-huge: 12.5rem;  /* 200px → *-50  */
 }
 
 /*
