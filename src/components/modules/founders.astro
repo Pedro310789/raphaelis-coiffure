@@ -18,18 +18,20 @@ const { overline, heading, body, imageCaption, cta } = Astro.props;
 ---
 
 <section class="bg-muted">
-  <Container size="page" as="div" class="py-16 md:py-20 lg:py-24">
-    <div class="flex flex-col gap-10 lg:flex-row lg:items-center lg:gap-33.5">
+  <Container size="page" as="div" class="py-16 md:py-20 xl:py-24">
+    <div
+      class="flex flex-col gap-10 md:flex-row md:items-center md:gap-10 xl:gap-33.5"
+    >
       {/* Left: portrait + caption */}
-      <div class="flex flex-col gap-3 lg:shrink-0">
+      <div class="flex flex-col gap-3 md:shrink-0">
         <div
-          class="relative w-full overflow-hidden rounded-none aspect-526/745 lg:w-131.5"
+          class="relative w-full overflow-hidden rounded-none aspect-526/745 xl:w-131.5"
         >
           <Image
             src={foundersImage}
             alt=""
             widths={[526, 800, 1080]}
-            sizes="(min-width: 1024px) 526px, 100vw"
+            sizes="(min-width: 1024px) 526px, (min-width: 768px) 40vw, 100vw"
             class="absolute inset-0 size-full object-cover object-top"
             loading="lazy"
           />
@@ -42,9 +44,9 @@ const { overline, heading, body, imageCaption, cta } = Astro.props;
       </div>
 
       {/* Right: text content */}
-      <div class="flex flex-col gap-10 lg:gap-14">
+      <div class="flex flex-col gap-10 md:gap-10 xl:gap-14">
         {/* Heading block + body */}
-        <div class="flex flex-col gap-6 lg:gap-8">
+        <div class="flex flex-col gap-6 md:gap-8">
           {/* Overline + divider + H2 */}
           <div class="flex flex-col gap-6">
             <div class="flex flex-col gap-4">
@@ -60,7 +62,7 @@ const { overline, heading, body, imageCaption, cta } = Astro.props;
               as="h2"
               size="h2"
               balance={false}
-              class="text-[36px]/none md:text-[46px]/none lg:text-[56px]/none"
+              class="text-[36px]/none md:text-[46px]/none xl:text-[56px]/none"
             >
               {heading.map((line) => <span class="block">{line}</span>)}
             </Heading>
