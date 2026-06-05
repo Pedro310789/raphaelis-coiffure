@@ -1,108 +1,147 @@
 ---
-import { cva, type VariantProps } from 'class-variance-authority';
-import Container from '@/components/primitives/container.astro';
-import Heading from '@/components/primitives/heading.astro';
-import Badge from '@/components/primitives/badge.astro';
-import { buttonVariants } from '@/components/primitives/button.astro';
-import type { CTALink, ImageProps } from '@/types/modules';
-import { cn } from '@/lib/utils';
+import type { CTALink } from "@/types/modules";
+import { Image } from "astro:assets";
+import { buttonVariants } from "@/components/primitives/button.astro";
+import Container from "@/components/primitives/container.astro";
+import Heading from "@/components/primitives/heading.astro";
+import heroImage from "@/assets/hero.png";
 
-const wrapperVariants = cva('py-16 md:py-24', {
-  variants: {
-    align: {
-      center: 'text-center',
-      left: 'text-left',
-    },
-  },
-  defaultVariants: {
-    align: 'center',
-  },
-});
-
-export interface Props extends VariantProps<typeof wrapperVariants> {
-  eyebrow?: string;
-  title: string;
-  description?: string;
-  primaryCta?: CTALink;
-  secondaryCta?: CTALink;
-  image?: ImageProps;
-  class?: string;
+export interface Props {
+  cta?: CTALink;
 }
 
-const {
-  eyebrow,
-  title,
-  description,
-  primaryCta,
-  secondaryCta,
-  image,
-  align = 'center',
-  class: className,
-} = Astro.props;
+const { cta = { label: "Prendre rendez-vous", href: "#" } } = Astro.props;
 
-const contentAlignment =
-  align === 'center' ? 'mx-auto max-w-3xl items-center' : 'max-w-3xl items-start';
-const ctaAlignment = align === 'center' ? 'justify-center' : 'justify-start';
+const navLinks = [
+  { label: "Accueil", href: "/" },
+  { label: "Maison", href: "/maison" },
+  { label: "Services", href: "/services" },
+  { label: "Collection", href: "/collection" },
+  { label: "Contact", href: "/contact" },
+];
 ---
 
-<section class={cn(wrapperVariants({ align }), className)}>
-  <Container>
-    <div class={cn('flex flex-col gap-6', contentAlignment)}>
-      {eyebrow && <Badge variant="secondary">{eyebrow}</Badge>}
+<section class="relative flex min-h-screen flex-col overflow-hidden">
+  {/* Background: full-bleed photo + gradient vignette */}
+  <div aria-hidden class="pointer-events-none absolute inset-0">
+    <Image
+      src={heroImage}
+      alt=""
+      loading="eager"
+      fetchpriority="high"
+      class="absolute inset-0 size-full object-cover"
+    />
+    <div
+      class="absolute inset-0"
+      style="background-image: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.3) 100%), linear-gradient(0deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.3) 100%), linear-gradient(90deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.2) 100%)"
+    >
+    </div>
+  </div>
 
-      <Heading as="h1" size="h1">{title}</Heading>
+  {/* Navbar */}
+  <header class="relative z-10 h-24">
+    <Container
+      size="page"
+      class="flex h-full items-center justify-end md:justify-between"
+    >
+      {/* Nav links — hidden on mobile, shown md+ */}
+      <nav aria-label="Navigation principale" class="hidden md:block">
+        <ul class="flex items-center gap-10">
+          {
+            navLinks.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class="text-xs/[1.3] font-normal uppercase tracking-[0.05em] text-white transition-colors hover:text-primary-foreground/60"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
 
-      {
-        description && (
-          <p class="text-lg md:text-xl text-muted-foreground text-balance max-w-2xl">
-            {description}
-          </p>
-        )
-      }
+      {/* Language selector */}
+      <div class="flex items-center gap-3" aria-label="Sélecteur de langue">
+        <button
+          type="button"
+          lang="fr"
+          class="text-xs/[1.3] font-normal uppercase tracking-[0.05em] text-white"
+        >
+          FR
+        </button>
+        <div class="h-3 w-px bg-primary-foreground/40" aria-hidden="true"></div>
+        <button
+          type="button"
+          lang="en"
+          class="text-xs/[1.3] font-normal uppercase tracking-[0.05em] text-primary-foreground/60"
+        >
+          EN
+        </button>
+      </div>
+    </Container>
+  </header>
 
-      {
-        (primaryCta || secondaryCta) && (
-          <div class={cn('flex flex-wrap gap-3 mt-2', ctaAlignment)}>
-            {primaryCta && (
-              <a
-                href={primaryCta.href}
-                class={buttonVariants({ variant: primaryCta.variant ?? 'main' })}
-                target={primaryCta.external ? '_blank' : undefined}
-                rel={primaryCta.external ? 'noopener noreferrer' : undefined}
-              >
-                {primaryCta.label}
-              </a>
-            )}
-            {secondaryCta && (
-              <a
-                href={secondaryCta.href}
-                class={buttonVariants({ variant: secondaryCta.variant ?? 'tertiary' })}
-                target={secondaryCta.external ? '_blank' : undefined}
-                rel={secondaryCta.external ? 'noopener noreferrer' : undefined}
-              >
-                {secondaryCta.label}
-              </a>
-            )}
-          </div>
-        )
-      }
+  {/* Hero content — vertically centered in remaining space */}
+  <div
+    class="relative z-10 flex flex-1 flex-col items-center justify-center px-4 py-10 md:py-0"
+  >
+    <div
+      class="flex w-full max-w-[467px] flex-col items-center gap-8 md:gap-10"
+    >
+      {/* Title group: H1 + divider + subtitle */}
+      <div class="flex w-full flex-col items-center gap-6 md:gap-8">
+        <Heading
+          as="h1"
+          size="h1"
+          balance={false}
+          class="w-full text-center text-[48px]/none text-white md:text-[88px]/none"
+        >
+          Maison Raphaëlis
+        </Heading>
+        <hr class="w-32 border-background" />
+        <p
+          class="text-center text-xs/[1.3] font-normal uppercase tracking-[0.05em] text-primary-foreground/60"
+        >
+          Bruxelles&nbsp;&nbsp;·&nbsp;&nbsp;Haute coiffure
+        </p>
+      </div>
+
+      {/* CTA button */}
+      <a href={cta.href} class={buttonVariants({ variant: "main-light" })}>
+        {cta.label}
+      </a>
+    </div>
+  </div>
+
+  {/* Discover section — bottom of viewport */}
+  <div class="relative z-10 pb-6">
+    {/* "Découvrir" label + vertical line, centered */}
+    <div class="flex flex-col items-center gap-3 pb-4 md:pb-2">
+      <span
+        class="text-xs/[1.3] font-normal uppercase tracking-[0.05em] text-primary-foreground/60"
+      >
+        Découvrir
+      </span>
+      <div class="h-10 w-px bg-primary-foreground/60" aria-hidden="true"></div>
     </div>
 
-    {
-      image && (
-        <div class="mt-12 md:mt-16">
-          <img
-            src={image.src}
-            alt={image.alt}
-            width={image.width}
-            height={image.height}
-            loading="eager"
-            decoding="async"
-            fetchpriority="high"
-            class="w-full rounded-lg border shadow-sm"
-          />
-        </div>
-      )
-    }
-  </Container>
+    {/* Slogan (left) + address (right); stacks on mobile */}
+    <Container
+      size="page"
+      class="flex flex-col items-center gap-2 md:flex-row md:justify-between md:gap-0"
+    >
+      <span
+        class="text-xs/[1.3] font-normal uppercase tracking-[0.05em] text-primary-foreground/60"
+      >
+        L'exigence du détail, depuis 2015.
+      </span>
+      <span
+        class="text-xs/[1.3] font-normal uppercase tracking-[0.05em] text-primary-foreground/60"
+      >
+        Rue Saint-Michel&nbsp;·&nbsp;1000
+      </span>
+    </Container>
+  </div>
 </section>

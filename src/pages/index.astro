@@ -1,11 +1,11 @@
 ---
-import BaseLayout from "@/layouts/base-layout.astro";
-import Container from "@/components/primitives/container.astro";
+import BaseLayout from '@/layouts/base-layout.astro';
+import { Hero } from '@/components/modules';
 ---
 
 <BaseLayout
-  title="Starter"
-  description="Astro starter with shadcn-style primitives"
+  title="Maison Raphaëlis — Haute coiffure, Bruxelles"
+  description="Maison Raphaëlis, salon de haute coiffure à Bruxelles depuis 2015."
 >
-  <Container size="lg" class="py-16 space-y-12" as="main" />
+  <Hero cta={{ label: "Prendre rendez-vous", href: "#contact", variant: "main-light" }} />
 </BaseLayout>
