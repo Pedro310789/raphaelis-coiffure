@@ -45,6 +45,19 @@
   /* Radius */
   --radius: 0.625rem;
 
+  /* Typography scale — from Figma style guide node 3388:5788 */
+  /* Heading font: Cormorant Garamond (font-display). Body font: Montserrat (font-sans). */
+  --text-h1: 5.5rem;    /* 88px  → Heading size="h1" */
+  --text-h2: 3.5rem;    /* 56px  → Heading size="h2" */
+  --text-h3: 2.875rem;  /* 46px  → Heading size="h3" */
+  --text-h4: 1.75rem;   /* 28px  → Heading size="h4" */
+  --text-h5: 1.5rem;    /* 24px  → Heading size="h5" */
+  --text-h6: 1.25rem;   /* 20px  → Heading size="h6" */
+  --text-h7: 1rem;      /* 16px  → Heading size="h7" */
+  --tracking-display: 0.03em;   /* H1 & Button */
+  --tracking-overline: 0.05em;  /* Overline */
+  --tracking-fine: 0.01em;      /* Text/S, Text/XS */
+
   /* Grid layout — from Figma style guide node 3005:2997 */
   --grid-columns: 12;
   --grid-columns-mobile: 4;
@@ -79,7 +92,7 @@
  * This is what makes `bg-primary`, `rounded-md`, etc. work.
  */
 @theme inline {
-  --font-condensed: var(--font-condensed);
+  --font-display: var(--font-display);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);

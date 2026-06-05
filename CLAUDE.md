@@ -38,6 +38,46 @@ This starter ships with no CMS. To integrate one:
 2. Create `src/lib/cms.ts` (or a provider module of your choice) that fetches content and maps it to the types in `src/types/modules.ts`.
 3. Import and call it in your page frontmatter — modules accept plain props and are CMS-agnostic.
 
+## Typography
+
+Defined in Figma style guide (node 3388-5788). CSS tokens live in `src/styles/global.css`. Fonts loaded via Astro's Google Fonts provider in `astro.config.mjs`.
+
+| Role | Family | CSS variable | Tailwind utility |
+|---|---|---|---|
+| Display / Heading | Cormorant Garamond | `--font-display` | `font-display` |
+| Body / UI | Montserrat | `--font-sans` | `font-sans` |
+
+Use the `<Heading>` component for all headings — its `size` prop encodes font, weight, size, and line-height per the Figma spec. Do not manually override `font-weight` or `font-style` on a `<Heading>` unless intentional.
+
+**Heading scale** (`font-display` — Cormorant Garamond)
+
+| `size` | Style | px | Line-height | Tracking | Tailwind classes |
+|---|---|---|---|---|---|
+| `h1` | Regular | 88 | 100% | 3% | `text-[88px]/none tracking-[0.03em]` |
+| `h2` | Regular | 56 | 100% | — | `text-[56px]/none` |
+| `h3` | Regular | 46 | 100% | — | `text-[46px]/none` |
+| `h4` | Regular | 28 | 120% | — | `text-[28px]/[1.2]` |
+| `h5` | SemiBold | 24 | 120% | — | `text-2xl/[1.2] font-semibold` |
+| `h6` | Italic | 20 | 130% | — | `text-xl/[1.3] italic` |
+| `h7` | Regular | 16 | 130% | — | `text-base/[1.3]` |
+
+**Body / UI scale** (`font-sans` — Montserrat)
+
+| Token | Style | px | Line-height | Tracking | Tailwind classes |
+|---|---|---|---|---|---|
+| Text/L/Regular | Regular | 18 | 150% | — | `text-lg/[1.5]` |
+| Text/L/SemiBold | SemiBold | 18 | 150% | — | `text-lg/[1.5] font-semibold` |
+| Text/M/Regular | Regular | 16 | 150% | — | `text-base/[1.5]` |
+| Text/M/SemiBold | SemiBold | 16 | 150% | — | `text-base/[1.5] font-semibold` |
+| Button | Regular | 14 | 120% | 3% | `text-sm/[1.2] font-normal tracking-[0.03em] uppercase` |
+| Text/S/Regular | Regular | 14 | 150% | 1% | `text-sm/[1.5] tracking-[0.01em]` |
+| Text/S/SemiBold | SemiBold | 14 | 150% | 1% | `text-sm/[1.5] font-semibold tracking-[0.01em]` |
+| Overline | Regular | 12 | 130% | 5% | `text-xs/[1.3] tracking-wider uppercase` |
+| Text/XS/Regular | Regular | 12 | 150% | 1% | `text-xs/[1.5] tracking-[0.01em]` |
+| Text/XS/SemiBold | SemiBold | 12 | 150% | 1% | `text-xs/[1.5] font-semibold tracking-[0.01em]` |
+
+> **Mobile type scale:** Not yet defined in Figma. Confirm responsive sizes for H1–H3 with the designer before implementing pages.
+
 ## Styling conventions
 
 - **Prefer Tailwind scale utilities over arbitrary values** — use `h-1` not `h-[4px]`, `text-sm` not `text-[14px]`, `gap-4` not `gap-[16px]`, etc.

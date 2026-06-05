@@ -26,15 +26,16 @@ export default defineConfig({
   fonts: [
     {
       provider: fontProviders.google(),
-      name: 'Sofia Sans Condensed',
-      cssVariable: '--font-condensed',
+      name: 'Cormorant Garamond',
+      cssVariable: '--font-display',
       weights: [400, 600],
+      styles: ['normal', 'italic'],
     },
     {
       provider: fontProviders.google(),
-      name: 'Inter',
+      name: 'Montserrat',
       cssVariable: '--font-sans',
-      weights: [400, 500, 600],
+      weights: [400, 600],
     },
   ],
 
