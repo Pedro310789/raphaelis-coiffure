@@ -36,6 +36,21 @@
 
   --destructive: #f04438;          /* Error/500 */
   --destructive-foreground: #fef3f2; /* Error/50 */
+  --destructive-300: #fda29b;      /* Error/300 */
+
+  /* Text palette */
+  --body-foreground: #444444;                      /* Text/Body */
+  --tertiary-foreground: rgba(247, 246, 243, 0.60); /* Text/Tertiary */
+
+  /* Warning */
+  --warning: #f79009;              /* Warning/500 */
+  --warning-300: #fec84b;          /* Warning/300 */
+  --warning-foreground: #fffaeb;   /* Warning/50 */
+
+  /* Success */
+  --success: #0adc7a;              /* Success/500 */
+  --success-300: #6ce9a6;          /* Success/300 */
+  --success-foreground: #ecfdf3;   /* Success/50 */
 
   /* Form & focus */
   --border: #d9d9d9;               /* Stroke/300 */
@@ -117,6 +132,18 @@
 
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
+  --color-destructive-300: var(--destructive-300);
+
+  --color-body-foreground: var(--body-foreground);
+  --color-tertiary-foreground: var(--tertiary-foreground);
+
+  --color-warning: var(--warning);
+  --color-warning-300: var(--warning-300);
+  --color-warning-foreground: var(--warning-foreground);
+
+  --color-success: var(--success);
+  --color-success-300: var(--success-300);
+  --color-success-foreground: var(--success-foreground);
 
   --color-border: var(--border);
   --color-input: var(--input);

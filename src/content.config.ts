@@ -22,6 +22,17 @@ export const heroSchema = z.object({
   }),
 });
 
+export const foundersSchema = z.object({
+  overline: z.string(),
+  heading: z.array(z.string()),
+  body: z.array(z.string()),
+  imageCaption: z.string(),
+  cta: z.object({
+    label: z.string(),
+    href: z.string(),
+  }),
+});
+
 // --- Section collections ---
 
 const hero = defineCollection({
@@ -29,4 +40,9 @@ const hero = defineCollection({
   schema: heroSchema,
 });
 
-export const collections = { hero };
+const founders = defineCollection({
+  loader: glob({ pattern: '**/founders.mdx', base: './src/content/pages' }),
+  schema: foundersSchema,
+});
+
+export const collections = { hero, founders };

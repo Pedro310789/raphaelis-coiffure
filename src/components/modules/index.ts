@@ -9,5 +9,6 @@
 export { default as CTA } from './cta.astro';
 export { default as FAQ } from './faq.astro';
 export { default as FeatureGrid } from './feature-grid.astro';
+export { default as Founders } from './founders.astro';
 export { default as Hero } from './hero.astro';
 export { default as RichText } from './rich-text.astro';
