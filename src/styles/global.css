@@ -44,6 +44,15 @@
 
   /* Radius */
   --radius: 0.625rem;
+
+  /* Grid layout — from Figma style guide node 3005:2997 */
+  --grid-columns: 12;
+  --grid-columns-mobile: 4;
+  --grid-margin: 4.5rem;       /* 72px — desktop   → px-18  */
+  --grid-margin-mobile: 1rem;  /* 16px — mobile    → px-4   */
+  --grid-gutter: 1.5rem;       /* 24px — desktop   → gap-6  */
+  --grid-gutter-mobile: 1rem;  /* 16px — mobile    → gap-4  */
+  --grid-max-width: 90rem;     /* 1440px                    */
 }
 
 /*

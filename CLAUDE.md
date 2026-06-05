@@ -49,6 +49,20 @@ This starter ships with no CMS. To integrate one:
   `leading-none` / `leading-tight` used on an element with *no* explicit `text-*` size utility
   (e.g. inheriting size from a parent).
 
+## Grid layout
+
+Defined in Figma style guide (node 3005-2997). CSS tokens live in `src/styles/global.css`.
+
+|  | Desktop | Mobile |
+|---|---|---|
+| Columns | 12 | 4 |
+| Margin | 72 px (`px-18`) | 16 px (`px-4`) |
+| Gutter | 24 px (`gap-6`) | 16 px (`gap-4`) |
+| Max width | 1440 px | — |
+
+Use `<Container size="page">` for full-width sections that span the design grid (hero, galleries, etc.).
+All other Container sizes (`default`, `lg`, `xl`) keep their existing narrower widths for text-heavy content.
+
 ## Linting & Formatting
 
 Biome (not ESLint/Prettier). Key rules enforced:
