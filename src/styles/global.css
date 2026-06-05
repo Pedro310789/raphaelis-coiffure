@@ -1,0 +1,102 @@
+@import 'tailwindcss';
+
+/*
+ * Design tokens (shadcn/ui v4 convention).
+ *
+ * Edit these per project. Everything downstream — primitives, modules,
+ * custom components — reads from these variables via Tailwind classes
+ * (bg-primary, text-muted-foreground, rounded-md, etc.)
+ *
+ * This is the ONLY file you should touch to rebrand a project.
+ */
+:root {
+  /* Surfaces */
+  --background: #edece8;           /* BG/100 — warm beige */
+  --foreground: #181818;           /* Text/Heading — near black */
+
+  --card: #ffffff;
+  --card-foreground: #181818;
+
+  --popover: #ffffff;
+  --popover-foreground: #181818;
+
+  /* Brand — warm neutral */
+  --primary: #1a1a1a;              /* Primary/900 */
+  --primary-foreground: #f7f6f3;   /* Primary/100 */
+
+  --secondary: #f7f6f3;            /* Primary/100 */
+  --secondary-foreground: #1a1a1a;
+
+  /* Utility */
+  --muted: #f7f6f3;                /* Primary/100 */
+  --muted-foreground: #8a8a8a;     /* Text/Secondary */
+
+  --accent: #1a1a1a;               /* Primary/900 */
+  --accent-foreground: #f7f6f3;
+
+  --destructive: #f04438;          /* Error/500 */
+  --destructive-foreground: #fef3f2; /* Error/50 */
+
+  /* Form & focus */
+  --border: #d9d9d9;               /* Stroke/300 */
+  --input: #d9d9d9;
+  --ring: #1a1a1a;                 /* Primary/900 */
+
+  /* Radius */
+  --radius: 0.625rem;
+}
+
+/*
+ * @theme inline maps CSS variables into Tailwind's design system.
+ * This is what makes `bg-primary`, `rounded-md`, etc. work.
+ */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    @apply scroll-smooth;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: 'rlig' 1, 'calt' 1;
+  }
+  *:focus-visible {
+    @apply outline-2 outline-offset-2 outline-ring;
+  }
+}
