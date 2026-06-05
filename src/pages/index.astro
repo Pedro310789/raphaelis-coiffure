@@ -1,0 +1,14 @@
+---
+import BaseLayout from "@/layouts/base-layout.astro";
+import { Hero } from "@/components/modules";
+import { getSection } from "@/lib/content";
+import type { Lang } from "@/i18n/translations";
+
+const locale = (Astro.currentLocale ?? "fr") as Lang;
+const hero = await getSection("hero", locale, "home");
+const { seo, heading, subtitle, cta, discover } = hero.data;
+---
+
+<BaseLayout title={seo.title} description={seo.description}>
+  <Hero {heading} {subtitle} {cta} {discover} />
+</BaseLayout>

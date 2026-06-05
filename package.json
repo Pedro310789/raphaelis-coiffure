@@ -1,24 +1,35 @@
 {
-  "name": "maison-raphaelis",
+  "name": "raphaelis-coiffure",
+  "type": "module",
   "version": "0.1.0",
-  "private": true,
+  "packageManager": "pnpm@11.5.1+sha512.93f7b57422ea7068257235b4c16eb60762eb68e1dc23723199cc739043ea9be2c4143274a399d8c6defa2b1176226d9ca1c4b63482d6200c1a8fbaa78c1d1485",
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "lint": "biome lint .",
+    "format": "biome format --write .",
+    "check:all": "biome check --write ."
   },
   "dependencies": {
-    "framer-motion": "^12.40.0",
-    "next": "16.2.6",
-    "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "@astrojs/mdx": "^6.0.2",
+    "@astrojs/sitemap": "^3.7.3",
+    "@astrojs/vercel": "^10.0.8",
+    "@tailwindcss/vite": "^4.3.0",
+    "astro": "^6.4.4",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "sharp": "^0.34.5",
+    "tailwind-merge": "^3.6.0",
+    "tailwindcss": "^4.3.0"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "tailwindcss": "^4",
-    "typescript": "^5.9.3"
+    "@astrojs/check": "^0.9.9",
+    "@biomejs/biome": "2.4.16",
+    "typescript": "^6.0.3"
   }
 }

@@ -1,0 +1,28 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import BaseLayout from "@/layouts/base-layout.astro";
+import { buttonVariants } from "@/components/primitives/button.astro";
+import Container from "@/components/primitives/container.astro";
+import Heading from "@/components/primitives/heading.astro";
+import { useTranslations } from "@/i18n/utils";
+import type { Lang } from "@/i18n/translations";
+
+const locale = (Astro.currentLocale ?? "fr") as Lang;
+const t = useTranslations(locale);
+---
+
+<BaseLayout title={`404 — ${t("notFound.title")}`}>
+  <Container
+    size="default"
+    class="flex min-h-screen flex-col items-center justify-center gap-6 py-20 text-center"
+  >
+    <Heading as="h1" size="h2">{t("notFound.title")}</Heading>
+    <p class="text-base/[1.5] text-muted-foreground">{t("notFound.body")}</p>
+    <a
+      href={getRelativeLocaleUrl(locale, "/")}
+      class={buttonVariants({ variant: "main" })}
+    >
+      {t("notFound.cta")}
+    </a>
+  </Container>
+</BaseLayout>

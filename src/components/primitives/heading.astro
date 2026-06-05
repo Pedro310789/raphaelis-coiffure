@@ -1,0 +1,63 @@
+---
+/**
+ * Heading — decouples semantic level (h1…h6) from visual size.
+ *
+ * Size variants map 1:1 to the Figma typography scale (node 3388:5788).
+ * The HTML tag and visual size are set independently — essential for
+ * accessibility and SEO.
+ *
+ *   <Heading as="h1" size="h1">Hero title</Heading>
+ *   <Heading as="h2" size="h3">Section heading</Heading>
+ *
+ * h1–h4, h7 are Regular weight; h5 is SemiBold; h6 is Italic.
+ * Do not override font-weight or font-style unless intentional.
+ */
+import type { HTMLAttributes } from "astro/types";
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "@/lib/utils";
+
+export const headingVariants = cva(
+  "font-display font-normal text-foreground",
+  {
+    variants: {
+      size: {
+        h1: "text-[88px]/none tracking-[0.03em]",
+        h2: "text-[56px]/none",
+        h3: "text-[46px]/none",
+        h4: "text-[28px]/[1.2]",
+        h5: "text-2xl/[1.2] font-semibold",
+        h6: "text-xl/[1.3] italic",
+        h7: "text-base/[1.3]",
+      },
+      balance: {
+        true: "text-balance",
+        false: "",
+      },
+    },
+    defaultVariants: {
+      size: "h3",
+      balance: true,
+    },
+  },
+);
+
+export type HeadingVariantProps = VariantProps<typeof headingVariants>;
+
+export interface Props
+  extends Omit<HTMLAttributes<"h1">, "class">, HeadingVariantProps {
+  class?: string;
+  as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+}
+
+const {
+  size,
+  balance,
+  class: className,
+  as: Tag = "h2",
+  ...rest
+} = Astro.props;
+---
+
+<Tag class={cn(headingVariants({ size, balance }), className)} {...rest}>
+  <slot />
+</Tag>
