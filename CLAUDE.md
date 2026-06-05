@@ -19,7 +19,8 @@ Astro 6 static site with MDX, sitemap, and Tailwind CSS v4.
 
 - **Routing**: file-based from `src/pages/` — `.astro` and `.md`/`.mdx` files become routes
 - **Styling**: Tailwind v4 loaded via `@import "tailwindcss"` in `src/styles/global.css`; configured as a Vite plugin (no `tailwind.config.*` file)
-- **Content**: MDX integration enabled — pages can use `.mdx` and import/render components
+- **Content**: MDX content collections in `src/content/pages/{locale}/` — all page-level content lives here
+- **i18n**: Astro built-in i18n; default locale `fr` at `/`, English at `/en/`. Config in `astro.config.mjs`
 - **Sitemap**: auto-generated at build time; update `site` in `astro.config.mjs` from `https://example.com`
 
 ## Component system
@@ -41,6 +42,30 @@ Two-tier hierarchy, all server-rendered Astro components (zero client JS by defa
 | `tertiary-light` | Dark bg | No border, `text-primary-foreground`, `rounded-sm`; hover fades to 60% |
 
 Size: `h-10 md:h-12 px-8` (40 px mobile / 48 px desktop, 32 px horizontal padding). All disabled states use `opacity-50`. The `buttonVariants()` function is also exported for styling `<a>` tags as buttons.
+
+## Content & i18n
+
+The site is multilingual: **French** (default, `/`) and **English** (`/en/`).
+
+**Rules for every new section or page:**
+
+1. **Content in collections** — all user-visible page copy (headings, body copy, CTA labels, meta title/description) goes in `src/content/pages/{locale}/{page}/{section}.mdx` frontmatter. Never hardcode translatable strings in components. One collection **per section type**, one MDX file per section per page; the file is named after the collection (`hero.mdx` → `hero` collection).
+2. **Both locales always** — every MDX entry ships as a `fr/` + `en/` pair. Every route ships as `src/pages/{slug}.astro` + `src/pages/en/{slug}.astro`.
+3. **Fetch via `getSection`** — pages load content with `getSection(collection, locale, page)` from `@/lib/content` (e.g. `getSection('hero', locale, 'home')`). It owns the entry-id convention (`{locale}/{page}/{collection}`) and throws on a miss — never hand-write `getEntry` ids.
+4. **UI strings in translations** — shared chrome that repeats across pages (nav labels, language switcher, footer text, 404 copy) lives in `src/i18n/translations.ts`. Add new keys to both `fr` and `en` objects together. Page-specific copy belongs in MDX (rule 1), not here.
+5. **Components read locale themselves** — use `Astro.currentLocale` + `useTranslations()` from `@/i18n/utils` inside the component. Do not pass a `lang` prop.
+6. **Locale-aware links** — use `getRelativeLocaleUrl(locale, path)` from `astro:i18n` for all internal hrefs.
+7. **Extend the schema** — when a new section adds new frontmatter fields, update the collection schema in `src/content.config.ts`.
+
+**Key files:**
+
+| Path | Purpose |
+|---|---|
+| `src/content.config.ts` | Collection schemas (Zod), one collection per section type |
+| `src/content/pages/{locale}/{page}/{section}.mdx` | Page content per locale (id `{locale}/{page}/{section}`) |
+| `src/lib/content.ts` | `getSection(collection, locale, page)` content fetch helper |
+| `src/i18n/translations.ts` | Shared UI strings |
+| `src/i18n/utils.ts` | `useTranslations(lang)` helper |
 
 ## CMS integration (per-project)
 

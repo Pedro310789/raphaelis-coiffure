@@ -10,6 +10,12 @@ export default defineConfig({
   site: 'https://example.com',
   integrations: [mdx(), sitemap()],
 
+  i18n: {
+    defaultLocale: 'fr',
+    locales: ['fr', 'en'],
+    routing: { prefixDefaultLocale: false },
+  },
+
   vite: {
     plugins: [tailwindcss()],
   },
