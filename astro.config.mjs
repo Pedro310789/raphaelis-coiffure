@@ -34,7 +34,7 @@ export default defineConfig({
       provider: fontProviders.google(),
       name: 'Cormorant Garamond',
       cssVariable: '--font-display',
-      weights: [400, 600],
+      weights: [300, 400, 600],
       styles: ['normal', 'italic'],
     },
     {

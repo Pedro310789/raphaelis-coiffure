@@ -14,3 +14,4 @@ export { default as Founders } from './founders.astro';
 export { default as Hero } from './hero.astro';
 export { default as RichText } from './rich-text.astro';
 export { default as Services } from './services.astro';
+export { default as Testimonials } from './testimonials.astro';

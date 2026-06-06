@@ -53,6 +53,21 @@ export const servicesSchema = z.object({
   ),
 });
 
+export const testimonialsSchema = z.object({
+  overline: z.string(),
+  heading: z.object({
+    line1: z.string(),
+    line2: z.string(),
+  }),
+  cards: z.array(
+    z.object({
+      quote: z.string(),
+      author: z.string(),
+      location: z.string(),
+    }),
+  ),
+});
+
 export const collectionSchema = z.object({
   overline: z.string(),
   heading: z.string(),
@@ -86,9 +101,14 @@ const services = defineCollection({
   schema: servicesSchema,
 });
 
+const testimonials = defineCollection({
+  loader: glob({ pattern: '**/testimonials.mdx', base: './src/content/pages' }),
+  schema: testimonialsSchema,
+});
+
 const collection = defineCollection({
   loader: glob({ pattern: '**/collection.mdx', base: './src/content/pages' }),
   schema: collectionSchema,
 });
 
-export const collections = { hero, founders, services, collection };
+export const collections = { hero, founders, services, testimonials, collection };
