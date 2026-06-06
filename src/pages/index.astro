@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "@/layouts/base-layout.astro";
-import { Hero, Founders, Services } from "@/components/modules";
+import { Hero, Founders, Services, Collection } from "@/components/modules";
 import { getSection } from "@/lib/content";
 import type { Lang } from "@/i18n/translations";
 
@@ -8,6 +8,7 @@ const locale = (Astro.currentLocale ?? "fr") as Lang;
 const hero = await getSection("hero", locale, "home");
 const founders = await getSection("founders", locale, "home");
 const services = await getSection("services", locale, "home");
+const collection = await getSection("collection", locale, "home");
 const { seo, heading, subtitle, cta, discover } = hero.data;
 ---
 
@@ -24,5 +25,11 @@ const { seo, heading, subtitle, cta, discover } = hero.data;
     overline={services.data.overline}
     heading={services.data.heading}
     cards={services.data.cards}
+  />
+  <Collection
+    overline={collection.data.overline}
+    heading={collection.data.heading}
+    images={collection.data.images}
+    cta={collection.data.cta}
   />
 </BaseLayout>

@@ -1,0 +1,96 @@
+---
+import type { ImageMetadata } from "astro";
+import { Image } from "astro:assets";
+import type { CTALink } from "@/types/modules";
+import { buttonVariants } from "@/components/primitives/button.astro";
+import Container from "@/components/primitives/container.astro";
+import Heading from "@/components/primitives/heading.astro";
+
+const collectionImages = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/images/collections/*",
+  { eager: true },
+);
+
+interface CollectionImage {
+  src: string;
+  alt: string;
+  caption: string;
+}
+
+export interface Props {
+  overline: string;
+  heading: string;
+  images: CollectionImage[];
+  cta: CTALink;
+}
+
+const { overline, heading, images, cta } = Astro.props;
+---
+
+<section class="bg-muted">
+  <Container size="page" as="div" class="py-16 md:py-20 xl:py-24">
+    <div class="flex flex-col items-center gap-12 xl:gap-24">
+      {/* Heading block */}
+      <div class="flex w-full flex-col items-center gap-6 text-center">
+        <div class="flex flex-col items-center gap-4">
+          <p
+            class="text-xs/[1.3] font-normal uppercase tracking-wider text-muted-foreground"
+          >
+            {overline}
+          </p>
+          <div class="h-px w-12 bg-muted-foreground" aria-hidden="true"></div>
+        </div>
+        <Heading
+          as="h2"
+          size="h2"
+          balance={false}
+          class="text-center text-[36px]/none md:text-[46px]/none xl:text-[56px]/none"
+        >
+          {heading}
+        </Heading>
+      </div>
+
+      {/* Image grid + CTA */}
+      <div class="flex w-full flex-col items-center gap-10 xl:gap-14">
+        <div class="grid w-full grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-6">
+          {
+            images.map((item) => {
+              const imgKey = `/${item.src}`;
+              const imgData = collectionImages[imgKey]?.default;
+              return (
+                <figure class="flex flex-col gap-3">
+                  <div class="relative aspect-3/4 w-full overflow-hidden">
+                    {imgData ? (
+                      <Image
+                        src={imgData}
+                        alt={item.alt}
+                        class="absolute inset-0 h-full w-full object-cover"
+                        widths={[300, 600, 816]}
+                        sizes="(min-width: 1024px) 25vw, 50vw"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <img
+                        src={item.src}
+                        alt={item.alt}
+                        class="absolute inset-0 h-full w-full object-cover"
+                        loading="lazy"
+                      />
+                    )}
+                  </div>
+                  <figcaption class="text-xs/[1.3] font-normal uppercase tracking-wider text-muted-foreground">
+                    {item.caption}
+                  </figcaption>
+                </figure>
+              );
+            })
+          }
+        </div>
+
+        <a href={cta.href} class={buttonVariants({ variant: "main" })}>
+          {cta.label}
+        </a>
+      </div>
+    </div>
+  </Container>
+</section>

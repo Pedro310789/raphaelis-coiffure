@@ -6,6 +6,7 @@
  * Keeps page frontmatter compact when composing 4–5 modules per page.
  */
 
+export { default as Collection } from './collection.astro';
 export { default as CTA } from './cta.astro';
 export { default as FAQ } from './faq.astro';
 export { default as FeatureGrid } from './feature-grid.astro';
