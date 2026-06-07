@@ -1,12 +1,12 @@
 ---
 import type { CTALink } from "@/types/modules";
 import { Image } from "astro:assets";
-import { getRelativeLocaleUrl } from "astro:i18n";
 import { buttonVariants } from "@/components/primitives/button.astro";
 import Container from "@/components/primitives/container.astro";
 import Heading from "@/components/primitives/heading.astro";
 import { useTranslations } from "@/i18n/utils";
 import type { Lang } from "@/i18n/translations";
+import { alternateLocalePath, localizedPath } from "@/i18n/routes";
 import heroImage from "@/assets/images/hero.png";
 
 export interface Props {
@@ -22,19 +22,15 @@ const locale = (Astro.currentLocale ?? "fr") as Lang;
 const t = useTranslations(locale);
 
 const navLinks = [
-  { label: t("nav.home"), href: getRelativeLocaleUrl(locale, "/") },
-  { label: t("nav.maison"), href: getRelativeLocaleUrl(locale, "/maison") },
-  { label: t("nav.services"), href: getRelativeLocaleUrl(locale, "/services") },
-  {
-    label: t("nav.collection"),
-    href: getRelativeLocaleUrl(locale, "/collection"),
-  },
-  { label: t("nav.contact"), href: getRelativeLocaleUrl(locale, "/contact") },
+  { label: t("nav.home"), href: localizedPath("home", locale) },
+  { label: t("nav.maison"), href: localizedPath("maison", locale) },
+  { label: t("nav.services"), href: localizedPath("services", locale) },
+  { label: t("nav.collection"), href: localizedPath("collection", locale) },
+  { label: t("nav.contact"), href: localizedPath("contact", locale) },
 ];
 
-const currentPath = Astro.url.pathname.replace(/^\/en/, "") || "/";
-const frHref = getRelativeLocaleUrl("fr", currentPath);
-const enHref = getRelativeLocaleUrl("en", currentPath);
+const frHref = alternateLocalePath(Astro.url.pathname, locale, "fr");
+const enHref = alternateLocalePath(Astro.url.pathname, locale, "en");
 ---
 
 <section class="relative flex min-h-screen flex-col overflow-hidden">

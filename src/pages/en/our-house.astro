@@ -1,0 +1,33 @@
+---
+import BaseLayout from "@/layouts/base-layout.astro";
+import { Hero, VisitCta, Footer } from "@/components/modules";
+import { getSection } from "@/lib/content";
+import type { Lang } from "@/i18n/translations";
+
+const locale = (Astro.currentLocale ?? "en") as Lang;
+const hero = await getSection("hero", locale, "home");
+const visitCta = await getSection("visit-cta", locale, "home");
+const footer = await getSection("footer", locale, "home");
+const { seo, heading, subtitle, cta, discover } = hero.data;
+---
+
+<BaseLayout title={seo.title} description={seo.description}>
+  <Hero {heading} {subtitle} {cta} {discover} />
+  <VisitCta
+    overline={visitCta.data.overline}
+    heading={visitCta.data.heading}
+    body={visitCta.data.body}
+    address={visitCta.data.address}
+    contact={visitCta.data.contact}
+    hours={visitCta.data.hours}
+    cta={visitCta.data.cta}
+  />
+  <Footer
+    brandName={footer.data.brandName}
+    tagline={footer.data.tagline}
+    nav={footer.data.nav}
+    contact={footer.data.contact}
+    social={footer.data.social}
+    legal={footer.data.legal}
+  />
+</BaseLayout>
