@@ -164,4 +164,32 @@ const visitCta = defineCollection({
   schema: visitCtaSchema,
 });
 
-export const collections = { hero, founders, services, testimonials, collection, partners, "visit-cta": visitCta };
+export const footerSchema = z.object({
+  brandName: z.string(),
+  tagline: z.string(),
+  nav: z.object({
+    label: z.string(),
+    links: z.array(z.object({ label: z.string(), href: z.string() })),
+  }),
+  contact: z.object({
+    label: z.string(),
+    address: z.object({ line1: z.string(), line2: z.string() }),
+    email: z.string(),
+    phone: z.string(),
+  }),
+  social: z.object({
+    label: z.string(),
+    links: z.array(z.object({ label: z.string(), href: z.string() })),
+  }),
+  legal: z.object({
+    copyright: z.string(),
+    links: z.array(z.object({ label: z.string(), href: z.string() })),
+  }),
+});
+
+const footer = defineCollection({
+  loader: glob({ pattern: '**/footer.mdx', base: './src/content/pages' }),
+  schema: footerSchema,
+});
+
+export const collections = { hero, founders, services, testimonials, collection, partners, "visit-cta": visitCta, footer };

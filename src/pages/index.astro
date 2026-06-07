@@ -8,6 +8,7 @@ import {
   Collection,
   Partners,
   VisitCta,
+  Footer,
 } from "@/components/modules";
 import { getSection } from "@/lib/content";
 import type { Lang } from "@/i18n/translations";
@@ -20,6 +21,7 @@ const testimonials = await getSection("testimonials", locale, "home");
 const collection = await getSection("collection", locale, "home");
 const partners = await getSection("partners", locale, "home");
 const visitCta = await getSection("visit-cta", locale, "home");
+const footer = await getSection("footer", locale, "home");
 const { seo, heading, subtitle, cta, discover } = hero.data;
 ---
 
@@ -60,5 +62,13 @@ const { seo, heading, subtitle, cta, discover } = hero.data;
     contact={visitCta.data.contact}
     hours={visitCta.data.hours}
     cta={visitCta.data.cta}
+  />
+  <Footer
+    brandName={footer.data.brandName}
+    tagline={footer.data.tagline}
+    nav={footer.data.nav}
+    contact={footer.data.contact}
+    social={footer.data.social}
+    legal={footer.data.legal}
   />
 </BaseLayout>

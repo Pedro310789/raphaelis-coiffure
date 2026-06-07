@@ -1,0 +1,149 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import Container from "@/components/primitives/container.astro";
+import { headingVariants } from "@/components/primitives/heading.astro";
+import type { Lang } from "@/i18n/translations";
+import { cn } from "@/lib/utils";
+
+export interface Props {
+  brandName: string;
+  tagline: string;
+  nav: {
+    label: string;
+    links: { label: string; href: string }[];
+  };
+  contact: {
+    label: string;
+    address: { line1: string; line2: string };
+    email: string;
+    phone: string;
+  };
+  social: {
+    label: string;
+    links: { label: string; href: string }[];
+  };
+  legal: {
+    copyright: string;
+    links: { label: string; href: string }[];
+  };
+}
+
+const { brandName, tagline, nav, contact, social, legal } = Astro.props;
+const locale = (Astro.currentLocale ?? "fr") as Lang;
+
+const overlineClass =
+  "text-xs/[1.3] font-normal uppercase tracking-wider text-muted-foreground";
+const linkClass =
+  "font-display text-base/[1.3] text-foreground/70 transition-colors hover:text-foreground";
+---
+
+<footer class="bg-background">
+  <Container size="page" class="py-10 lg:pt-18 lg:pb-12">
+    <div class="flex flex-col gap-12 lg:gap-20">
+      {/* Top row: brand + nav columns */}
+      <div class="flex flex-col gap-10 lg:flex-row lg:items-start lg:gap-20">
+        {/* Brand block */}
+        <div class="flex flex-col gap-6 lg:flex-1">
+          <p
+            class={cn(
+              headingVariants({ size: "h2", balance: false }),
+              "text-[36px]/none sm:text-[46px]/none lg:text-[56px]/none",
+            )}
+          >
+            {brandName}
+          </p>
+          <div class="h-px w-16 bg-muted-foreground" aria-hidden="true"></div>
+          <p class={overlineClass}>{tagline}</p>
+        </div>
+
+        {/* Nav columns */}
+        <div
+          class="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:flex-1 lg:gap-x-6 lg:gap-y-12"
+        >
+          {/* Column 1: Maison (nav links) */}
+          <nav aria-label={nav.label}>
+            <p class={cn(overlineClass, "mb-6")}>{nav.label}</p>
+            <ul class="flex flex-col gap-3">
+              {
+                nav.links.map((link) => (
+                  <li>
+                    <a
+                      href={getRelativeLocaleUrl(locale, link.href)}
+                      class={linkClass}
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+          </nav>
+
+          {/* Column 2: Contact */}
+          <div>
+            <p class={cn(overlineClass, "mb-6")}>{contact.label}</p>
+            <address class="not-italic flex flex-col gap-3">
+              <p class="font-display text-base/[1.3] text-foreground/70">
+                {contact.address.line1}<br />{contact.address.line2}
+              </p>
+              <a href={`mailto:${contact.email}`} class={linkClass}
+                >{contact.email}</a
+              >
+              <a
+                href={`tel:${contact.phone.replace(/\s/g, "")}`}
+                class={linkClass}>{contact.phone}</a
+              >
+            </address>
+          </div>
+
+          {/* Column 3: Social */}
+          <div class="col-span-2 sm:col-span-1">
+            <p class={cn(overlineClass, "mb-6")}>{social.label}</p>
+            <ul class="flex flex-col gap-3">
+              {
+                social.links.map((link) => (
+                  <li>
+                    <a
+                      href={link.href}
+                      class={linkClass}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      {/* Copyright bar */}
+      <div
+        class="flex flex-col gap-4 border-t border-border pt-8 sm:flex-row sm:items-center sm:justify-between"
+      >
+        <p class={overlineClass}>{legal.copyright}</p>
+        <nav aria-label="Liens légaux">
+          <ul class="flex flex-wrap gap-x-6 gap-y-2">
+            {
+              legal.links.map((link) => (
+                <li>
+                  <a
+                    href={link.href}
+                    class={cn(
+                      overlineClass,
+                      "hover:text-foreground transition-colors",
+                    )}
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </Container>
+</footer>
