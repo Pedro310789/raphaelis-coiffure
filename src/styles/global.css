@@ -155,6 +155,20 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
+/* Heading reveal animations — triggered by IntersectionObserver adding .is-visible */
+[data-animate] {
+  transition: opacity 0.75s ease-out, transform 0.75s ease-out;
+}
+[data-animate="fade-up"]    { opacity: 0; transform: translateY(1.75rem); }
+[data-animate="fade-down"]    { opacity: 0; transform: translateY(-1.75rem); }
+[data-animate="fade-right"] { opacity: 0; transform: translateX(1.75rem); }
+[data-animate="fade-left"]  { opacity: 0; transform: translateX(-1.75rem); }
+[data-animate].is-visible   { opacity: 1; transform: translate(0, 0); }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-animate] { opacity: 1; transform: none; transition: none; }
+}
+
 @layer base {
   * {
     @apply border-border;
