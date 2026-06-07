@@ -6,6 +6,7 @@ import {
   Services,
   Testimonials,
   Collection,
+  Partners,
 } from "@/components/modules";
 import { getSection } from "@/lib/content";
 import type { Lang } from "@/i18n/translations";
@@ -16,6 +17,7 @@ const founders = await getSection("founders", locale, "home");
 const services = await getSection("services", locale, "home");
 const testimonials = await getSection("testimonials", locale, "home");
 const collection = await getSection("collection", locale, "home");
+const partners = await getSection("partners", locale, "home");
 const { seo, heading, subtitle, cta, discover } = hero.data;
 ---
 
@@ -43,5 +45,9 @@ const { seo, heading, subtitle, cta, discover } = hero.data;
     overline={testimonials.data.overline}
     heading={testimonials.data.heading}
     cards={testimonials.data.cards}
+  />
+  <Partners
+    overline={partners.data.overline}
+    logos={partners.data.logos}
   />
 </BaseLayout>

@@ -7,6 +7,7 @@
  */
 
 export { default as Collection } from './collection.astro';
+export { default as Partners } from './partners.astro';
 export { default as CTA } from './cta.astro';
 export { default as FAQ } from './faq.astro';
 export { default as FeatureGrid } from './feature-grid.astro';
