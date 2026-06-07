@@ -151,7 +151,7 @@ src/
 │   └── modules/                   # Five marketing modules
 │       ├── hero.astro
 │       ├── feature-grid.astro
-│       ├── cta.astro
+│       ├── visit-cta.astro
 │       ├── faq.astro
 │       ├── rich-text.astro
 │       └── index.ts               # Barrel re-export

@@ -94,6 +94,39 @@ export const collectionSchema = z.object({
   }),
 });
 
+export const visitCtaSchema = z.object({
+  overline: z.string(),
+  heading: z.object({
+    line1: z.string(),
+    line2: z.string(),
+  }),
+  body: z.string(),
+  address: z.object({
+    label: z.string(),
+    line1: z.string(),
+    line2: z.string(),
+  }),
+  contact: z.object({
+    label: z.string(),
+    email: z.string(),
+    phone: z.string(),
+  }),
+  hours: z.object({
+    label: z.string(),
+    rows: z.array(
+      z.object({
+        day: z.string(),
+        time: z.string(),
+        muted: z.boolean().optional(),
+      }),
+    ),
+  }),
+  cta: z.object({
+    label: z.string(),
+    href: z.string(),
+  }),
+});
+
 // --- Section collections ---
 
 const hero = defineCollection({
@@ -126,4 +159,9 @@ const partners = defineCollection({
   schema: partnersSchema,
 });
 
-export const collections = { hero, founders, services, testimonials, collection, partners };
+const visitCta = defineCollection({
+  loader: glob({ pattern: '**/visit-cta.mdx', base: './src/content/pages' }),
+  schema: visitCtaSchema,
+});
+
+export const collections = { hero, founders, services, testimonials, collection, partners, "visit-cta": visitCta };
