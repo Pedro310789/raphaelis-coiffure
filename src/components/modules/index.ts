@@ -14,7 +14,7 @@ export { default as FAQ } from './faq.astro';
 export { default as FeatureGrid } from './feature-grid.astro';
 export { default as Founders } from './founders.astro';
 export { default as Hero } from './hero.astro';
-export { default as MaisonHero } from './maison-hero.astro';
+export { default as PageHero } from './page-hero.astro';
 export { default as MaisonFeature } from './maison-feature.astro';
 export { default as MaisonVision } from './maison-vision.astro';
 export { default as MaisonStrengths } from './maison-strengths.astro';

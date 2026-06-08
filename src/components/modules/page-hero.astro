@@ -1,36 +1,42 @@
 ---
 /**
- * MaisonHero — full-screen hero for the Maison page (Figma 3430:2427).
+ * PageHero — full-screen hero shared by the Maison (Figma 3430:2427) and
+ * Services (Figma 3435:3408) pages.
  *
  * Same three-band structure as the home Hero (navbar → centered title block →
  * discover/slogan band), but the title is H2-sized and the centered block shows
- * an intro paragraph instead of an overline + CTA button. Shares the navbar and
- * the discover band markup with the home Hero.
+ * an intro paragraph instead of an overline + CTA button. The background image
+ * (and its optional object-position) is passed in per page; everything else is
+ * shared. Reuses the navbar and the discover band markup with the home Hero.
  */
+import type { ImageMetadata } from "astro";
 import { Image } from "astro:assets";
 import Container from "@/components/primitives/container.astro";
 import Heading from "@/components/primitives/heading.astro";
 import Navbar from "@/components/modules/navbar.astro";
-import heroImage from "@/assets/images/hero_about.jpg";
 
 export interface Props {
   heading: string;
   body: string;
   discover: { label: string; slogan: string; address: string };
+  /** Full-bleed background image (imported asset). */
+  image: ImageMetadata;
+  /** Optional extra classes for the background image, e.g. `object-[50%_30%]`. */
+  imageClass?: string;
 }
 
-const { heading, body, discover } = Astro.props;
+const { heading, body, discover, image, imageClass } = Astro.props;
 ---
 
 <section class="relative flex min-h-150 flex-col overflow-hidden">
   {/* Background: full-bleed photo + gradient vignette */}
   <div aria-hidden class="pointer-events-none absolute inset-0">
     <Image
-      src={heroImage}
+      src={image}
       alt=""
       loading="eager"
       fetchpriority="high"
-      class="absolute inset-0 size-full object-cover object-[50%_30%]"
+      class:list={["absolute inset-0 size-full object-cover", imageClass]}
     />
     <div
       class="absolute inset-0"
@@ -62,7 +68,7 @@ const { heading, body, discover } = Astro.props;
 
       {/* Intro paragraph */}
       <p
-        class="text-center text-base/[1.5] font-normal text-primary-foreground/60"
+        class="text-center text-base/normal font-normal text-primary-foreground/60"
       >
         {body}
       </p>

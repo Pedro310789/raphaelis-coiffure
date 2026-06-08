@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "@/layouts/base-layout.astro";
 import {
-  MaisonHero,
+  PageHero,
   MaisonFeature,
   MaisonVision,
   MaisonStrengths,
@@ -10,6 +10,7 @@ import {
 } from "@/components/modules";
 import { getSection } from "@/lib/content";
 import type { Lang } from "@/i18n/translations";
+import heroImage from "@/assets/images/hero_about.jpg";
 import aboutImage from "@/assets/images/atmosphere_about.jpg";
 import foundersImage from "@/assets/images/founders_about.jpg";
 import monogram from "@/assets/images/monogram.png";
@@ -28,7 +29,13 @@ const { seo, heading, body, discover } = hero.data;
 ---
 
 <BaseLayout title={seo.title} description={seo.description}>
-  <MaisonHero {heading} {body} {discover} />
+  <PageHero
+    {heading}
+    {body}
+    {discover}
+    image={heroImage}
+    imageClass="object-[50%_30%]"
+  />
   <MaisonFeature
     overline={about.data.overline}
     heading={about.data.heading}
