@@ -3,6 +3,7 @@ import BaseLayout from "@/layouts/base-layout.astro";
 import {
   MaisonHero,
   MaisonFeature,
+  MaisonVision,
   MaisonStrengths,
   VisitCta,
   Footer,
@@ -11,10 +12,14 @@ import { getSection } from "@/lib/content";
 import type { Lang } from "@/i18n/translations";
 import aboutImage from "@/assets/images/atmosphere_about.jpg";
 import foundersImage from "@/assets/images/founders_about.jpg";
+import monogram from "@/assets/images/monogram.png";
+import visionLeftImage from "@/assets/images/atmosphere_about.jpg";
+import visionRightImage from "@/assets/images/atmosphere_1_about.jpg";
 
 const locale = (Astro.currentLocale ?? "fr") as Lang;
 const hero = await getSection("maison-hero", locale, "maison");
 const about = await getSection("maison-about", locale, "maison");
+const vision = await getSection("maison-vision", locale, "maison");
 const founders = await getSection("maison-founders", locale, "maison");
 const strengths = await getSection("maison-strengths", locale, "maison");
 const visitCta = await getSection("visit-cta", locale, "home");
@@ -45,6 +50,16 @@ const { seo, heading, body, discover } = hero.data;
     overline={strengths.data.overline}
     heading={strengths.data.heading}
     items={strengths.data.items}
+  />
+  <MaisonVision
+    overline={vision.data.overline}
+    heading={vision.data.heading}
+    body={vision.data.body}
+    monogram={monogram}
+    leftImage={visionLeftImage}
+    leftImageAlt={vision.data.leftImageAlt}
+    rightImage={visionRightImage}
+    rightImageAlt={vision.data.rightImageAlt}
   />
   <VisitCta
     overline={visitCta.data.overline}
