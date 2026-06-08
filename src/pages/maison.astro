@@ -1,12 +1,20 @@
 ---
 import BaseLayout from "@/layouts/base-layout.astro";
-import { MaisonHero, MaisonAbout, VisitCta, Footer } from "@/components/modules";
+import {
+  MaisonHero,
+  MaisonFeature,
+  VisitCta,
+  Footer,
+} from "@/components/modules";
 import { getSection } from "@/lib/content";
 import type { Lang } from "@/i18n/translations";
+import aboutImage from "@/assets/images/atmosphere_about.jpg";
+import foundersImage from "@/assets/images/founders_about.jpg";
 
 const locale = (Astro.currentLocale ?? "fr") as Lang;
 const hero = await getSection("maison-hero", locale, "maison");
 const about = await getSection("maison-about", locale, "maison");
+const founders = await getSection("maison-founders", locale, "maison");
 const visitCta = await getSection("visit-cta", locale, "home");
 const footer = await getSection("footer", locale, "home");
 const { seo, heading, body, discover } = hero.data;
@@ -14,12 +22,22 @@ const { seo, heading, body, discover } = hero.data;
 
 <BaseLayout title={seo.title} description={seo.description}>
   <MaisonHero {heading} {body} {discover} />
-  <MaisonAbout
+  <MaisonFeature
     overline={about.data.overline}
     heading={about.data.heading}
     body={about.data.body}
+    image={aboutImage}
     imageAlt={about.data.imageAlt}
     cta={about.data.cta}
+  />
+  <MaisonFeature
+    overline={founders.data.overline}
+    heading={founders.data.heading}
+    body={founders.data.body}
+    image={foundersImage}
+    imageAlt={founders.data.imageAlt}
+    imagePosition="top"
+    class="pt-8 md:pt-10 xl:pt-12"
   />
   <VisitCta
     overline={visitCta.data.overline}
