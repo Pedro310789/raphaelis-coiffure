@@ -52,11 +52,7 @@ export function localizedPath(key: RouteKey, locale: Lang): string {
  * returns that key's slug in `toLocale`. Falls back to the locale home when the
  * path isn't registered, since FR/EN slugs can differ and guessing is unsafe.
  */
-export function alternateLocalePath(
-  pathname: string,
-  fromLocale: Lang,
-  toLocale: Lang,
-): string {
+export function alternateLocalePath(pathname: string, fromLocale: Lang, toLocale: Lang): string {
   const current = stripLocalePrefix(pathname);
   const match = (Object.entries(routes) as [RouteKey, Record<Lang, string>][]).find(
     ([, slugs]) => normalizePath(slugs[fromLocale]) === current,
