@@ -111,9 +111,10 @@ export const servicesSchema = z.object({
       }),
       title: z.string(),
       body: z.string(),
+      // Booking href is global (src/data/settings.json `bookingUrl`); only the
+      // translatable label lives per-card here.
       cta: z.object({
         label: z.string(),
-        href: z.string(),
       }),
     }),
   ),

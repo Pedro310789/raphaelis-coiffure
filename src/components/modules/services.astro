@@ -5,19 +5,25 @@ import type { CTALink } from "@/types/modules";
 import { buttonVariants } from "@/components/primitives/button.astro";
 import Container from "@/components/primitives/container.astro";
 import Heading from "@/components/primitives/heading.astro";
-import { cn } from "@/lib/utils";
+import settings from "@/data/settings.json";
+import { cn, isExternalUrl } from "@/lib/utils";
 
 const serviceImages = import.meta.glob<{ default: ImageMetadata }>(
   "/src/assets/images/services/*",
   { eager: true },
 );
 
+// Single global booking link (editable in Pages CMS → Site settings) shared by
+// every card CTA, so a booking-tool change only needs one edit.
+const bookingUrl = settings.bookingUrl;
+const bookingExternal = isExternalUrl(bookingUrl);
+
 interface ServiceCard {
   numeral: string;
   image: { src: string; alt: string };
   title: string;
   body: string;
-  cta: CTALink;
+  cta: Pick<CTALink, "label">;
 }
 
 export interface Props {
@@ -110,7 +116,9 @@ const { overline, heading, cards } = Astro.props;
                       </p>
                     </div>
                     <a
-                      href={card.cta.href}
+                      href={bookingUrl}
+                      target={bookingExternal ? "_blank" : undefined}
+                      rel={bookingExternal ? "noopener noreferrer" : undefined}
                       class={cn(
                         buttonVariants({ variant: "tertiary" }),
                         "px-0",

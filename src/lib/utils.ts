@@ -12,3 +12,12 @@ import { twMerge } from 'tailwind-merge';
 export function cn(...inputs: ClassValue[]): string {
   return twMerge(clsx(inputs));
 }
+
+/**
+ * True for absolute http(s) URLs — used to decide whether a link should open in
+ * a new tab (`target="_blank" rel="noopener noreferrer"`). Internal paths like
+ * `/contact` return false.
+ */
+export function isExternalUrl(href: string): boolean {
+  return /^https?:\/\//i.test(href);
+}

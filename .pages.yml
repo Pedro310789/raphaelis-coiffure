@@ -1,0 +1,89 @@
+# Pages CMS configuration — https://pagescms.org/docs/configuration
+#
+# The site is multilingual (FR default at `/`, EN at `/en/`). Pages CMS has no
+# built-in i18n, so each translatable section is modelled as a group with one
+# `file` entry per locale, pointing at the matching MDX in
+# `src/content/pages/{locale}/{page}/`.
+
+media:
+  input: src/assets/images
+  output: src/assets/images
+  extensions: [jpg, jpeg, png, webp, avif, svg]
+
+content:
+  # Global, locale-independent settings. The booking link lives here so the
+  # third-party booking tool can change in one place and every "Réserver" / CTA
+  # button across the site follows it.
+  - name: settings
+    label: Site settings
+    type: file
+    path: src/data/settings.json
+    format: json
+    fields:
+      - name: bookingUrl
+        label: Booking link (global)
+        description: >-
+          URL of the third-party booking tool used by every booking CTA on the
+          site. Use a full https:// link to open it in a new tab, or an internal
+          path like /contact.
+        type: string
+
+  # Services section ("Ce que nous faisons, nous le faisons bien") — home page.
+  - name: services
+    label: Services section
+    type: group
+    items:
+      - name: services_fr
+        label: Services (FR)
+        type: file
+        path: src/content/pages/fr/home/services.mdx
+        format: yaml-frontmatter
+        fields: &servicesFields
+          - name: overline
+            label: Overline
+            type: string
+          - name: heading
+            label: Heading lines
+            description: Each entry renders as its own line in the heading.
+            type: string
+            list: true
+          - name: cards
+            label: Service cards
+            type: object
+            list: true
+            fields:
+              - name: numeral
+                label: Numeral
+                type: string
+              - name: image
+                label: Image
+                type: object
+                fields:
+                  - name: src
+                    label: File
+                    type: image
+                  - name: alt
+                    label: Alt text
+                    type: string
+              - name: title
+                label: Title
+                type: string
+              - name: body
+                label: Body
+                type: text
+              - name: cta
+                label: CTA
+                type: object
+                fields:
+                  - name: label
+                    label: Button label
+                    description: >-
+                      Visible text only — the link is the global booking link in
+                      Site settings.
+                    type: string
+      - name: services_en
+        label: Services (EN)
+        type: file
+        path: src/content/pages/en/home/services.mdx
+        format: yaml-frontmatter
+        fields: *servicesFields
