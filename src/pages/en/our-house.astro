@@ -3,6 +3,7 @@ import BaseLayout from "@/layouts/base-layout.astro";
 import {
   MaisonHero,
   MaisonFeature,
+  MaisonStrengths,
   VisitCta,
   Footer,
 } from "@/components/modules";
@@ -15,6 +16,7 @@ const locale = (Astro.currentLocale ?? "en") as Lang;
 const hero = await getSection("maison-hero", locale, "maison");
 const about = await getSection("maison-about", locale, "maison");
 const founders = await getSection("maison-founders", locale, "maison");
+const strengths = await getSection("maison-strengths", locale, "maison");
 const visitCta = await getSection("visit-cta", locale, "home");
 const footer = await getSection("footer", locale, "home");
 const { seo, heading, body, discover } = hero.data;
@@ -38,6 +40,11 @@ const { seo, heading, body, discover } = hero.data;
     imageAlt={founders.data.imageAlt}
     imagePosition="top"
     class="pt-8 md:pt-10 xl:pt-12"
+  />
+  <MaisonStrengths
+    overline={strengths.data.overline}
+    heading={strengths.data.heading}
+    items={strengths.data.items}
   />
   <VisitCta
     overline={visitCta.data.overline}
