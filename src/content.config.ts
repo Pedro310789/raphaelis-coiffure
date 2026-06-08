@@ -36,6 +36,17 @@ export const maisonHeroSchema = z.object({
   }),
 });
 
+export const maisonAboutSchema = z.object({
+  overline: z.string(),
+  heading: z.string(),
+  body: z.array(z.string()),
+  imageAlt: z.string(),
+  cta: z.object({
+    label: z.string(),
+    href: z.string(),
+  }),
+});
+
 export const foundersSchema = z.object({
   overline: z.string(),
   heading: z.array(z.string()),
@@ -153,6 +164,11 @@ const maisonHero = defineCollection({
   schema: maisonHeroSchema,
 });
 
+const maisonAbout = defineCollection({
+  loader: glob({ pattern: '**/maison-about.mdx', base: './src/content/pages' }),
+  schema: maisonAboutSchema,
+});
+
 const founders = defineCollection({
   loader: glob({ pattern: '**/founders.mdx', base: './src/content/pages' }),
   schema: foundersSchema,
@@ -211,4 +227,4 @@ const footer = defineCollection({
   schema: footerSchema,
 });
 
-export const collections = { hero, "maison-hero": maisonHero, founders, services, testimonials, collection, partners, "visit-cta": visitCta, footer };
+export const collections = { hero, "maison-hero": maisonHero, "maison-about": maisonAbout, founders, services, testimonials, collection, partners, "visit-cta": visitCta, footer };
