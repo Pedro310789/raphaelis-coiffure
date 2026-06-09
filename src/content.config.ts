@@ -50,6 +50,20 @@ export const servicesHeroSchema = z.object({
   }),
 });
 
+export const collectionHeroSchema = z.object({
+  seo: z.object({
+    title: z.string(),
+    description: z.string(),
+  }),
+  heading: z.string(),
+  body: z.string(),
+  discover: z.object({
+    label: z.string(),
+    slogan: z.string(),
+    address: z.string(),
+  }),
+});
+
 export const maisonAboutSchema = z.object({
   overline: z.string(),
   heading: z.string(),
@@ -228,6 +242,11 @@ const servicesHero = defineCollection({
   schema: servicesHeroSchema,
 });
 
+const collectionHero = defineCollection({
+  loader: glob({ pattern: '**/collection-hero.mdx', base: './src/content/pages' }),
+  schema: collectionHeroSchema,
+});
+
 const maisonAbout = defineCollection({
   loader: glob({ pattern: '**/maison-about.mdx', base: './src/content/pages' }),
   schema: maisonAboutSchema,
@@ -314,6 +333,7 @@ const footer = defineCollection({
 export const collections = {
   hero,
   'services-hero': servicesHero,
+  'collection-hero': collectionHero,
   'services-disciplines': servicesDisciplines,
   'maison-hero': maisonHero,
   'maison-about': maisonAbout,
