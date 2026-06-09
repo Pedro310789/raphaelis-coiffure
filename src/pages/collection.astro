@@ -1,12 +1,13 @@
 ---
 import BaseLayout from "@/layouts/base-layout.astro";
-import { PageHero, VisitCta, Footer } from "@/components/modules";
+import { PageHero, CollectionGallery, VisitCta, Footer } from "@/components/modules";
 import { getSection } from "@/lib/content";
 import type { Lang } from "@/i18n/translations";
 import heroImage from "@/assets/images/hero_collection.jpg";
 
 const locale = (Astro.currentLocale ?? "fr") as Lang;
 const hero = await getSection("collection-hero", locale, "collection");
+const gallery = await getSection("collection-gallery", locale, "collection");
 const visitCta = await getSection("visit-cta", locale, "home");
 const footer = await getSection("footer", locale, "home");
 const { seo, heading, body, discover } = hero.data;
@@ -14,6 +15,11 @@ const { seo, heading, body, discover } = hero.data;
 
 <BaseLayout title={seo.title} description={seo.description}>
   <PageHero {heading} {body} {discover} image={heroImage} />
+  <CollectionGallery
+    overline={gallery.data.overline}
+    heading={gallery.data.heading}
+    images={gallery.data.images}
+  />
   <VisitCta
     overline={visitCta.data.overline}
     heading={visitCta.data.heading}

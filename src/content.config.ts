@@ -192,6 +192,18 @@ export const collectionSchema = z.object({
   }),
 });
 
+export const collectionGallerySchema = z.object({
+  overline: z.string(),
+  heading: z.string(),
+  images: z.array(
+    z.object({
+      src: z.string(),
+      alt: z.string(),
+      caption: z.string(),
+    }),
+  ),
+});
+
 export const visitCtaSchema = z.object({
   overline: z.string(),
   heading: z.object({
@@ -292,6 +304,11 @@ const collection = defineCollection({
   schema: collectionSchema,
 });
 
+const collectionGallery = defineCollection({
+  loader: glob({ pattern: '**/collection-gallery.mdx', base: './src/content/pages' }),
+  schema: collectionGallerySchema,
+});
+
 const partners = defineCollection({
   loader: glob({ pattern: '**/partners.mdx', base: './src/content/pages' }),
   schema: partnersSchema,
@@ -344,6 +361,7 @@ export const collections = {
   services,
   testimonials,
   collection,
+  'collection-gallery': collectionGallery,
   partners,
   'visit-cta': visitCta,
   footer,

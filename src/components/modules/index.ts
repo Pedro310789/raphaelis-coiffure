@@ -7,6 +7,7 @@
  */
 
 export { default as Collection } from './collection.astro';
+export { default as CollectionGallery } from './collection-gallery.astro';
 export { default as Footer } from './footer.astro';
 export { default as Partners } from './partners.astro';
 export { default as VisitCta } from './visit-cta.astro';

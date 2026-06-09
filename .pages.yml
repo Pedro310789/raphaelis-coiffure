@@ -146,3 +146,44 @@ content:
         path: src/content/pages/en/services/services-disciplines.mdx
         format: yaml-frontmatter
         fields: *servicesDisciplinesFields
+
+  # Collection gallery ("Couleurs, coupes, soins.") — collection page.
+  - name: collection_gallery
+    label: Collection gallery
+    type: group
+    items:
+      - name: collection_gallery_fr
+        label: Collection gallery (FR)
+        type: file
+        path: src/content/pages/fr/collection/collection-gallery.mdx
+        format: yaml-frontmatter
+        fields: &collectionGalleryFields
+          - name: overline
+            label: Overline
+            type: string
+          - name: heading
+            label: Heading
+            type: string
+          - name: images
+            label: Gallery images
+            type: object
+            list: true
+            fields:
+              - name: src
+                label: File
+                type: image
+                options:
+                  path: src/assets/images/collections
+              - name: alt
+                label: Alt text
+                type: string
+              - name: caption
+                label: Caption
+                description: Short label shown below the image (e.g. "Coupe · Carré net").
+                type: string
+      - name: collection_gallery_en
+        label: Collection gallery (EN)
+        type: file
+        path: src/content/pages/en/collection/collection-gallery.mdx
+        format: yaml-frontmatter
+        fields: *collectionGalleryFields
