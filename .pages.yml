@@ -63,7 +63,8 @@ content:
                     label: File
                     type: image
                     options:
-                      path: services
+                      media: images
+                      path: src/assets/images/services
                   - name: alt
                     label: Alt text
                     type: string
@@ -131,7 +132,8 @@ content:
                     label: File
                     type: image
                     options:
-                      path: services
+                      media: images
+                      path: src/assets/images/services
                   - name: alt
                     label: Alt text
                     type: string
