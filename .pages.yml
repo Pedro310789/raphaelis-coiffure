@@ -62,6 +62,9 @@ content:
                   - name: src
                     label: File
                     type: image
+                    media:
+                      input: src/assets/images/services
+                      output: src/assets/images/services
                   - name: alt
                     label: Alt text
                     type: string
@@ -128,6 +131,9 @@ content:
                   - name: src
                     label: File
                     type: image
+                    media:
+                      input: src/assets/images/services
+                      output: src/assets/images/services
                   - name: alt
                     label: Alt text
                     type: string
