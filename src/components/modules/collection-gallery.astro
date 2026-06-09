@@ -1,11 +1,14 @@
 ---
-import type { ImageMetadata } from 'astro';
-import { Image } from 'astro:assets';
-import Container from '@/components/primitives/container.astro';
-import Heading from '@/components/primitives/heading.astro';
+import type { ImageMetadata } from "astro";
+import { Image, getImage } from "astro:assets";
+import Button from "@/components/primitives/button.astro";
+import Container from "@/components/primitives/container.astro";
+import Heading from "@/components/primitives/heading.astro";
+import type { Lang } from "@/i18n/translations";
+import { useTranslations } from "@/i18n/utils";
 
 const galleryImages = import.meta.glob<{ default: ImageMetadata }>(
-  '/src/assets/images/collections/*',
+  "/src/assets/images/collections/*",
   { eager: true },
 );
 
@@ -19,18 +22,36 @@ export interface Props {
   overline: string;
   heading: string;
   images: GalleryImage[];
+  /** Number of images shown before the "Load more" button reveals the rest. */
+  initialCount?: number;
 }
 
-const { overline, heading, images } = Astro.props;
+const { overline, heading, images, initialCount = 8 } = Astro.props;
+
+const locale = (Astro.currentLocale ?? "fr") as Lang;
+const t = useTranslations(locale);
+
+// Resolve each entry's processed asset once, and pre-generate a large rendition
+// for the lightbox (grid thumbnails top out at 816px, too small when enlarged).
+const items = await Promise.all(
+  images.map(async (item) => {
+    const imgData = galleryImages[`/${item.src}`]?.default;
+    const fullSrc = imgData
+      ? (await getImage({ src: imgData, width: 1600, format: "webp" })).src
+      : item.src;
+    return { ...item, imgData, fullSrc };
+  }),
+);
 ---
 
 <section class="bg-muted">
   <Container size="page" as="div" class="py-16 md:py-20 xl:py-24">
     <div class="flex flex-col items-center gap-12 xl:gap-24">
-
       <div class="flex w-full flex-col items-center gap-6 text-center">
         <div class="flex flex-col items-center gap-4">
-          <p class="text-xs/[1.3] font-normal uppercase tracking-wider text-muted-foreground">
+          <p
+            class="text-xs/[1.3] font-normal uppercase tracking-wider text-muted-foreground"
+          >
             {overline}
           </p>
           <div class="h-px w-12 bg-muted-foreground" aria-hidden="true"></div>
@@ -45,42 +66,258 @@ const { overline, heading, images } = Astro.props;
         </Heading>
       </div>
 
-      <div class="grid w-full grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-6">
+      <div
+        id="gallery-grid"
+        class="grid w-full grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-6"
+      >
         {
-          images.map((item) => {
-            const imgKey = `/${item.src}`;
-            const imgData = galleryImages[imgKey]?.default;
-            return (
-              <figure class="flex flex-col gap-3">
-                <div class="relative aspect-3/4 w-full overflow-hidden">
-                  {imgData ? (
-                    <Image
-                      src={imgData}
-                      alt={item.alt}
-                      class="absolute inset-0 h-full w-full object-cover"
-                      widths={[300, 600, 816]}
-                      sizes="(min-width: 1024px) 25vw, 50vw"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <img
-                      src={item.src}
-                      alt={item.alt}
-                      class="absolute inset-0 h-full w-full object-cover"
-                      loading="lazy"
-                    />
-                  )}
-                  <div class="absolute inset-0 bg-black/10" aria-hidden="true" />
-                </div>
-                <figcaption class="text-xs/[1.3] font-normal uppercase tracking-wider text-muted-foreground">
-                  {item.caption}
-                </figcaption>
-              </figure>
-            );
-          })
+          items.map((item, i) => (
+            <figure
+              class="flex flex-col gap-3"
+              data-overflow={i >= initialCount ? "" : null}
+            >
+              <button
+                type="button"
+                class="group relative aspect-3/4 w-full cursor-pointer overflow-hidden"
+                data-lightbox-trigger
+                data-index={i}
+                data-full={item.fullSrc}
+                data-alt={item.alt}
+                data-caption={item.caption}
+              >
+                {item.imgData ? (
+                  <Image
+                    src={item.imgData}
+                    alt={item.alt}
+                    class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    widths={[300, 600, 816]}
+                    sizes="(min-width: 1024px) 25vw, 50vw"
+                    loading="lazy"
+                  />
+                ) : (
+                  <img
+                    src={item.src}
+                    alt={item.alt}
+                    class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                )}
+                <div class="absolute inset-0 bg-black/10" aria-hidden="true" />
+              </button>
+              <figcaption class="text-xs/[1.3] font-normal uppercase tracking-wider text-muted-foreground">
+                {item.caption}
+              </figcaption>
+            </figure>
+          ))
         }
       </div>
 
+      {
+        /* Hidden until the script confirms there are overflow images to reveal. */
+      }
+      <Button id="gallery-load-more" variant="main" hidden>
+        {t("gallery.loadMore")}
+      </Button>
     </div>
   </Container>
 </section>
+
+{
+  /* Lightbox — native <dialog> gives Escape, focus trap, and backdrop for free. */
+}
+<dialog
+  id="gallery-lightbox"
+  aria-label={t("gallery.lightboxLabel")}
+  class="m-0 h-full max-h-none w-full max-w-none bg-transparent backdrop:bg-black/90"
+>
+  <div class="flex h-full w-full flex-col">
+    <div class="flex h-16 items-center justify-end px-4 md:px-6">
+      <button
+        type="button"
+        data-lightbox-close
+        aria-label={t("gallery.close")}
+        class="flex items-center justify-center p-2 text-white/80 transition-colors hover:text-white"
+      >
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+        >
+          <line x1="4" y1="4" x2="20" y2="20"></line>
+          <line x1="20" y1="4" x2="4" y2="20"></line>
+        </svg>
+      </button>
+    </div>
+
+    <div
+      class="relative flex flex-1 items-center justify-center px-4 pb-4 md:px-6"
+    >
+      <button
+        type="button"
+        data-lightbox-prev
+        aria-label={t("gallery.prev")}
+        class="absolute left-4 z-10 flex items-center justify-center p-2 text-white/80 transition-colors hover:text-white md:left-6"
+      >
+        <svg
+          width="32"
+          height="32"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+
+      <img
+        data-lightbox-image
+        src=""
+        alt=""
+        class="max-h-[85vh] max-w-full object-contain"
+      />
+
+      <button
+        type="button"
+        data-lightbox-next
+        aria-label={t("gallery.next")}
+        class="absolute right-4 z-10 flex items-center justify-center p-2 text-white/80 transition-colors hover:text-white md:right-6"
+      >
+        <svg
+          width="32"
+          height="32"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+    </div>
+
+    <div class="flex h-16 items-center justify-center gap-4 px-4 text-white/80">
+      <figcaption
+        data-lightbox-caption
+        class="text-xs/[1.3] font-normal uppercase tracking-wider"
+      >
+      </figcaption>
+      <span
+        data-lightbox-counter
+        class="text-xs/[1.3] tabular-nums text-white/50"></span>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  const grid = document.getElementById("gallery-grid");
+  const loadMore = document.getElementById("gallery-load-more");
+  const dialog = document.getElementById(
+    "gallery-lightbox",
+  ) as HTMLDialogElement | null;
+
+  // --- Load more ---
+  const overflow = grid
+    ? Array.from(grid.querySelectorAll<HTMLElement>("[data-overflow]"))
+    : [];
+
+  if (overflow.length > 0 && loadMore) {
+    for (const fig of overflow) fig.hidden = true;
+    loadMore.hidden = false;
+    loadMore.addEventListener("click", () => {
+      for (const fig of overflow) fig.hidden = false;
+      loadMore.hidden = true;
+    });
+  }
+
+  // --- Lightbox ---
+  const triggers = Array.from(
+    document.querySelectorAll<HTMLButtonElement>("[data-lightbox-trigger]"),
+  );
+
+  if (dialog && triggers.length > 0) {
+    const slides = triggers.map((el) => ({
+      full: el.dataset.full ?? "",
+      alt: el.dataset.alt ?? "",
+      caption: el.dataset.caption ?? "",
+    }));
+
+    const img = dialog.querySelector<HTMLImageElement>("[data-lightbox-image]");
+    const caption = dialog.querySelector<HTMLElement>(
+      "[data-lightbox-caption]",
+    );
+    const counter = dialog.querySelector<HTMLElement>(
+      "[data-lightbox-counter]",
+    );
+    const closeBtn = dialog.querySelector<HTMLButtonElement>(
+      "[data-lightbox-close]",
+    );
+    const prevBtn = dialog.querySelector<HTMLButtonElement>(
+      "[data-lightbox-prev]",
+    );
+    const nextBtn = dialog.querySelector<HTMLButtonElement>(
+      "[data-lightbox-next]",
+    );
+
+    let current = 0;
+
+    function render() {
+      const slide = slides[current];
+      if (img) {
+        img.src = slide.full;
+        img.alt = slide.alt;
+      }
+      if (caption) caption.textContent = slide.caption;
+      if (counter) counter.textContent = `${current + 1} / ${slides.length}`;
+    }
+
+    function open(index: number) {
+      current = index;
+      render();
+      dialog?.showModal();
+      document.body.style.overflow = "hidden";
+    }
+
+    function close() {
+      dialog?.close();
+    }
+
+    function step(delta: number) {
+      current = (current + delta + slides.length) % slides.length;
+      render();
+    }
+
+    triggers.forEach((el, i) => {
+      el.addEventListener("click", () => open(i));
+    });
+
+    closeBtn?.addEventListener("click", close);
+    prevBtn?.addEventListener("click", () => step(-1));
+    nextBtn?.addEventListener("click", () => step(1));
+
+    // Click anywhere except the image itself or a control button closes the dialog.
+    dialog.addEventListener("click", (e) => {
+      const target = e.target as HTMLElement;
+      if (target === img || target.closest("button")) return;
+      close();
+    });
+
+    dialog.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") step(-1);
+      else if (e.key === "ArrowRight") step(1);
+    });
+
+    // Restore body scroll whenever the dialog closes (button, Escape, or backdrop).
+    dialog.addEventListener("close", () => {
+      document.body.style.overflow = "";
+    });
+  }
+</script>
