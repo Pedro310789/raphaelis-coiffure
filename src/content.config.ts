@@ -99,6 +99,23 @@ export const foundersSchema = z.object({
   }),
 });
 
+export const servicesDisciplinesSchema = z.object({
+  overline: z.string(),
+  heading: z.array(z.string()),
+  disciplines: z.array(
+    z.object({
+      numeral: z.string(),
+      title: z.string(),
+      body: z.string(),
+      image: z.object({
+        src: z.string(),
+        alt: z.string(),
+      }),
+      items: z.array(z.string()),
+    }),
+  ),
+});
+
 export const servicesSchema = z.object({
   overline: z.string(),
   heading: z.array(z.string()),
@@ -236,6 +253,11 @@ const founders = defineCollection({
   schema: foundersSchema,
 });
 
+const servicesDisciplines = defineCollection({
+  loader: glob({ pattern: '**/services-disciplines.mdx', base: './src/content/pages' }),
+  schema: servicesDisciplinesSchema,
+});
+
 const services = defineCollection({
   loader: glob({ pattern: '**/services.mdx', base: './src/content/pages' }),
   schema: servicesSchema,
@@ -292,6 +314,7 @@ const footer = defineCollection({
 export const collections = {
   hero,
   'services-hero': servicesHero,
+  'services-disciplines': servicesDisciplines,
   'maison-hero': maisonHero,
   'maison-about': maisonAbout,
   'maison-vision': maisonVision,

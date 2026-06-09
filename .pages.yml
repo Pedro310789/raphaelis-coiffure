@@ -87,3 +87,58 @@ content:
         path: src/content/pages/en/home/services.mdx
         format: yaml-frontmatter
         fields: *servicesFields
+
+  # Services disciplines accordion ("Notre savoir-faire / L'excellence en quatre disciplines") — services page.
+  - name: services_disciplines
+    label: Services disciplines accordion
+    type: group
+    items:
+      - name: services_disciplines_fr
+        label: Services disciplines (FR)
+        type: file
+        path: src/content/pages/fr/services/services-disciplines.mdx
+        format: yaml-frontmatter
+        fields: &servicesDisciplinesFields
+          - name: overline
+            label: Overline
+            type: string
+          - name: heading
+            label: Heading lines
+            description: Each entry renders as its own line in the heading.
+            type: string
+            list: true
+          - name: disciplines
+            label: Disciplines
+            type: object
+            list: true
+            fields:
+              - name: numeral
+                label: Numeral (e.g. I, II, III, IV)
+                type: string
+              - name: title
+                label: Title
+                type: string
+              - name: body
+                label: Description
+                type: text
+              - name: image
+                label: Image
+                type: object
+                fields:
+                  - name: src
+                    label: File
+                    type: image
+                  - name: alt
+                    label: Alt text
+                    type: string
+              - name: items
+                label: Techniques / Services list
+                description: Each entry appears as a checkmark item in the expanded accordion row.
+                type: string
+                list: true
+      - name: services_disciplines_en
+        label: Services disciplines (EN)
+        type: file
+        path: src/content/pages/en/services/services-disciplines.mdx
+        format: yaml-frontmatter
+        fields: *servicesDisciplinesFields

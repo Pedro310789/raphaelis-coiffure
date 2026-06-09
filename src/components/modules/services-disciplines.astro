@@ -1,0 +1,147 @@
+---
+import type { ImageMetadata } from "astro";
+import { Image } from "astro:assets";
+import Container from "@/components/primitives/container.astro";
+import Heading from "@/components/primitives/heading.astro";
+
+const disciplineImages = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/images/services/*",
+  { eager: true },
+);
+
+interface Discipline {
+  numeral: string;
+  title: string;
+  body: string;
+  image: { src: string; alt: string };
+  items: string[];
+}
+
+export interface Props {
+  overline: string;
+  heading: string[];
+  disciplines: Discipline[];
+}
+
+const { overline, heading, disciplines } = Astro.props;
+---
+
+<section class="bg-muted">
+  <Container size="page" as="div" class="py-16 md:py-20 xl:py-22">
+    <div class="flex flex-col gap-12 xl:gap-24">
+      {/* Section header */}
+      <div class="flex flex-col items-center gap-4 text-center">
+        <div class="flex flex-col items-center gap-4">
+          <p
+            class="text-xs/[1.3] font-normal uppercase tracking-wider text-muted-foreground"
+          >
+            {overline}
+          </p>
+          <div class="h-px w-12 bg-muted-foreground" aria-hidden="true"></div>
+        </div>
+        <Heading
+          as="h2"
+          size="h2"
+          balance={false}
+          class="text-center text-[36px]/none md:text-[46px]/none xl:text-[56px]/none"
+        >
+          {heading.map((line) => <span class="block">{line}</span>)}
+        </Heading>
+      </div>
+
+      {/* Accordion */}
+      <div class="border-t border-border">
+        {
+          disciplines.map((discipline, index) => {
+            const imgKey = `/${discipline.image.src}`;
+            const imgData = disciplineImages[imgKey]?.default;
+            return (
+              <details class="group border-b border-border" open={index === 0}>
+                <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-5 md:py-6 [&::-webkit-details-marker]:hidden">
+                  <Heading
+                    as="h3"
+                    size="h4"
+                    balance={false}
+                    class="text-[22px]/[1.2] sm:text-[28px]/[1.2]"
+                  >
+                    <span class="italic">{discipline.numeral}.</span>{" "}
+                    {discipline.title}
+                  </Heading>
+                  <svg
+                    class="size-8 shrink-0 transition-transform duration-300 group-open:rotate-180 md:size-10"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M6 9l6 6 6-6"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </summary>
+
+                <div class="pb-8 lg:pb-12">
+                  <div class="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
+                    {/* Left: body + checklist */}
+                    <div class="flex flex-col gap-8 lg:max-w-[44%]">
+                      <p class="text-base/noramal text-body-foreground">
+                        {discipline.body}
+                      </p>
+                      <ul class="grid grid-cols-2 gap-x-6 gap-y-3 sm:gap-x-8">
+                        {discipline.items.map((item) => (
+                          <li class="flex items-center gap-2">
+                            <svg
+                              class="size-4.5 shrink-0 text-foreground"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              aria-hidden="true"
+                            >
+                              <path
+                                d="M5 13l4 4L19 7"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              />
+                            </svg>
+                            <span class="text-sm/normal text-body-foreground sm:text-base/normal">
+                              {item}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {/* Right: image */}
+                    <div class="w-full overflow-hidden aspect-video lg:w-[45%] lg:aspect-[2.3/1]">
+                      {imgData ? (
+                        <Image
+                          src={imgData}
+                          alt={discipline.image.alt}
+                          class="h-full w-full object-cover object-center"
+                          widths={[400, 640, 900]}
+                          sizes="(min-width: 1024px) 45vw, 100vw"
+                          loading="lazy"
+                        />
+                      ) : (
+                        <img
+                          src={discipline.image.src}
+                          alt={discipline.image.alt}
+                          class="h-full w-full object-cover object-center"
+                          loading="lazy"
+                        />
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </details>
+            );
+          })
+        }
+      </div>
+    </div>
+  </Container>
+</section>
