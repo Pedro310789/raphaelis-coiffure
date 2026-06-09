@@ -1,6 +1,12 @@
 ---
 import BaseLayout from "@/layouts/base-layout.astro";
-import { PageHero, Services as ServicesModule, ServicesDisciplines } from "@/components/modules";
+import {
+  PageHero,
+  Services as ServicesModule,
+  ServicesDisciplines,
+  VisitCta,
+  Footer,
+} from "@/components/modules";
 import { getSection } from "@/lib/content";
 import type { Lang } from "@/i18n/translations";
 import heroImage from "@/assets/images/hero_services.jpg";
@@ -8,7 +14,13 @@ import heroImage from "@/assets/images/hero_services.jpg";
 const locale = (Astro.currentLocale ?? "fr") as Lang;
 const hero = await getSection("services-hero", locale, "services");
 const services = await getSection("services", locale, "services");
-const servicesDisciplines = await getSection("services-disciplines", locale, "services");
+const servicesDisciplines = await getSection(
+  "services-disciplines",
+  locale,
+  "services",
+);
+const visitCta = await getSection("visit-cta", locale, "home");
+const footer = await getSection("footer", locale, "home");
 const { seo, heading, body, discover } = hero.data;
 ---
 
@@ -16,4 +28,21 @@ const { seo, heading, body, discover } = hero.data;
   <PageHero {heading} {body} {discover} image={heroImage} />
   <ServicesModule {...services.data} />
   <ServicesDisciplines {...servicesDisciplines.data} />
+  <VisitCta
+    overline={visitCta.data.overline}
+    heading={visitCta.data.heading}
+    body={visitCta.data.body}
+    address={visitCta.data.address}
+    contact={visitCta.data.contact}
+    hours={visitCta.data.hours}
+    cta={visitCta.data.cta}
+  />
+  <Footer
+    brandName={footer.data.brandName}
+    tagline={footer.data.tagline}
+    nav={footer.data.nav}
+    contact={footer.data.contact}
+    social={footer.data.social}
+    legal={footer.data.legal}
+  />
 </BaseLayout>
