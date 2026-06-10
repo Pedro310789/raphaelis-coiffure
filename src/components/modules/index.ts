@@ -7,6 +7,7 @@
  */
 
 export { default as Collection } from './collection.astro';
+export { default as Commitments } from './commitments.astro';
 export { default as ContactForm } from './contact-form.astro';
 export { default as CollectionGallery } from './collection-gallery.astro';
 export { default as Footer } from './footer.astro';

@@ -1,6 +1,12 @@
 ---
 import BaseLayout from "@/layouts/base-layout.astro";
-import { PageHero, ContactForm, Footer } from "@/components/modules";
+import {
+  PageHero,
+  ContactForm,
+  Commitments,
+  VisitCta,
+  Footer,
+} from "@/components/modules";
 import { getSection } from "@/lib/content";
 import type { Lang } from "@/i18n/translations";
 import heroImage from "@/assets/images/hero_contact.jpg";
@@ -8,6 +14,8 @@ import heroImage from "@/assets/images/hero_contact.jpg";
 const locale = (Astro.currentLocale ?? "fr") as Lang;
 const hero = await getSection("contact-hero", locale, "contact");
 const form = await getSection("contact-form", locale, "contact");
+const commitments = await getSection("commitments", locale, "contact");
+const visitCta = await getSection("visit-cta", locale, "home");
 const footer = await getSection("footer", locale, "home");
 const { seo, heading, body, discover } = hero.data;
 ---
@@ -15,6 +23,16 @@ const { seo, heading, body, discover } = hero.data;
 <BaseLayout title={seo.title} description={seo.description}>
   <PageHero {heading} {body} {discover} image={heroImage} />
   <ContactForm {...form.data} />
+  <VisitCta
+    overline={visitCta.data.overline}
+    heading={visitCta.data.heading}
+    body={visitCta.data.body}
+    address={visitCta.data.address}
+    contact={visitCta.data.contact}
+    hours={visitCta.data.hours}
+    cta={visitCta.data.cta}
+  />
+  <Commitments {...commitments.data} />
   <Footer
     brandName={footer.data.brandName}
     tagline={footer.data.tagline}

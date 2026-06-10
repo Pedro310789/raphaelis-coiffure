@@ -93,6 +93,12 @@ export const contactFormSchema = z.object({
   error: z.string(),
 });
 
+export const commitmentsSchema = z.object({
+  overline: z.string(),
+  heading: z.string(),
+  body: z.string(),
+});
+
 export const maisonAboutSchema = z.object({
   overline: z.string(),
   heading: z.string(),
@@ -298,6 +304,11 @@ const contactForm = defineCollection({
   schema: contactFormSchema,
 });
 
+const commitments = defineCollection({
+  loader: glob({ pattern: '**/commitments.mdx', base: './src/content/pages' }),
+  schema: commitmentsSchema,
+});
+
 const maisonAbout = defineCollection({
   loader: glob({ pattern: '**/maison-about.mdx', base: './src/content/pages' }),
   schema: maisonAboutSchema,
@@ -392,6 +403,7 @@ export const collections = {
   'collection-hero': collectionHero,
   'contact-hero': contactHero,
   'contact-form': contactForm,
+  commitments,
   'services-disciplines': servicesDisciplines,
   'maison-hero': maisonHero,
   'maison-about': maisonAbout,
