@@ -1,0 +1,24 @@
+---
+import BaseLayout from "@/layouts/base-layout.astro";
+import { PageHero, Footer } from "@/components/modules";
+import { getSection } from "@/lib/content";
+import type { Lang } from "@/i18n/translations";
+import heroImage from "@/assets/images/hero_contact.jpg";
+
+const locale = (Astro.currentLocale ?? "en") as Lang;
+const hero = await getSection("contact-hero", locale, "contact");
+const footer = await getSection("footer", locale, "home");
+const { seo, heading, body, discover } = hero.data;
+---
+
+<BaseLayout title={seo.title} description={seo.description}>
+  <PageHero {heading} {body} {discover} image={heroImage} />
+  <Footer
+    brandName={footer.data.brandName}
+    tagline={footer.data.tagline}
+    nav={footer.data.nav}
+    contact={footer.data.contact}
+    social={footer.data.social}
+    legal={footer.data.legal}
+  />
+</BaseLayout>
