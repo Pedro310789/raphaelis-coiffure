@@ -1,0 +1,223 @@
+---
+import { buttonVariants } from "@/components/primitives/button.astro";
+import Container from "@/components/primitives/container.astro";
+import Heading from "@/components/primitives/heading.astro";
+import { cn } from "@/lib/utils";
+
+export interface Props {
+  overline: string;
+  heading: string;
+  fields: {
+    name: string;
+    firstName: string;
+    email: string;
+    phone: string;
+    message: string;
+  };
+  submit: string;
+  success: string;
+  error: string;
+}
+
+const { overline, heading, fields, submit, success, error } = Astro.props;
+
+const accessKey = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY ?? "";
+
+// Underline-style field: bottom border only, transparent background.
+const inputClass = cn(
+  "w-full border-0 border-b border-border bg-transparent pb-2",
+  "text-base/[1.5] text-foreground",
+  "transition-colors outline-none focus:border-foreground",
+);
+const labelClass = "text-base/[1.5] text-[#444]";
+const fieldClass = "flex flex-col gap-[17px]";
+---
+
+<section class="bg-secondary">
+  <Container size="page" class="py-16 lg:py-24">
+    <div class="flex flex-col gap-12 lg:flex-row lg:gap-[116px]">
+      {/* Left: heading block */}
+      <div class="flex flex-col gap-6 lg:w-[544px] lg:shrink-0">
+        <div class="flex flex-col gap-4">
+          <p
+            class="text-xs/[1.3] font-normal uppercase tracking-wider text-muted-foreground"
+          >
+            {overline}
+          </p>
+          <div class="h-px w-12 bg-muted-foreground" aria-hidden="true"></div>
+        </div>
+        <Heading
+          as="h2"
+          size="h3"
+          balance={false}
+          class="text-[30px]/none md:text-[38px]/none lg:text-[46px]/none"
+        >
+          {heading}
+        </Heading>
+      </div>
+
+      {/* Right: form */}
+      <form
+        action="https://api.web3forms.com/submit"
+        method="POST"
+        data-contact-form
+        data-success={success}
+        data-error={error}
+        class="flex w-full flex-col gap-14 lg:w-[636px] lg:pt-6"
+      >
+        {/* Web3Forms config */}
+        <input type="hidden" name="access_key" value={accessKey} />
+        <input
+          type="hidden"
+          name="subject"
+          value="Nouveau message — Maison Raphaëlis"
+        />
+        <input type="hidden" name="from_name" value="Maison Raphaëlis" />
+        {/* Honeypot: hidden from users, filled by bots */}
+        <input
+          type="checkbox"
+          name="botcheck"
+          class="hidden"
+          tabindex="-1"
+          autocomplete="off"
+          aria-hidden="true"
+        />
+
+        <div class="flex flex-col gap-12">
+          <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+            <div class={fieldClass}>
+              <label for="contact-name" class={labelClass}>{fields.name}</label>
+              <input
+                id="contact-name"
+                name="Nom"
+                type="text"
+                autocomplete="family-name"
+                required
+                class={inputClass}
+              />
+            </div>
+            <div class={fieldClass}>
+              <label for="contact-firstname" class={labelClass}>
+                {fields.firstName}
+              </label>
+              <input
+                id="contact-firstname"
+                name="Prénom"
+                type="text"
+                autocomplete="given-name"
+                required
+                class={inputClass}
+              />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+            <div class={fieldClass}>
+              <label for="contact-email" class={labelClass}>
+                {fields.email}
+              </label>
+              <input
+                id="contact-email"
+                name="Email"
+                type="email"
+                autocomplete="email"
+                required
+                class={inputClass}
+              />
+            </div>
+            <div class={fieldClass}>
+              <label for="contact-phone" class={labelClass}>
+                {fields.phone}
+              </label>
+              <input
+                id="contact-phone"
+                name="Téléphone"
+                type="tel"
+                autocomplete="tel"
+                required
+                class={inputClass}
+              />
+            </div>
+          </div>
+
+          <div class={fieldClass}>
+            <label for="contact-message" class={labelClass}>
+              {fields.message}
+            </label>
+            <textarea
+              id="contact-message"
+              name="Message"
+              rows="2"
+              class={cn(inputClass, "resize-y")}></textarea>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-6">
+          <button type="submit" class={buttonVariants({ variant: "main" })}>
+            {submit}
+          </button>
+          <p
+            data-form-result
+            aria-live="polite"
+            hidden
+            class={cn(
+              "text-sm/[1.5] tracking-[0.01em]",
+              "data-[state=success]:text-foreground",
+              "data-[state=error]:text-destructive",
+            )}
+          >
+          </p>
+        </div>
+      </form>
+    </div>
+  </Container>
+</section>
+
+<script>
+  const forms = document.querySelectorAll<HTMLFormElement>(
+    "[data-contact-form]",
+  );
+
+  for (const form of forms) {
+    const result = form.querySelector<HTMLElement>("[data-form-result]");
+    const submitBtn = form.querySelector<HTMLButtonElement>(
+      'button[type="submit"]',
+    );
+    if (!result || !submitBtn) continue;
+
+    const successMsg = form.dataset.success ?? "";
+    const errorMsg = form.dataset.error ?? "";
+
+    const show = (message: string, state: "success" | "error") => {
+      result.textContent = message;
+      result.dataset.state = state;
+      result.hidden = false;
+    };
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      submitBtn.disabled = true;
+      result.hidden = true;
+
+      try {
+        const response = await fetch(form.action, {
+          method: "POST",
+          body: new FormData(form),
+          headers: { Accept: "application/json" },
+        });
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          show(successMsg, "success");
+          form.reset();
+        } else {
+          show(errorMsg, "error");
+        }
+      } catch {
+        show(errorMsg, "error");
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+  }
+</script>

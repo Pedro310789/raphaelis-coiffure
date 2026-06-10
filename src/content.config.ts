@@ -78,6 +78,21 @@ export const contactHeroSchema = z.object({
   }),
 });
 
+export const contactFormSchema = z.object({
+  overline: z.string(),
+  heading: z.string(),
+  fields: z.object({
+    name: z.string(),
+    firstName: z.string(),
+    email: z.string(),
+    phone: z.string(),
+    message: z.string(),
+  }),
+  submit: z.string(),
+  success: z.string(),
+  error: z.string(),
+});
+
 export const maisonAboutSchema = z.object({
   overline: z.string(),
   heading: z.string(),
@@ -278,6 +293,11 @@ const contactHero = defineCollection({
   schema: contactHeroSchema,
 });
 
+const contactForm = defineCollection({
+  loader: glob({ pattern: '**/contact-form.mdx', base: './src/content/pages' }),
+  schema: contactFormSchema,
+});
+
 const maisonAbout = defineCollection({
   loader: glob({ pattern: '**/maison-about.mdx', base: './src/content/pages' }),
   schema: maisonAboutSchema,
@@ -371,6 +391,7 @@ export const collections = {
   'services-hero': servicesHero,
   'collection-hero': collectionHero,
   'contact-hero': contactHero,
+  'contact-form': contactForm,
   'services-disciplines': servicesDisciplines,
   'maison-hero': maisonHero,
   'maison-about': maisonAbout,
