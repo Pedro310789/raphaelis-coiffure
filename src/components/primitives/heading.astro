@@ -77,7 +77,24 @@ const {
     },
     { threshold: 0.15, rootMargin: "0px 0px -40px 0px" },
   );
-  for (const el of document.querySelectorAll("[data-animate]")) {
-    observer.observe(el);
-  }
+
+  const arm = () => {
+    for (const el of document.querySelectorAll("[data-animate]")) {
+      observer.observe(el);
+    }
+  };
+
+  arm();
+
+  // On a back/forward-cache (bfcache) restore the page returns with `.is-visible`
+  // already applied and this module is not re-executed, so the animation never
+  // replays. Reset the elements to their hidden state and re-observe them.
+  window.addEventListener("pageshow", (event) => {
+    if (!event.persisted) return;
+    for (const el of document.querySelectorAll("[data-animate]")) {
+      el.classList.remove("is-visible");
+    }
+    // Paint the hidden state before re-observing so the transition replays.
+    requestAnimationFrame(() => requestAnimationFrame(arm));
+  });
 </script>
