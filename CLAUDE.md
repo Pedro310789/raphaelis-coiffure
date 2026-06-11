@@ -27,9 +27,9 @@ Astro 6 static site with MDX, sitemap, and Tailwind CSS v4.
 
 Two-tier hierarchy, all server-rendered Astro components (zero client JS by default):
 
-- **`src/components/primitives/`** — building blocks: `Button`, `Card`, `Input`, `Badge`, `Container`, `Heading`. All variants use `class-variance-authority` (CVA).
-- **`src/components/modules/`** — marketing compositions that accept plain typed props: `Hero`, `CTA`, `FeatureGrid`, `FAQ`, `RichText`.
-- **`src/types/modules.ts`** — shared UI types (`CTALink`, `ImageProps`). When adding a CMS, map CMS content shapes to these types in your page.
+- **`src/components/primitives/`** — building blocks: `Button`, `Input`, `Container`, `Heading`. All variants use `class-variance-authority` (CVA).
+- **`src/components/modules/`** — page-level sections: `Hero`, `PageHero`, `Navbar`, `Footer`, `Founders`, `Services`, `ServicesDisciplines`, `Collection`, `CollectionGallery`, `Testimonials`, `Partners`, `MaisonFeature`, `MaisonVision`, `MaisonStrengths`, `VisitCta`, `ContactForm`, `Commitments`.
+- **`src/types/modules.ts`** — shared UI types (`CTALink`). When adding a CMS, map CMS content shapes to these types in your page.
 - **`src/styles/global.css`** — all design tokens as CSS custom properties (`--primary`, `--background`, etc.). Rebrand by editing this file only.
 
 **Button variants** (Figma style guide node 3354-7766):

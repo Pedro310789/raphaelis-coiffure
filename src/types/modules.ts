@@ -6,9 +6,3 @@ export interface CTALink {
   external?: boolean;
 }
 
-export interface ImageProps {
-  src: string;
-  alt: string;
-  width?: number;
-  height?: number;
-}

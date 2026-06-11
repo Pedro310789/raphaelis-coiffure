@@ -1,7 +1,7 @@
 /**
  * Modules barrel. Import like:
  *
- *   import { Hero, FeatureGrid, CTA } from '@/components/modules';
+ *   import { Hero, PageHero, Footer } from '@/components/modules';
  *
  * Keeps page frontmatter compact when composing 4–5 modules per page.
  */
@@ -13,8 +13,6 @@ export { default as CollectionGallery } from './collection-gallery.astro';
 export { default as Footer } from './footer.astro';
 export { default as Partners } from './partners.astro';
 export { default as VisitCta } from './visit-cta.astro';
-export { default as FAQ } from './faq.astro';
-export { default as FeatureGrid } from './feature-grid.astro';
 export { default as Founders } from './founders.astro';
 export { default as Hero } from './hero.astro';
 export { default as PageHero } from './page-hero.astro';
@@ -22,7 +20,6 @@ export { default as MaisonFeature } from './maison-feature.astro';
 export { default as MaisonVision } from './maison-vision.astro';
 export { default as MaisonStrengths } from './maison-strengths.astro';
 export { default as Navbar } from './navbar.astro';
-export { default as RichText } from './rich-text.astro';
 export { default as Services } from './services.astro';
 export { default as ServicesDisciplines } from './services-disciplines.astro';
 export { default as Testimonials } from './testimonials.astro';
