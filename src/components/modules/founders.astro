@@ -5,6 +5,7 @@ import { buttonVariants } from "@/components/primitives/button.astro";
 import Container from "@/components/primitives/container.astro";
 import Heading from "@/components/primitives/heading.astro";
 import foundersImage from "@/assets/images/founders.png";
+import rightIcon from "@/assets/icons/right-icon.svg?raw";
 
 export interface Props {
   overline: string;
@@ -81,20 +82,7 @@ const { overline, heading, body, imageCaption, cta } = Astro.props;
         {/* CTA */}
         <a href={cta.href} class={buttonVariants({ variant: "tertiary" })}>
           {cta.label}
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="none"
-            aria-hidden="true"
-          >
-            <path
-              d="M3 8h10M9 4l4 4-4 4"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"></path>
-          </svg>
+          <Fragment set:html={rightIcon} />
         </a>
       </div>
     </div>

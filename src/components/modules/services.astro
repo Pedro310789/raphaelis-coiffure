@@ -7,6 +7,7 @@ import Container from "@/components/primitives/container.astro";
 import Heading from "@/components/primitives/heading.astro";
 import settings from "@/data/settings.json";
 import { cn, isExternalUrl } from "@/lib/utils";
+import rightIcon from "@/assets/icons/right-icon.svg?raw";
 
 const serviceImages = import.meta.glob<{ default: ImageMetadata }>(
   "/src/assets/images/services/*",
@@ -125,21 +126,7 @@ const { overline, heading, cards } = Astro.props;
                       )}
                     >
                       {card.cta.label}
-                      <svg
-                        width="16"
-                        height="16"
-                        viewBox="0 0 16 16"
-                        fill="none"
-                        aria-hidden="true"
-                      >
-                        <path
-                          d="M3 8h10M9 4l4 4-4 4"
-                          stroke="currentColor"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        />
-                      </svg>
+                      <Fragment set:html={rightIcon} />
                     </a>
                   </div>
                 </div>

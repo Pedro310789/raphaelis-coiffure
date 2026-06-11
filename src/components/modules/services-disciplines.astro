@@ -3,6 +3,8 @@ import type { ImageMetadata } from "astro";
 import { Image } from "astro:assets";
 import Container from "@/components/primitives/container.astro";
 import Heading from "@/components/primitives/heading.astro";
+import checkIcon from "@/assets/icons/check.svg?raw";
+import chevronIcon from "@/assets/icons/chevron-right.svg?raw";
 
 const disciplineImages = import.meta.glob<{ default: ImageMetadata }>(
   "/src/assets/images/services/*",
@@ -67,20 +69,11 @@ const { overline, heading, disciplines } = Astro.props;
                     <span class="italic">{discipline.numeral}.</span>{" "}
                     {discipline.title}
                   </Heading>
-                  <svg
-                    class="size-8 shrink-0 transition-transform duration-300 group-open:rotate-180 md:size-10"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
+                  <span
+                    class="inline-flex size-8 shrink-0 transition-transform duration-300 group-open:rotate-180 md:size-12 [&>svg]:size-full"
                     aria-hidden="true"
-                  >
-                    <path
-                      d="M6 9l6 6 6-6"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
+                    set:html={chevronIcon}
+                  />
                 </summary>
 
                 <div class="pb-8 lg:pb-12">
@@ -93,20 +86,11 @@ const { overline, heading, disciplines } = Astro.props;
                       <ul class="grid grid-cols-2 gap-x-6 gap-y-3 sm:gap-x-8">
                         {discipline.items.map((item) => (
                           <li class="flex items-center gap-2">
-                            <svg
-                              class="size-4.5 shrink-0 text-foreground"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              stroke-width="2"
+                            <span
+                              class="inline-flex size-5.5 shrink-0 text-foreground [&>svg]:size-full"
                               aria-hidden="true"
-                            >
-                              <path
-                                d="M5 13l4 4L19 7"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                              />
-                            </svg>
+                              set:html={checkIcon}
+                            />
                             <span class="text-sm/normal text-body-foreground sm:text-base/normal">
                               {item}
                             </span>
