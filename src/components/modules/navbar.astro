@@ -1,15 +1,10 @@
 ---
-/**
- * Navbar — shared hero chrome: desktop nav links, language selector, and a
- * full-screen mobile menu overlay. Rendered inside a hero `<section>` (over the
- * background image), so it stays transparent and uses light text.
- *
- * Reads the locale itself (per project i18n rules) — no `lang` prop.
- */
 import Container from "@/components/primitives/container.astro";
+import { Image } from "astro:assets";
 import { useTranslations } from "@/i18n/utils";
 import type { Lang } from "@/i18n/translations";
 import { alternateLocalePath, localizedPath } from "@/i18n/routes";
+import menuBgImage from "@/assets/images/hero.png";
 
 const locale = (Astro.currentLocale ?? "fr") as Lang;
 const t = useTranslations(locale);
@@ -32,14 +27,70 @@ const enHref = alternateLocalePath(Astro.url.pathname, locale, "en");
   role="dialog"
   aria-modal="true"
   aria-label={t("nav.label")}
-  class="fixed inset-0 z-50 hidden flex-col bg-[#181818] md:hidden"
+  class="fixed inset-0 z-50 hidden flex-col overflow-hidden md:hidden"
 >
-  {/* Top bar: close button */}
-  <div class="flex h-24 items-center justify-end px-4">
+  {/* Background: full-bleed photo + gradient vignette */}
+  <div aria-hidden class="pointer-events-none absolute inset-0">
+    <Image
+      src={menuBgImage}
+      alt=""
+      class="absolute inset-0 size-full object-cover object-[75%_50%]"
+    />
+    <div
+      class="absolute inset-0"
+      style="background-image: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 40%), linear-gradient(0deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 40%), linear-gradient(90deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.2) 100%)"
+    >
+    </div>
+  </div>
+
+  {/* Top bar: language selector (left) + close (right) */}
+  <div class="absolute inset-x-5 top-0 flex items-center justify-between py-6">
+    <div class="flex items-center gap-3" aria-label={t("lang.selector")}>
+      {
+        locale === "fr" ? (
+          <span
+            lang="fr"
+            aria-current="true"
+            class="cursor-default text-xs/[1.3] font-normal uppercase tracking-wider text-white"
+          >
+            FR
+          </span>
+        ) : (
+          <a
+            href={frHref}
+            lang="fr"
+            class="text-xs/[1.3] font-normal uppercase tracking-wider text-primary-foreground/60 transition-colors hover:text-white"
+          >
+            FR
+          </a>
+        )
+      }
+      <div class="h-3 w-px bg-primary-foreground/40" aria-hidden="true"></div>
+      {
+        locale === "en" ? (
+          <span
+            lang="en"
+            aria-current="true"
+            class="cursor-default text-xs/[1.3] font-normal uppercase tracking-wider text-white"
+          >
+            EN
+          </span>
+        ) : (
+          <a
+            href={enHref}
+            lang="en"
+            class="text-xs/[1.3] font-normal uppercase tracking-wider text-primary-foreground/60 transition-colors hover:text-white"
+          >
+            EN
+          </a>
+        )
+      }
+    </div>
+
     <button
       id="menu-close"
       aria-label={t("nav.closeMenu")}
-      class="flex items-center justify-center p-2 text-white/80 transition-colors hover:text-white"
+      class="flex items-center justify-center text-white"
     >
       <svg
         width="24"
@@ -56,77 +107,28 @@ const enHref = alternateLocalePath(Astro.url.pathname, locale, "en");
     </button>
   </div>
 
-  {/* Nav links — centered */}
+  {/* Nav links */}
   <nav
     aria-label={t("nav.label")}
-    class="flex flex-1 flex-col items-center justify-center gap-10"
+    class="relative flex flex-col gap-10 px-5 mt-[132px] pb-4"
   >
     {
       navLinks.map((link) => (
         <a
           href={link.href}
-          class="font-display text-[28px]/none text-white/80 transition-colors hover:text-white"
+          class="w-full border-b border-[rgba(217,217,217,0.5)] pb-4 pt-[6.5px] text-xs/[1.3] font-normal uppercase tracking-wider text-white transition-colors hover:text-white/70"
         >
           {link.label}
         </a>
       ))
     }
   </nav>
-
-  {/* Language selector */}
-  <div
-    class="flex items-center justify-center gap-4 pb-12"
-    aria-label={t("lang.selector")}
-  >
-    {
-      locale === "fr" ? (
-        <span
-          lang="fr"
-          aria-current="true"
-          class="text-xs/[1.3] font-normal uppercase tracking-wider text-white cursor-default"
-        >
-          FR
-        </span>
-      ) : (
-        <a
-          href={frHref}
-          lang="fr"
-          class="text-xs/[1.3] font-normal uppercase tracking-wider text-white/50 transition-colors hover:text-white"
-        >
-          FR
-        </a>
-      )
-    }
-    <div class="h-3 w-px bg-white/30" aria-hidden="true"></div>
-    {
-      locale === "en" ? (
-        <span
-          lang="en"
-          aria-current="true"
-          class="text-xs/[1.3] font-normal uppercase tracking-wider text-white cursor-default"
-        >
-          EN
-        </span>
-      ) : (
-        <a
-          href={enHref}
-          lang="en"
-          class="text-xs/[1.3] font-normal uppercase tracking-wider text-white/50 transition-colors hover:text-white"
-        >
-          EN
-        </a>
-      )
-    }
-  </div>
 </div>
 
 {/* Navbar */}
-<header class="relative z-10 h-24">
-  <Container
-    size="page"
-    class="flex h-full items-center justify-end md:justify-between"
-  >
-    {/* Nav links — hidden on mobile, shown md+ */}
+<header class="relative z-10 h-18 md:h-24">
+  <Container size="page" class="flex h-full items-center justify-between">
+    {/* Left: nav links (desktop) | language selector (mobile) */}
     <nav aria-label={t("nav.label")} class="hidden md:block">
       <ul class="flex items-center gap-10">
         {
@@ -144,16 +146,63 @@ const enHref = alternateLocalePath(Astro.url.pathname, locale, "en");
       </ul>
     </nav>
 
-    {/* Right side: language selector + hamburger */}
+    <div
+      class="flex items-center gap-3 md:hidden"
+      aria-label={t("lang.selector")}
+    >
+      {
+        locale === "fr" ? (
+          <span
+            lang="fr"
+            aria-current="true"
+            class="cursor-default text-xs/[1.3] font-normal uppercase tracking-wider text-white"
+          >
+            FR
+          </span>
+        ) : (
+          <a
+            href={frHref}
+            lang="fr"
+            class="text-xs/[1.3] font-normal uppercase tracking-wider text-primary-foreground/60 transition-colors hover:text-white"
+          >
+            FR
+          </a>
+        )
+      }
+      <div class="h-3 w-px bg-primary-foreground/40" aria-hidden="true"></div>
+      {
+        locale === "en" ? (
+          <span
+            lang="en"
+            aria-current="true"
+            class="cursor-default text-xs/[1.3] font-normal uppercase tracking-wider text-white"
+          >
+            EN
+          </span>
+        ) : (
+          <a
+            href={enHref}
+            lang="en"
+            class="text-xs/[1.3] font-normal uppercase tracking-wider text-primary-foreground/60 transition-colors hover:text-white"
+          >
+            EN
+          </a>
+        )
+      }
+    </div>
+
+    {/* Right: language selector (desktop) + hamburger (mobile) */}
     <div class="flex items-center gap-5">
-      {/* Language selector */}
-      <div class="flex items-center gap-3" aria-label={t("lang.selector")}>
+      <div
+        class="hidden items-center gap-3 md:flex"
+        aria-label={t("lang.selector")}
+      >
         {
           locale === "fr" ? (
             <span
               lang="fr"
               aria-current="true"
-              class="text-xs/[1.3] font-normal uppercase tracking-wider text-white cursor-default"
+              class="cursor-default text-xs/[1.3] font-normal uppercase tracking-wider text-white"
             >
               FR
             </span>
@@ -173,7 +222,7 @@ const enHref = alternateLocalePath(Astro.url.pathname, locale, "en");
             <span
               lang="en"
               aria-current="true"
-              class="text-xs/[1.3] font-normal uppercase tracking-wider text-white cursor-default"
+              class="cursor-default text-xs/[1.3] font-normal uppercase tracking-wider text-white"
             >
               EN
             </span>
@@ -189,17 +238,16 @@ const enHref = alternateLocalePath(Astro.url.pathname, locale, "en");
         }
       </div>
 
-      {/* Hamburger — mobile only */}
       <button
         id="menu-toggle"
         aria-expanded="false"
         aria-controls="mobile-menu"
         aria-label={t("nav.openMenu")}
-        class="flex flex-col items-center justify-center gap-1.25 p-2 text-white md:hidden"
+        class="flex flex-col items-center justify-center gap-2 text-white md:hidden"
       >
-        <span class="block h-px w-5 bg-white"></span>
-        <span class="block h-px w-5 bg-white"></span>
-        <span class="block h-px w-5 bg-white"></span>
+        <span class="block h-px w-6 bg-white"></span>
+        <span class="block h-px w-6 bg-white"></span>
+        <span class="block h-px w-6 bg-white"></span>
       </button>
     </div>
   </Container>
