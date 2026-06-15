@@ -16,7 +16,7 @@ export interface Props {
 const { overline, logos } = Astro.props;
 ---
 
-<section class="bg-secondary">
+<section class="bg-secondary overflow-hidden">
   <Container
     size="page"
     as="div"
@@ -31,22 +31,59 @@ const { overline, logos } = Astro.props;
       <div class="h-px w-12 bg-muted-foreground" aria-hidden="true"></div>
     </div>
 
+    <!-- Mobile marquee -->
+    <div class="md:hidden -mx-5 w-screen overflow-hidden">
+      <ul class="flex list-none w-max animate-marquee gap-8">
+        {
+          [...logos, ...logos].map((logo, i) => {
+            const key = `/${logo.src}`;
+            const imgData = partnerImages[key]?.default;
+            return (
+              <li
+                aria-hidden={i >= logos.length ? "true" : undefined}
+                class="flex h-16 w-16 shrink-0 items-center justify-center"
+              >
+                {imgData ? (
+                  <Image
+                    src={imgData}
+                    alt={logo.alt}
+                    class="h-full w-full object-contain"
+                    widths={[64]}
+                    sizes="64px"
+                    loading="lazy"
+                  />
+                ) : (
+                  <img
+                    src={logo.src}
+                    alt={logo.alt}
+                    class="h-full w-full object-contain"
+                    loading="lazy"
+                  />
+                )}
+              </li>
+            );
+          })
+        }
+      </ul>
+    </div>
+
+    <!-- Desktop static grid -->
     <ul
-      class="flex list-none flex-wrap items-center justify-center gap-8 md:gap-x-16 lg:gap-x-46 lg:gap-y-8"
+      class="hidden md:flex list-none flex-wrap items-center justify-center md:gap-x-16 lg:gap-x-46 lg:gap-y-8"
     >
       {
         logos.map((logo) => {
           const key = `/${logo.src}`;
           const imgData = partnerImages[key]?.default;
           return (
-            <li class="flex h-16 w-16 shrink-0 items-center justify-center md:h-20 md:w-20 lg:h-24 lg:w-24">
+            <li class="flex h-20 w-20 shrink-0 items-center justify-center lg:h-24 lg:w-24">
               {imgData ? (
                 <Image
                   src={imgData}
                   alt={logo.alt}
                   class="h-full w-full object-contain"
-                  widths={[64, 80, 96]}
-                  sizes="(min-width: 1024px) 96px, (min-width: 768px) 80px, 64px"
+                  widths={[80, 96]}
+                  sizes="(min-width: 1024px) 96px, 80px"
                   loading="lazy"
                 />
               ) : (

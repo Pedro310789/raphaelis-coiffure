@@ -153,6 +153,13 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
+  --animate-marquee: marquee 20s linear infinite;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
 
 /* Heading reveal animations — triggered by IntersectionObserver adding .is-visible */
@@ -166,6 +173,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   [data-animate] { opacity: 1; transform: none; transition: none; }
+  .animate-marquee { animation: none; }
 }
 
 @layer base {
