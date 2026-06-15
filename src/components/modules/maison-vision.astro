@@ -40,11 +40,11 @@ const imageWidths = [430, 660, 900];
 ---
 
 <section class="bg-muted">
-  <Container size="page" as="div" class="py-16 md:py-20 xl:py-24">
+  <Container size="page" as="div" class="py-12 md:py-20 xl:py-24">
     <div class="grid grid-cols-1 items-center gap-10 lg:grid-cols-3 lg:gap-15">
       {/* Left photo */}
       <div
-        class="relative w-full overflow-hidden aspect-3/2 lg:aspect-auto lg:h-155"
+        class="relative w-full overflow-hidden aspect-3/4 lg:aspect-auto lg:h-155"
       >
         <Image
           src={leftImage}
@@ -76,7 +76,7 @@ const imageWidths = [430, 660, 900];
           <div class="flex flex-col items-center gap-6">
             <div class="flex flex-col items-center gap-4">
               <p
-                class="text-xs/[1.3] font-normal uppercase tracking-wider text-muted-foreground"
+                class="text-[10px]/[1.3] md:text-xs/[1.3] font-normal uppercase tracking-wider text-muted-foreground"
               >
                 {overline}
               </p>
@@ -103,7 +103,7 @@ const imageWidths = [430, 660, 900];
 
       {/* Right photo */}
       <div
-        class="relative w-full overflow-hidden aspect-3/2 lg:aspect-auto lg:h-155"
+        class="relative w-full overflow-hidden aspect-3/4 lg:aspect-auto lg:h-155"
       >
         <Image
           src={rightImage}

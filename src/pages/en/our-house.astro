@@ -11,7 +11,7 @@ import {
 import { getSection } from "@/lib/content";
 import type { Lang } from "@/i18n/translations";
 import heroImage from "@/assets/images/hero_about.jpg";
-import aboutImage from "@/assets/images/atmosphere_about.jpg";
+import aboutImage from "@/assets/images/founders_1_about.jpg";
 import foundersImage from "@/assets/images/founders_about.jpg";
 import monogram from "@/assets/images/monogram.png";
 import visionLeftImage from "@/assets/images/atmosphere_about.jpg";
@@ -40,7 +40,7 @@ const { seo, heading, body, discover } = hero.data;
     overline={about.data.overline}
     heading={about.data.heading}
     body={about.data.body}
-    image={aboutImage}
+    image={foundersImage}
     imageAlt={about.data.imageAlt}
     cta={about.data.cta}
   />
@@ -48,9 +48,8 @@ const { seo, heading, body, discover } = hero.data;
     overline={founders.data.overline}
     heading={founders.data.heading}
     body={founders.data.body}
-    image={foundersImage}
+    image={aboutImage}
     imageAlt={founders.data.imageAlt}
-    imagePosition="top"
     class="pt-8 md:pt-10 xl:pt-12"
   />
   <MaisonStrengths
