@@ -12,25 +12,34 @@ const { overline, heading, cards } = Astro.props;
 ---
 
 <section class="bg-primary">
-  <Container size="page" as="div" class="flex flex-col gap-24 pb-28 pt-26">
+  <Container
+    size="page"
+    as="div"
+    class="flex flex-col gap-10 md:gap-24 pt-10 pb-16 md:pb-28 md:pt-26"
+  >
     {/* Header */}
     <div class="flex flex-col items-center gap-6">
       <div class="flex flex-col items-center gap-4">
         <p
-          class="text-xs/[1.3] font-normal uppercase tracking-wider text-muted-foreground"
+          class="text-[10px]/[1.3] md:text-xs/[1.3] font-normal uppercase tracking-wider text-muted-foreground"
         >
           {overline}
         </p>
         <div class="h-px w-12 bg-muted-foreground" aria-hidden="true"></div>
       </div>
-      <Heading as="h2" size="h2" balance={false} class="text-center">
+      <Heading
+        as="h2"
+        size="h2"
+        balance={false}
+        class="text-center text-[36px]/none md:text-[46px]/none xl:text-[56px]/none"
+      >
         <span class="block text-white">{heading.line1}</span>
         <span class="block text-muted-foreground">{heading.line2}</span>
       </Heading>
     </div>
 
     {/* Testimonial cards */}
-    <div class="flex flex-col gap-10 md:flex-row md:gap-6">
+    <div class="flex flex-col gap-6 md:flex-row">
       {
         cards.map((card) => (
           <article class="flex flex-col md:flex-1">
@@ -48,7 +57,7 @@ const { overline, heading, cards } = Astro.props;
                 class="h-px w-8 shrink-0 bg-tertiary-foreground"
                 aria-hidden="true"
               />
-              <p class="text-xs/[1.3] font-normal uppercase tracking-wider text-tertiary-foreground">
+              <p class="text-[10px]/[1.3] md:text-xs/[1.3] font-normal uppercase tracking-wider text-tertiary-foreground">
                 {card.author} · {card.location}
               </p>
             </footer>
