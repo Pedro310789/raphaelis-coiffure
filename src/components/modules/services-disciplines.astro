@@ -29,8 +29,8 @@ const { overline, heading, disciplines } = Astro.props;
 ---
 
 <section class="bg-muted">
-  <Container size="page" as="div" class="py-16 md:py-20 xl:py-22">
-    <div class="flex flex-col gap-12 xl:gap-24">
+  <Container size="page" as="div" class="py-10 md:py-20 xl:py-22">
+    <div class="flex flex-col gap-10 xl:gap-24">
       {/* Section header */}
       <div class="flex flex-col items-center gap-4 text-center">
         <div class="flex flex-col items-center gap-4">
@@ -59,12 +59,12 @@ const { overline, heading, disciplines } = Astro.props;
             const imgData = disciplineImages[imgKey]?.default;
             return (
               <details class="group border-b border-border" open={index === 0}>
-                <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-5 md:py-6 [&::-webkit-details-marker]:hidden">
+                <summary class="flex cursor-pointer list-none items-center justify-between gap-6 pt-10 pb-5 md:pb-6 md:pt-6 [&::-webkit-details-marker]:hidden">
                   <Heading
                     as="h3"
                     size="h4"
                     balance={false}
-                    class="text-[22px]/[1.2] sm:text-[28px]/[1.2]"
+                    class="text-[26px]/[1.2] sm:text-[28px]/[1.2]"
                   >
                     <span class="italic">{discipline.numeral}.</span>{" "}
                     {discipline.title}
@@ -77,7 +77,7 @@ const { overline, heading, disciplines } = Astro.props;
                 </summary>
 
                 <div class="pb-8 lg:pb-12">
-                  <div class="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
+                  <div class="flex flex-col-reverse gap-8 lg:flex-row lg:items-start lg:justify-between">
                     {/* Left: body + checklist */}
                     <div class="flex flex-col gap-8 lg:max-w-[44%]">
                       <p class="text-base/noramal text-body-foreground">
