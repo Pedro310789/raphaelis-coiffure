@@ -6,6 +6,8 @@ import Container from "@/components/primitives/container.astro";
 import Heading from "@/components/primitives/heading.astro";
 import Navbar from "@/components/modules/navbar.astro";
 import heroImage from "@/assets/images/hero.png";
+import settings from "@/data/settings.json";
+import { isExternalUrl } from "@/lib/utils";
 
 export interface Props {
   heading: string;
@@ -15,6 +17,9 @@ export interface Props {
 }
 
 const { heading, subtitle, cta, discover } = Astro.props;
+
+const bookingUrl = settings.bookingUrl;
+const bookingExternal = isExternalUrl(bookingUrl);
 ---
 
 <section class="relative flex flex-col overflow-hidden">
@@ -61,7 +66,12 @@ const { heading, subtitle, cta, discover } = Astro.props;
       </div>
 
       {/* CTA button */}
-      <a href={cta.href} class={buttonVariants({ variant: "main-light" })}>
+      <a
+        href={bookingUrl}
+        target={bookingExternal ? "_blank" : undefined}
+        rel={bookingExternal ? "noopener noreferrer" : undefined}
+        class={buttonVariants({ variant: "main-light" })}
+      >
         {cta.label}
       </a>
     </div>
