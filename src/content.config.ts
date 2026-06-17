@@ -369,6 +369,21 @@ const visitCta = defineCollection({
   schema: visitCtaSchema,
 });
 
+export const legalPageSchema = z.object({
+  seo: z.object({
+    title: z.string(),
+    description: z.string(),
+  }),
+  title: z.string(),
+  subtitle: z.string().optional(),
+  sections: z.array(
+    z.object({
+      heading: z.string(),
+      paragraphs: z.array(z.string()),
+    }),
+  ),
+});
+
 export const footerSchema = z.object({
   brandName: z.string(),
   tagline: z.string(),
@@ -397,6 +412,11 @@ const footer = defineCollection({
   schema: footerSchema,
 });
 
+const legalPage = defineCollection({
+  loader: glob({ pattern: '**/legal-page.mdx', base: './src/content/pages' }),
+  schema: legalPageSchema,
+});
+
 export const collections = {
   hero,
   'services-hero': servicesHero,
@@ -418,4 +438,5 @@ export const collections = {
   partners,
   'visit-cta': visitCta,
   footer,
+  'legal-page': legalPage,
 };

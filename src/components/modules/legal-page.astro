@@ -1,0 +1,60 @@
+---
+import Container from "@/components/primitives/container.astro";
+import Heading from "@/components/primitives/heading.astro";
+import Navbar from "@/components/modules/navbar.astro";
+
+export interface Props {
+  title: string;
+  subtitle?: string;
+  sections: Array<{
+    heading: string;
+    paragraphs: string[];
+  }>;
+}
+
+const { title, subtitle, sections } = Astro.props;
+---
+
+<div class="bg-primary">
+  <Navbar />
+</div>
+
+<main>
+  <Container size="sm" as="section" class="py-16 lg:py-24">
+    <div class="flex flex-col gap-12 lg:gap-16">
+      <div class="flex flex-col gap-4 border-b border-border pb-10 lg:pb-12">
+        <Heading
+          as="h1"
+          size="h2"
+          class="text-[36px]/none md:text-[46px]/none xl:text-[56px]/none"
+        >
+          {title}
+        </Heading>
+        {
+          subtitle && (
+            <p class="text-[10px]/[1.3] md:text-xs/[1.3] font-normal uppercase tracking-wider text-muted-foreground">
+              {subtitle}
+            </p>
+          )
+        }
+      </div>
+
+      <div class="flex flex-col gap-10 lg:gap-12">
+        {
+          sections.map((section) => (
+            <div class="flex flex-col gap-3 lg:gap-4">
+              <h2 class="text-base/normal font-semibold text-foreground">
+                {section.heading}
+              </h2>
+              <div class="flex flex-col gap-3">
+                {section.paragraphs.map((p) => (
+                  <p class="text-base/normal text-foreground/70">{p}</p>
+                ))}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </Container>
+</main>

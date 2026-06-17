@@ -23,3 +23,4 @@ export { default as Navbar } from './navbar.astro';
 export { default as Services } from './services.astro';
 export { default as ServicesDisciplines } from './services-disciplines.astro';
 export { default as Testimonials } from './testimonials.astro';
+export { default as LegalPage } from './legal-page.astro';

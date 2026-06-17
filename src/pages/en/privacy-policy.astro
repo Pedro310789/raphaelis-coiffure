@@ -1,0 +1,23 @@
+---
+import BaseLayout from "@/layouts/base-layout.astro";
+import { LegalPage, Footer } from "@/components/modules";
+import { getSection } from "@/lib/content";
+import type { Lang } from "@/i18n/translations";
+
+const locale = (Astro.currentLocale ?? "fr") as Lang;
+const page = await getSection("legal-page", locale, "privacy-policy");
+const footer = await getSection("footer", locale, "home");
+const { seo, title, subtitle, sections } = page.data;
+---
+
+<BaseLayout title={seo.title} description={seo.description}>
+  <LegalPage {title} {subtitle} {sections} />
+  <Footer
+    brandName={footer.data.brandName}
+    tagline={footer.data.tagline}
+    nav={footer.data.nav}
+    contact={footer.data.contact}
+    social={footer.data.social}
+    legal={footer.data.legal}
+  />
+</BaseLayout>
