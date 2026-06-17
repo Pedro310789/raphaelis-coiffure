@@ -123,7 +123,15 @@ const linkClass =
       <div
         class="flex flex-col gap-6 border-t border-border pt-6 sm:flex-row sm:items-center sm:justify-between sm:gap-0 sm:pt-8"
       >
-        <p class={overlineClass}>{legal.copyright}</p>
+        <p class={overlineClass}>
+          {legal.copyright} ·{" "}
+          <a
+            href="https://votresitepro.be/"
+            class="hover:text-foreground transition-colors"
+            target="_blank"
+            rel="noopener noreferrer">Créé par Votre Site Pro</a
+          >
+        </p>
         <nav aria-label="Liens légaux">
           <ul class="flex flex-wrap gap-x-6 gap-y-2">
             {
