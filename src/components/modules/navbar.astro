@@ -4,8 +4,7 @@ import { Image } from "astro:assets";
 import { useTranslations } from "@/i18n/utils";
 import type { Lang } from "@/i18n/translations";
 import { alternateLocalePath, localizedPath } from "@/i18n/routes";
-import menuBgImage from "@/assets/images/hero.png";
-import logoRaphaelis from "@/assets/icons/logo-raphaelis.svg";
+import logoRaphaelis from "@/assets/icons/logo.svg";
 
 const locale = (Astro.currentLocale ?? "fr") as Lang;
 const t = useTranslations(locale);
@@ -28,22 +27,8 @@ const enHref = alternateLocalePath(Astro.url.pathname, locale, "en");
   role="dialog"
   aria-modal="true"
   aria-label={t("nav.label")}
-  class="fixed inset-0 z-50 hidden flex-col overflow-hidden md:hidden"
+  class="pointer-events-none fixed inset-0 z-50 flex flex-col overflow-hidden bg-primary opacity-0 transition-opacity duration-300 ease-in-out md:hidden"
 >
-  {/* Background: full-bleed photo + gradient vignette */}
-  <div aria-hidden class="pointer-events-none absolute inset-0">
-    <Image
-      src={menuBgImage}
-      alt=""
-      class="absolute inset-0 size-full object-cover object-[75%_50%]"
-    />
-    <div
-      class="absolute inset-0"
-      style="background-image: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 40%), linear-gradient(0deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 40%), linear-gradient(90deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.2) 100%)"
-    >
-    </div>
-  </div>
-
   {/* Top bar: logo (left) + close (right) */}
   <div
     class="absolute inset-x-5 top-0 z-10 flex items-center justify-between py-4"
@@ -226,9 +211,9 @@ const enHref = alternateLocalePath(Astro.url.pathname, locale, "en");
         aria-label={t("nav.openMenu")}
         class="flex flex-col items-center justify-center gap-2 text-white md:hidden"
       >
-        <span class="block h-px w-6 bg-white"></span>
-        <span class="block h-px w-6 bg-white"></span>
-        <span class="block h-px w-6 bg-white"></span>
+        <span id="hamburger-top" class="block h-px w-6 origin-center bg-white transition-transform duration-300 ease-in-out"></span>
+        <span id="hamburger-mid" class="block h-px w-6 bg-white transition-[opacity,transform] duration-300 ease-in-out"></span>
+        <span id="hamburger-bot" class="block h-px w-6 origin-center bg-white transition-transform duration-300 ease-in-out"></span>
       </button>
     </div>
   </Container>
@@ -238,19 +223,30 @@ const enHref = alternateLocalePath(Astro.url.pathname, locale, "en");
   const toggle = document.getElementById("menu-toggle");
   const closeBtn = document.getElementById("menu-close");
   const menu = document.getElementById("mobile-menu");
+  const hamburgerTop = document.getElementById("hamburger-top");
+  const hamburgerMid = document.getElementById("hamburger-mid");
+  const hamburgerBot = document.getElementById("hamburger-bot");
 
   function openMenu() {
-    menu?.classList.remove("hidden");
-    menu?.classList.add("flex");
+    menu?.classList.remove("opacity-0", "pointer-events-none");
+    menu?.classList.add("opacity-100", "pointer-events-auto");
+    hamburgerTop?.classList.add("translate-y-[9px]", "rotate-45");
+    hamburgerMid?.classList.add("opacity-0");
+    hamburgerBot?.classList.add("-translate-y-[9px]", "-rotate-45");
     toggle?.setAttribute("aria-expanded", "true");
     document.body.style.overflow = "hidden";
   }
 
   function closeMenu() {
-    menu?.classList.remove("flex");
-    menu?.classList.add("hidden");
+    menu?.classList.remove("opacity-100", "pointer-events-auto");
+    menu?.classList.add("opacity-0", "pointer-events-none");
+    hamburgerTop?.classList.remove("translate-y-[9px]", "rotate-45");
+    hamburgerMid?.classList.remove("opacity-0");
+    hamburgerBot?.classList.remove("-translate-y-[9px]", "-rotate-45");
     toggle?.setAttribute("aria-expanded", "false");
-    document.body.style.overflow = "";
+    setTimeout(() => {
+      document.body.style.overflow = "";
+    }, 300);
   }
 
   toggle?.addEventListener("click", openMenu);
