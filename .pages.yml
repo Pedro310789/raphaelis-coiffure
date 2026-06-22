@@ -28,6 +28,94 @@ content:
           path like /contact.
         type: string
 
+  # Per-page SEO metadata (meta title, meta description, social share image).
+  # One file per main page per locale — these feed the <title>, meta description
+  # and Open Graph / Twitter tags rendered in the base layout.
+  - name: seo
+    label: SEO
+    type: group
+    items:
+      - name: seo_home_fr
+        label: Home (FR)
+        type: file
+        path: src/content/pages/fr/home/seo.mdx
+        format: yaml-frontmatter
+        fields: &seoFields
+          - name: title
+            label: Meta title
+            description: Browser tab title and social share headline.
+            type: string
+          - name: description
+            label: Meta description
+            description: Search-result and social-share summary (~155 characters).
+            type: text
+          - name: image
+            label: Featured image (social share)
+            description: >-
+              Shown when the page is shared on social media (Open Graph /
+              Twitter). Recommended 1200×630. Falls back to the site default if
+              left empty.
+            type: image
+            options:
+              path: src/assets/images/og
+          - name: imageAlt
+            label: Featured image alt text
+            type: string
+      - name: seo_home_en
+        label: Home (EN)
+        type: file
+        path: src/content/pages/en/home/seo.mdx
+        format: yaml-frontmatter
+        fields: *seoFields
+      - name: seo_maison_fr
+        label: Maison (FR)
+        type: file
+        path: src/content/pages/fr/maison/seo.mdx
+        format: yaml-frontmatter
+        fields: *seoFields
+      - name: seo_maison_en
+        label: Maison (EN)
+        type: file
+        path: src/content/pages/en/maison/seo.mdx
+        format: yaml-frontmatter
+        fields: *seoFields
+      - name: seo_services_fr
+        label: Services (FR)
+        type: file
+        path: src/content/pages/fr/services/seo.mdx
+        format: yaml-frontmatter
+        fields: *seoFields
+      - name: seo_services_en
+        label: Services (EN)
+        type: file
+        path: src/content/pages/en/services/seo.mdx
+        format: yaml-frontmatter
+        fields: *seoFields
+      - name: seo_collection_fr
+        label: Collection (FR)
+        type: file
+        path: src/content/pages/fr/collection/seo.mdx
+        format: yaml-frontmatter
+        fields: *seoFields
+      - name: seo_collection_en
+        label: Collection (EN)
+        type: file
+        path: src/content/pages/en/collection/seo.mdx
+        format: yaml-frontmatter
+        fields: *seoFields
+      - name: seo_contact_fr
+        label: Contact (FR)
+        type: file
+        path: src/content/pages/fr/contact/seo.mdx
+        format: yaml-frontmatter
+        fields: *seoFields
+      - name: seo_contact_en
+        label: Contact (EN)
+        type: file
+        path: src/content/pages/en/contact/seo.mdx
+        format: yaml-frontmatter
+        fields: *seoFields
+
   # Services section ("Ce que nous faisons, nous le faisons bien") — home page.
   - name: services
     label: Services section

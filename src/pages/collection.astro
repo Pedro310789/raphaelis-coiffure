@@ -6,14 +6,20 @@ import type { Lang } from "@/i18n/translations";
 import heroImage from "@/assets/images/hero_collection.jpg";
 
 const locale = (Astro.currentLocale ?? "fr") as Lang;
+const seo = await getSection("seo", locale, "collection");
 const hero = await getSection("collection-hero", locale, "collection");
 const gallery = await getSection("collection-gallery", locale, "collection");
 const visitCta = await getSection("visit-cta", locale, "home");
 const footer = await getSection("footer", locale, "home");
-const { seo, heading, body, discover } = hero.data;
+const { heading, body, discover } = hero.data;
 ---
 
-<BaseLayout title={seo.title} description={seo.description}>
+<BaseLayout
+  title={seo.data.title}
+  description={seo.data.description}
+  image={seo.data.image}
+  imageAlt={seo.data.imageAlt}
+>
   <PageHero {heading} {body} {discover} image={heroImage} />
   <CollectionGallery
     overline={gallery.data.overline}

@@ -18,6 +18,7 @@ import visionLeftImage from "@/assets/images/atmosphere_about.jpg";
 import visionRightImage from "@/assets/images/atmosphere_1_about.jpg";
 
 const locale = (Astro.currentLocale ?? "en") as Lang;
+const seo = await getSection("seo", locale, "maison");
 const hero = await getSection("maison-hero", locale, "maison");
 const about = await getSection("maison-about", locale, "maison");
 const vision = await getSection("maison-vision", locale, "maison");
@@ -25,10 +26,15 @@ const founders = await getSection("maison-founders", locale, "maison");
 const strengths = await getSection("maison-strengths", locale, "maison");
 const visitCta = await getSection("visit-cta", locale, "home");
 const footer = await getSection("footer", locale, "home");
-const { seo, heading, body, discover } = hero.data;
+const { heading, body, discover } = hero.data;
 ---
 
-<BaseLayout title={seo.title} description={seo.description}>
+<BaseLayout
+  title={seo.data.title}
+  description={seo.data.description}
+  image={seo.data.image}
+  imageAlt={seo.data.imageAlt}
+>
   <PageHero
     {heading}
     {body}

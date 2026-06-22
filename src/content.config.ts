@@ -4,11 +4,18 @@ import { z } from 'astro/zod';
 
 // --- Section schemas ---
 
+// Per-page SEO metadata, edited in Pages CMS (one `seo.mdx` per page per
+// locale). `image` is a repo-relative path string (resolved to an optimized
+// asset at render time, like the other CMS image fields); the base layout turns
+// it into an absolute Open Graph / Twitter image URL.
+export const seoSchema = z.object({
+  title: z.string(),
+  description: z.string(),
+  image: z.string().optional(),
+  imageAlt: z.string().optional(),
+});
+
 export const heroSchema = z.object({
-  seo: z.object({
-    title: z.string(),
-    description: z.string(),
-  }),
   heading: z.string(),
   subtitle: z.string(),
   cta: z.object({
@@ -23,10 +30,6 @@ export const heroSchema = z.object({
 });
 
 export const maisonHeroSchema = z.object({
-  seo: z.object({
-    title: z.string(),
-    description: z.string(),
-  }),
   heading: z.string(),
   body: z.string(),
   discover: z.object({
@@ -37,10 +40,6 @@ export const maisonHeroSchema = z.object({
 });
 
 export const servicesHeroSchema = z.object({
-  seo: z.object({
-    title: z.string(),
-    description: z.string(),
-  }),
   heading: z.string(),
   body: z.string(),
   discover: z.object({
@@ -51,10 +50,6 @@ export const servicesHeroSchema = z.object({
 });
 
 export const collectionHeroSchema = z.object({
-  seo: z.object({
-    title: z.string(),
-    description: z.string(),
-  }),
   heading: z.string(),
   body: z.string(),
   discover: z.object({
@@ -65,10 +60,6 @@ export const collectionHeroSchema = z.object({
 });
 
 export const contactHeroSchema = z.object({
-  seo: z.object({
-    title: z.string(),
-    description: z.string(),
-  }),
   heading: z.string(),
   body: z.string(),
   discover: z.object({
@@ -274,6 +265,11 @@ export const visitCtaSchema = z.object({
 
 // --- Section collections ---
 
+const seo = defineCollection({
+  loader: glob({ pattern: '**/seo.mdx', base: './src/content/pages' }),
+  schema: seoSchema,
+});
+
 const hero = defineCollection({
   loader: glob({ pattern: '**/hero.mdx', base: './src/content/pages' }),
   schema: heroSchema,
@@ -418,6 +414,7 @@ const legalPage = defineCollection({
 });
 
 export const collections = {
+  seo,
   hero,
   'services-hero': servicesHero,
   'collection-hero': collectionHero,

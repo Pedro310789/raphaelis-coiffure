@@ -14,6 +14,7 @@ import { getSection } from "@/lib/content";
 import type { Lang } from "@/i18n/translations";
 
 const locale = (Astro.currentLocale ?? "fr") as Lang;
+const seo = await getSection("seo", locale, "home");
 const hero = await getSection("hero", locale, "home");
 const founders = await getSection("founders", locale, "home");
 const services = await getSection("services", locale, "home");
@@ -22,10 +23,15 @@ const collection = await getSection("collection", locale, "home");
 const partners = await getSection("partners", locale, "home");
 const visitCta = await getSection("visit-cta", locale, "home");
 const footer = await getSection("footer", locale, "home");
-const { seo, heading, subtitle, cta, discover } = hero.data;
+const { heading, subtitle, cta, discover } = hero.data;
 ---
 
-<BaseLayout title={seo.title} description={seo.description}>
+<BaseLayout
+  title={seo.data.title}
+  description={seo.data.description}
+  image={seo.data.image}
+  imageAlt={seo.data.imageAlt}
+>
   <Hero {heading} {subtitle} {cta} {discover} />
   <Founders
     overline={founders.data.overline}

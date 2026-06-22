@@ -12,6 +12,7 @@ import type { Lang } from "@/i18n/translations";
 import heroImage from "@/assets/images/hero_services.jpg";
 
 const locale = (Astro.currentLocale ?? "fr") as Lang;
+const seo = await getSection("seo", locale, "services");
 const hero = await getSection("services-hero", locale, "services");
 const services = await getSection("services", locale, "services");
 const servicesDisciplines = await getSection(
@@ -21,10 +22,15 @@ const servicesDisciplines = await getSection(
 );
 const visitCta = await getSection("visit-cta", locale, "home");
 const footer = await getSection("footer", locale, "home");
-const { seo, heading, body, discover } = hero.data;
+const { heading, body, discover } = hero.data;
 ---
 
-<BaseLayout title={seo.title} description={seo.description}>
+<BaseLayout
+  title={seo.data.title}
+  description={seo.data.description}
+  image={seo.data.image}
+  imageAlt={seo.data.imageAlt}
+>
   <PageHero {heading} {body} {discover} image={heroImage} />
   <ServicesModule {...services.data} />
   <ServicesDisciplines {...servicesDisciplines.data} />
