@@ -130,40 +130,50 @@ content:
           - name: overline
             label: Overline
             type: string
+            required: true
           - name: heading
             label: Heading lines
             description: Each entry renders as its own line in the heading.
             type: string
             list: true
+            required: true
           - name: cards
             label: Service cards
             type: object
             list: true
+            required: true
             fields:
               - name: numeral
                 label: Numeral
                 type: string
+                required: true
               - name: image
                 label: Image
                 type: object
+                required: true
                 fields:
                   - name: src
                     label: File
                     type: image
+                    required: true
                     options:
                       path: src/assets/images/services
                   - name: alt
                     label: Alt text
                     type: string
+                    required: true
               - name: title
                 label: Title
                 type: string
+                required: true
               - name: body
                 label: Body
                 type: text
+                required: true
               - name: cta
                 label: CTA
                 type: object
+                required: true
                 fields:
                   - name: label
                     label: Button label
@@ -171,6 +181,7 @@ content:
                       Visible text only — the link is the global booking link in
                       Site settings.
                     type: string
+                    required: true
       - name: services_en
         label: Services (EN)
         type: file
@@ -192,42 +203,52 @@ content:
           - name: overline
             label: Overline
             type: string
+            required: true
           - name: heading
             label: Heading lines
             description: Each entry renders as its own line in the heading.
             type: string
             list: true
+            required: true
           - name: disciplines
             label: Disciplines
             type: object
             list: true
+            required: true
             fields:
               - name: numeral
                 label: Numeral (e.g. I, II, III, IV)
                 type: string
+                required: true
               - name: title
                 label: Title
                 type: string
+                required: true
               - name: body
                 label: Description
                 type: text
+                required: true
               - name: image
                 label: Image
                 type: object
+                required: true
                 fields:
                   - name: src
                     label: File
                     type: image
+                    required: true
                     options:
                       path: src/assets/images/services
                   - name: alt
                     label: Alt text
                     type: string
+                    required: true
               - name: items
                 label: Techniques / Services list
                 description: Each entry appears as a checkmark item in the expanded accordion row.
                 type: string
                 list: true
+                required: true
       - name: services_disciplines_en
         label: Services disciplines (EN)
         type: file
