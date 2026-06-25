@@ -4,14 +4,13 @@ import {
   PageHero,
   MaisonFeature,
   MaisonVision,
-  MaisonStrengths,
   VisitCta,
   Footer,
 } from "@/components/modules";
 import { getSection } from "@/lib/content";
 import type { Lang } from "@/i18n/translations";
 import heroImage from "@/assets/images/hero_about.jpg";
-import aboutImage from "@/assets/images/founders_1_about.jpg";
+import aboutImage from "@/assets/images/founders.jpg";
 import foundersImage from "@/assets/images/founders_about.jpg";
 import monogram from "@/assets/images/monogram.png";
 import visionLeftImage from "@/assets/images/atmosphere_about.jpg";
@@ -23,7 +22,6 @@ const hero = await getSection("maison-hero", locale, "maison");
 const about = await getSection("maison-about", locale, "maison");
 const vision = await getSection("maison-vision", locale, "maison");
 const founders = await getSection("maison-founders", locale, "maison");
-const strengths = await getSection("maison-strengths", locale, "maison");
 const visitCta = await getSection("visit-cta", locale, "home");
 const footer = await getSection("footer", locale, "home");
 const { heading, body, discover } = hero.data;
@@ -57,11 +55,6 @@ const { heading, body, discover } = hero.data;
     image={aboutImage}
     imageAlt={founders.data.imageAlt}
     class="pt-8 md:pt-10 xl:pt-12"
-  />
-  <MaisonStrengths
-    overline={strengths.data.overline}
-    heading={strengths.data.heading}
-    items={strengths.data.items}
   />
   <MaisonVision
     overline={vision.data.overline}

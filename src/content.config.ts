@@ -31,7 +31,7 @@ export const heroSchema = z.object({
 
 export const maisonHeroSchema = z.object({
   heading: z.string(),
-  body: z.string(),
+  body: z.array(z.string()),
   discover: z.object({
     label: z.string(),
     slogan: z.string(),

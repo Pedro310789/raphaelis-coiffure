@@ -17,7 +17,7 @@ import Navbar from "@/components/modules/navbar.astro";
 
 export interface Props {
   heading: string;
-  body: string;
+  body: string | string[];
   discover: { label: string; slogan: string; address: string };
   /** Full-bleed background image (imported asset). */
   image: ImageMetadata;
@@ -25,7 +25,8 @@ export interface Props {
   imageClass?: string;
 }
 
-const { heading, body, discover, image, imageClass } = Astro.props;
+const { heading, body: bodyProp, discover, image, imageClass } = Astro.props;
+const body = Array.isArray(bodyProp) ? bodyProp : [bodyProp];
 ---
 
 <section class="relative flex min-h-150 flex-col overflow-hidden">
@@ -37,7 +38,7 @@ const { heading, body, discover, image, imageClass } = Astro.props;
       loading="eager"
       fetchpriority="high"
       class:list={[
-        "absolute inset-0 size-full object-cover object-[75%_50%] md:object-center",
+        "absolute inset-0 size-full object-cover object-[75%_50%] md:object-[50%_25%]",
         imageClass,
       ]}
     />
@@ -52,7 +53,7 @@ const { heading, body, discover, image, imageClass } = Astro.props;
 
   {/* Hero content — vertically centered in remaining space */}
   <div
-    class="relative z-10 flex flex-1 flex-col items-center justify-between gap-32 px-5 pt-37 pb-4 md:py-0"
+    class="relative z-10 flex flex-1 flex-col items-center justify-between gap-32 px-5 pt-37 pb-4 md:pt-17 md:pb-0"
   >
     <div class="flex w-full max-w-117 flex-col items-center gap-8">
       {/* Title group: H2 + divider */}
@@ -70,11 +71,15 @@ const { heading, body, discover, image, imageClass } = Astro.props;
       </div>
 
       {/* Intro paragraph */}
-      <p
-        class="text-center text-sm/normal font-normal text-primary-foreground/60"
-      >
-        {body}
-      </p>
+      <div class="flex flex-col gap-4">
+        {
+          body.map((paragraph) => (
+            <p class="text-center text-sm/normal font-normal text-primary-foreground/60">
+              {paragraph}
+            </p>
+          ))
+        }
+      </div>
     </div>
     {/* Discover section — bottom of viewport */}
     <div class="relative z-10 pb-0 md:pb-6 w-full">
