@@ -4,7 +4,6 @@ import {
   Hero,
   Founders,
   Services,
-  Testimonials,
   Collection,
   Partners,
   VisitCta,
@@ -18,7 +17,6 @@ const seo = await getSection("seo", locale, "home");
 const hero = await getSection("hero", locale, "home");
 const founders = await getSection("founders", locale, "home");
 const services = await getSection("services", locale, "home");
-const testimonials = await getSection("testimonials", locale, "home");
 const collection = await getSection("collection", locale, "home");
 const partners = await getSection("partners", locale, "home");
 const visitCta = await getSection("visit-cta", locale, "home");
@@ -51,15 +49,7 @@ const { heading, subtitle, cta, discover } = hero.data;
     images={collection.data.images}
     cta={collection.data.cta}
   />
-  <Testimonials
-    overline={testimonials.data.overline}
-    heading={testimonials.data.heading}
-    cards={testimonials.data.cards}
-  />
-  <Partners
-    overline={partners.data.overline}
-    logos={partners.data.logos}
-  />
+  <Partners overline={partners.data.overline} logos={partners.data.logos} />
   <VisitCta
     overline={visitCta.data.overline}
     heading={visitCta.data.heading}
