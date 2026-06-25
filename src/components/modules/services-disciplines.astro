@@ -3,7 +3,6 @@ import type { ImageMetadata } from "astro";
 import { Image } from "astro:assets";
 import Container from "@/components/primitives/container.astro";
 import Heading from "@/components/primitives/heading.astro";
-import checkIcon from "@/assets/icons/check.svg?raw";
 import chevronIcon from "@/assets/icons/chevron-right.svg?raw";
 
 const disciplineImages = import.meta.glob<{ default: ImageMetadata }>(
@@ -83,15 +82,14 @@ const { overline, heading, disciplines } = Astro.props;
                       <p class="text-base/noramal text-body-foreground">
                         {discipline.body}
                       </p>
-                      <ul class="grid grid-cols-2 gap-x-6 gap-y-3 sm:gap-x-8">
+                      <ul class="flex flex-col gap-4">
                         {discipline.items.map((item) => (
-                          <li class="flex items-center gap-2">
+                          <li class="flex items-center gap-4">
                             <span
-                              class="inline-flex size-5.5 shrink-0 text-foreground [&>svg]:size-full"
+                              class="size-1.5 shrink-0 rounded-full bg-foreground"
                               aria-hidden="true"
-                              set:html={checkIcon}
                             />
-                            <span class="text-sm/normal text-body-foreground sm:text-base/normal">
+                            <span class="text-base/[1.5] text-body-foreground">
                               {item}
                             </span>
                           </li>

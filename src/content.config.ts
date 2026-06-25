@@ -51,7 +51,7 @@ export const servicesHeroSchema = z.object({
 
 export const collectionHeroSchema = z.object({
   heading: z.string(),
-  body: z.string(),
+  body: z.union([z.string(), z.array(z.string())]),
   discover: z.object({
     label: z.string(),
     slogan: z.string(),
@@ -88,6 +88,12 @@ export const commitmentsSchema = z.object({
   overline: z.string(),
   heading: z.string(),
   body: z.string(),
+});
+
+export const servicesVipSchema = z.object({
+  overline: z.string(),
+  heading: z.array(z.string()),
+  body: z.array(z.string()),
 });
 
 export const maisonAboutSchema = z.object({
@@ -305,6 +311,11 @@ const commitments = defineCollection({
   schema: commitmentsSchema,
 });
 
+const servicesVip = defineCollection({
+  loader: glob({ pattern: '**/services-vip.mdx', base: './src/content/pages' }),
+  schema: servicesVipSchema,
+});
+
 const maisonAbout = defineCollection({
   loader: glob({ pattern: '**/maison-about.mdx', base: './src/content/pages' }),
   schema: maisonAboutSchema,
@@ -416,6 +427,7 @@ const legalPage = defineCollection({
 export const collections = {
   seo,
   hero,
+  'services-vip': servicesVip,
   'services-hero': servicesHero,
   'collection-hero': collectionHero,
   'contact-hero': contactHero,

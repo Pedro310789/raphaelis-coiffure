@@ -1,0 +1,53 @@
+---
+/**
+ * ServicesVip — VIP service editorial block (Figma 3788:2944).
+ *
+ * Centered overline + divider + H2 above a multi-paragraph body column. Purely
+ * typographic — no images, no CTAs. Sits on BG/100 (#EDECE8 → bg-background).
+ * Mobile-first: H2 scales 36 → 46 → 56px, section padding tightens on small
+ * screens, body measure caps at 856px on desktop while staying fluid below.
+ */
+import Container from "@/components/primitives/container.astro";
+import Heading from "@/components/primitives/heading.astro";
+
+export interface Props {
+  overline: string;
+  heading: string[];
+  body: string[];
+}
+
+const { overline, heading, body } = Astro.props;
+---
+
+<section class="bg-background">
+  <Container size="page" class="py-16 md:py-20 xl:py-24">
+    <div class="flex flex-col items-center gap-10 md:gap-14">
+      {/* Heading block: overline + divider + H2 */}
+      <div class="flex flex-col items-center gap-6 text-center">
+        <div class="flex flex-col items-center gap-4">
+          <p
+            class="text-xs/[1.3] font-normal uppercase tracking-wider text-muted-foreground"
+          >
+            {overline}
+          </p>
+          <div class="h-px w-12 bg-muted-foreground" aria-hidden="true"></div>
+        </div>
+        <Heading
+          as="h2"
+          size="h2"
+          balance={false}
+          class="text-[36px]/none md:text-[46px]/none xl:text-[56px]/none"
+        >
+          {heading.map((line) => <span class="block">{line}</span>)}
+        </Heading>
+      </div>
+
+      {/* Body: centered paragraphs, capped at Figma 856px measure */}
+      <div
+        class="flex w-full max-w-[856px] flex-col gap-4 text-center text-base/[1.5] text-body-foreground"
+      >
+        {body.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+    </div>
+  </Container>
+</section>

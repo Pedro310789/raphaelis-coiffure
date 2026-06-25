@@ -2,8 +2,8 @@
 import BaseLayout from "@/layouts/base-layout.astro";
 import {
   PageHero,
-  Services as ServicesModule,
   ServicesDisciplines,
+  ServicesVip,
   VisitCta,
   Footer,
 } from "@/components/modules";
@@ -14,12 +14,12 @@ import heroImage from "@/assets/images/hero_services.jpg";
 const locale = (Astro.currentLocale ?? "en") as Lang;
 const seo = await getSection("seo", locale, "services");
 const hero = await getSection("services-hero", locale, "services");
-const services = await getSection("services", locale, "services");
 const servicesDisciplines = await getSection(
   "services-disciplines",
   locale,
   "services",
 );
+const servicesVip = await getSection("services-vip", locale, "services");
 const visitCta = await getSection("visit-cta", locale, "home");
 const footer = await getSection("footer", locale, "home");
 const { heading, body, discover } = hero.data;
@@ -32,8 +32,8 @@ const { heading, body, discover } = hero.data;
   imageAlt={seo.data.imageAlt}
 >
   <PageHero {heading} {body} {discover} image={heroImage} />
-  <ServicesModule {...services.data} />
   <ServicesDisciplines {...servicesDisciplines.data} />
+  <ServicesVip {...servicesVip.data} />
   <VisitCta
     overline={visitCta.data.overline}
     heading={visitCta.data.heading}
