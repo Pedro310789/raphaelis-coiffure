@@ -40,6 +40,7 @@ const { overline, heading, body, address, contact, hours, cta } = Astro.props;
             as="h2"
             size="h3"
             balance={false}
+            animation="fade-up"
             class="text-primary-foreground text-[36px]/none md:text-[38px]/none lg:text-[46px]/none"
           >
             <span class="inline-block">{heading.line1}</span>
@@ -56,7 +57,10 @@ const { overline, heading, body, address, contact, hours, cta } = Astro.props;
       </div>
 
       {/* Address + Contact (left) · Hours (right) */}
-      <div class="flex flex-col gap-8 lg:flex-row">
+      <div
+        class="reveal-on-scroll animate-fade-up flex flex-col gap-8 lg:flex-row"
+        style="--reveal-delay: 120ms"
+      >
         {
           /* Address + Contact: stack on mobile, row on sm, column again on lg */
         }
@@ -114,7 +118,14 @@ const { overline, heading, body, address, contact, hours, cta } = Astro.props;
     </div>
 
     {/* CTA */}
-    <a href={cta.href} class={buttonVariants({ variant: "main-light" })}>
+    <a
+      href={cta.href}
+      class={cn(
+        buttonVariants({ variant: "main-light" }),
+        "reveal-on-scroll animate-fade-up",
+      )}
+      style="--reveal-delay: 200ms"
+    >
       {cta.label}
     </a>
   </div>

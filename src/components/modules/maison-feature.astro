@@ -50,7 +50,7 @@ const {
     >
       {/* Left: photo */}
       <div
-        class="relative w-full shrink-0 overflow-hidden aspect-526/560 md:w-2/5 xl:w-131.5"
+        class="reveal-on-scroll animate-scale-in group relative w-full shrink-0 overflow-hidden aspect-526/560 md:w-2/5 xl:w-131.5"
       >
         <Image
           src={image}
@@ -58,7 +58,7 @@ const {
           widths={[526, 800, 1052]}
           sizes="(min-width: 1280px) 526px, (min-width: 768px) 40vw, 100vw"
           class:list={[
-            "absolute inset-0 size-full object-cover",
+            "absolute inset-0 size-full object-cover transition-transform duration-700 ease-out group-hover:scale-105",
             imagePosition === "top" && "object-top",
           ]}
           loading="lazy"
@@ -89,6 +89,7 @@ const {
               as="h2"
               size="h3"
               balance={false}
+              animation="fade-up"
               class="text-[36px]/none md:text-[40px]/none xl:text-[46px]/none"
             >
               {heading}
@@ -96,7 +97,10 @@ const {
           </div>
 
           {/* Body paragraphs */}
-          <div class="flex flex-col gap-4">
+          <div
+            class="reveal-on-scroll animate-fade-up flex flex-col gap-4"
+            style="--reveal-delay: 120ms"
+          >
             {
               body.map((paragraph) => (
                 <p class="text-base/normal text-body-foreground max-w-138">
@@ -114,8 +118,9 @@ const {
               href={cta.href}
               class={cn(
                 buttonVariants({ variant: "tertiary" }),
-                "self-start px-0",
+                "self-start px-0 reveal-on-scroll animate-fade-up",
               )}
+              style="--reveal-delay: 200ms"
             >
               {cta.label}
               <Fragment set:html={rightIcon} />

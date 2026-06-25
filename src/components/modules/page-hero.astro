@@ -38,7 +38,7 @@ const body = Array.isArray(bodyProp) ? bodyProp : [bodyProp];
       loading="eager"
       fetchpriority="high"
       class:list={[
-        "absolute inset-0 size-full object-cover object-[75%_50%] md:object-[50%_25%]",
+        "reveal-on-scroll animate-scale-in absolute inset-0 size-full object-cover object-[75%_50%] md:object-[50%_25%]",
         imageClass,
       ]}
     />
@@ -71,7 +71,10 @@ const body = Array.isArray(bodyProp) ? bodyProp : [bodyProp];
       </div>
 
       {/* Intro paragraph */}
-      <div class="flex flex-col gap-4">
+      <div
+        class="reveal-on-scroll animate-fade-up flex flex-col gap-4"
+        style="--reveal-delay: 120ms"
+      >
         {
           body.map((paragraph) => (
             <p class="text-center text-sm/normal font-normal text-primary-foreground/60">

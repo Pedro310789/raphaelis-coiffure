@@ -37,6 +37,7 @@ const { overline, heading, body } = Astro.props;
           as="h2"
           size="h2"
           balance={false}
+          animation="fade-up"
           class="text-[36px]/none md:text-[46px]/none xl:text-[56px]/none"
         >
           {heading}
@@ -45,7 +46,8 @@ const { overline, heading, body } = Astro.props;
 
       {/* Body: centered, capped at the Figma 856px measure */}
       <p
-        class="w-full max-w-[856px] text-center text-base/[1.5] text-body-foreground"
+        class="reveal-on-scroll animate-fade-up w-full max-w-[856px] text-center text-base/[1.5] text-body-foreground"
+        style="--reveal-delay: 120ms"
       >
         {body}
       </p>

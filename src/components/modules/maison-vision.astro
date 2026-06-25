@@ -44,14 +44,14 @@ const imageWidths = [430, 660, 900];
     <div class="grid grid-cols-1 items-center gap-10 lg:grid-cols-3 lg:gap-15">
       {/* Left photo */}
       <div
-        class="relative w-full overflow-hidden aspect-3/4 lg:aspect-auto lg:h-155"
+        class="reveal-on-scroll animate-scale-in group relative w-full overflow-hidden aspect-3/4 lg:aspect-auto lg:h-155"
       >
         <Image
           src={leftImage}
           alt={leftImageAlt}
           widths={imageWidths}
           sizes={imageSizes}
-          class="absolute inset-0 size-full object-cover"
+          class="absolute inset-0 size-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
           loading="lazy"
         />
       </div>
@@ -86,6 +86,7 @@ const imageWidths = [430, 660, 900];
             <Heading
               as="h2"
               size="h3"
+              animation="fade-up"
               class="text-center text-[32px]/none md:text-[40px]/none lg:text-[46px]/none"
             >
               {heading}
@@ -94,7 +95,8 @@ const imageWidths = [430, 660, 900];
 
           {/* Body */}
           <p
-            class="max-w-prose text-sm/normal tracking-[0.01em] text-body-foreground"
+            class="reveal-on-scroll animate-fade-up max-w-prose text-sm/normal tracking-[0.01em] text-body-foreground"
+            style="--reveal-delay: 120ms"
           >
             {body}
           </p>
@@ -103,14 +105,14 @@ const imageWidths = [430, 660, 900];
 
       {/* Right photo */}
       <div
-        class="relative w-full overflow-hidden aspect-3/4 lg:aspect-auto lg:h-155"
+        class="reveal-on-scroll animate-scale-in group relative w-full overflow-hidden aspect-3/4 lg:aspect-auto lg:h-155"
       >
         <Image
           src={rightImage}
           alt={rightImageAlt}
           widths={imageWidths}
           sizes={imageSizes}
-          class="absolute inset-0 size-full object-cover"
+          class="absolute inset-0 size-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
           loading="lazy"
         />
       </div>

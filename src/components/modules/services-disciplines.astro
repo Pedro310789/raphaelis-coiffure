@@ -44,6 +44,7 @@ const { overline, heading, disciplines } = Astro.props;
           as="h2"
           size="h2"
           balance={false}
+          animation="fade-up"
           class="text-center text-[36px]/none md:text-[46px]/none xl:text-[56px]/none"
         >
           {heading.map((line) => <span class="block">{line}</span>)}
@@ -51,7 +52,10 @@ const { overline, heading, disciplines } = Astro.props;
       </div>
 
       {/* Accordion */}
-      <div class="border-t border-border">
+      <div
+        class="reveal-on-scroll animate-fade-up border-t border-border"
+        style="--reveal-delay: 120ms"
+      >
         {
           disciplines.map((discipline, index) => {
             const imgKey = `/${discipline.image.src}`;

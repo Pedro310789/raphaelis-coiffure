@@ -33,7 +33,7 @@ const { overline, heading, body, imageCaption, cta } = Astro.props;
             alt=""
             widths={[526, 800, 1080]}
             sizes="(min-width: 1024px) 526px, (min-width: 768px) 40vw, 100vw"
-            class="absolute inset-0 size-full object-cover object-top"
+            class="reveal-on-scroll animate-scale-in absolute inset-0 size-full object-cover object-top"
             loading="lazy"
           />
         </div>
@@ -63,6 +63,7 @@ const { overline, heading, body, imageCaption, cta } = Astro.props;
               as="h2"
               size="h2"
               balance={false}
+              animation="fade-up"
               class="text-[36px]/none md:text-[46px]/none xl:text-[56px]/none"
             >
               {heading.map((line) => <span class="block">{line}</span>)}
@@ -70,7 +71,10 @@ const { overline, heading, body, imageCaption, cta } = Astro.props;
           </div>
 
           {/* Body paragraphs */}
-          <div class="flex flex-col gap-6">
+          <div
+            class="reveal-on-scroll animate-fade-up flex flex-col gap-6"
+            style="--reveal-delay: 120ms"
+          >
             {
               body.map((paragraph) => (
                 <p class="text-sm/normal md:text-base/normal text-body-foreground">
@@ -88,7 +92,10 @@ const { overline, heading, body, imageCaption, cta } = Astro.props;
             variant: "tertiary",
             size: "noGutter",
           })}
-          class:list={"justify-start"}
+          class:list={[
+            "justify-start reveal-on-scroll animate-fade-up",
+          ]}
+          style="--reveal-delay: 200ms"
         >
           {cta.label}
           <Fragment set:html={rightIcon} />

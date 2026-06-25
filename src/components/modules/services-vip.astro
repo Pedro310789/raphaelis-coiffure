@@ -36,6 +36,7 @@ const { overline, heading, body } = Astro.props;
           as="h2"
           size="h2"
           balance={false}
+          animation="fade-up"
           class="text-[36px]/none md:text-[46px]/none xl:text-[56px]/none"
         >
           {heading.map((line) => <span class="block">{line}</span>)}
@@ -44,7 +45,8 @@ const { overline, heading, body } = Astro.props;
 
       {/* Body: centered paragraphs, capped at Figma 856px measure */}
       <div
-        class="flex w-full max-w-[856px] flex-col gap-4 text-center text-base/[1.5] text-body-foreground"
+        class="reveal-on-scroll animate-fade-up flex w-full max-w-[856px] flex-col gap-4 text-center text-base/[1.5] text-body-foreground"
+        style="--reveal-delay: 120ms"
       >
         {body.map((paragraph) => <p>{paragraph}</p>)}
       </div>

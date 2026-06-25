@@ -12,6 +12,7 @@ export { default as ContactForm } from './contact-form.astro';
 export { default as CollectionGallery } from './collection-gallery.astro';
 export { default as Footer } from './footer.astro';
 export { default as Partners } from './partners.astro';
+export { default as ScrollReveal } from './scroll-reveal.astro';
 export { default as VisitCta } from './visit-cta.astro';
 export { default as Founders } from './founders.astro';
 export { default as Hero } from './hero.astro';

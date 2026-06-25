@@ -53,6 +53,7 @@ const { overline, heading, cards } = Astro.props;
           as="h2"
           size="h2"
           balance={false}
+          animation="fade-up"
           class="text-center text-[36px]/none md:text-[46px]/none xl:text-[56px]/none"
         >
           {heading.map((line) => <span class="block">{line}</span>)}
@@ -61,21 +62,21 @@ const { overline, heading, cards } = Astro.props;
 
       {/* Cards grid */}
       <div
-        class="grid w-full grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6"
+        class="animate-stagger grid w-full grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6"
       >
         {
           cards.map((card) => {
             const imgKey = `/${card.image.src}`;
             const imgData = serviceImages[imgKey]?.default;
             return (
-              <div class="flex flex-col gap-4 md:gap-8">
+              <div class="reveal-on-scroll animate-fade-up flex flex-col gap-4 md:gap-8">
                 {/* Image */}
-                <div class="relative aspect-4/5 w-full overflow-hidden">
+                <div class="group relative aspect-4/5 w-full overflow-hidden">
                   {imgData ? (
                     <Image
                       src={imgData}
                       alt={card.image.alt}
-                      class="absolute inset-0 h-full w-full object-cover"
+                      class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                       widths={[400, 600, 816]}
                       sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                       loading="lazy"
@@ -84,7 +85,7 @@ const { overline, heading, cards } = Astro.props;
                     <img
                       src={card.image.src}
                       alt={card.image.alt}
-                      class="absolute inset-0 h-full w-full object-cover"
+                      class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                       loading="lazy"
                     />
                   )}

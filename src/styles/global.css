@@ -162,17 +162,37 @@
   to   { transform: translateX(-50%); }
 }
 
-/* Heading reveal animations — triggered by IntersectionObserver adding .is-visible */
-[data-animate] {
-  transition: opacity 0.75s ease-out, transform 0.75s ease-out;
+/*
+ * Reveal animations — an element opts in with `reveal-on-scroll` plus one
+ * `animate-*` variant; the IntersectionObserver (scroll-reveal.astro) adds
+ * `.is-visible` when it enters the viewport. Stagger child reveals by putting
+ * `animate-stagger` on the parent, or set `--reveal-delay` inline per item.
+ * Only opacity + transform animate (no layout shift).
+ */
+.reveal-on-scroll {
+  opacity: 0;
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  transition-delay: var(--reveal-delay, 0ms);
 }
-[data-animate="fade-up"]    { opacity: 0; transform: translateY(1.25rem); }
-[data-animate="fade-right"] { opacity: 0; transform: translateX(1.25rem); }
-[data-animate="fade-left"]  { opacity: 0; transform: translateX(-1.25rem); }
-[data-animate].is-visible   { opacity: 1; transform: translate(0, 0); }
+.reveal-on-scroll.animate-fade-up    { transform: translateY(1.25rem); }
+.reveal-on-scroll.animate-fade-right { transform: translateX(1.25rem); }
+.reveal-on-scroll.animate-fade-left  { transform: translateX(-1.25rem); }
+.reveal-on-scroll.animate-scale-in   { transform: scale(1.04); }
+.reveal-on-scroll.animate-fade-in    { transform: none; }
+.reveal-on-scroll.is-visible         { opacity: 1; transform: none; }
+
+/* Stagger direct children's reveals (covers up to 8 items). */
+.animate-stagger > *:nth-child(1) { --reveal-delay: 0ms; }
+.animate-stagger > *:nth-child(2) { --reveal-delay: 90ms; }
+.animate-stagger > *:nth-child(3) { --reveal-delay: 180ms; }
+.animate-stagger > *:nth-child(4) { --reveal-delay: 270ms; }
+.animate-stagger > *:nth-child(5) { --reveal-delay: 360ms; }
+.animate-stagger > *:nth-child(6) { --reveal-delay: 450ms; }
+.animate-stagger > *:nth-child(7) { --reveal-delay: 540ms; }
+.animate-stagger > *:nth-child(8) { --reveal-delay: 630ms; }
 
 @media (prefers-reduced-motion: reduce) {
-  [data-animate] { opacity: 1; transform: none; transition: none; }
+  .reveal-on-scroll { opacity: 1; transform: none; transition: none; }
   .animate-marquee { animation: none; }
 }
 

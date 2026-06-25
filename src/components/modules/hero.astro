@@ -7,7 +7,7 @@ import Heading from "@/components/primitives/heading.astro";
 import Navbar from "@/components/modules/navbar.astro";
 import heroImage from "@/assets/images/hero.png";
 import settings from "@/data/settings.json";
-import { isExternalUrl } from "@/lib/utils";
+import { cn, isExternalUrl } from "@/lib/utils";
 
 export interface Props {
   heading: string;
@@ -30,7 +30,7 @@ const bookingExternal = isExternalUrl(bookingUrl);
       alt=""
       loading="eager"
       fetchpriority="high"
-      class="absolute inset-0 size-full object-cover object-[75%_50%] md:object-center"
+      class="reveal-on-scroll animate-scale-in absolute inset-0 size-full object-cover object-[75%_50%] md:object-center"
     />
     <div
       class="absolute inset-0"
@@ -59,7 +59,8 @@ const bookingExternal = isExternalUrl(bookingUrl);
         </Heading>
         <hr class="w-32 border-background" />
         <p
-          class="text-center text-xs/[1.3] font-normal uppercase tracking-wider text-background"
+          class="reveal-on-scroll animate-fade-up text-center text-xs/[1.3] font-normal uppercase tracking-wider text-background"
+          style="--reveal-delay: 120ms"
         >
           {subtitle}
         </p>
@@ -70,7 +71,11 @@ const bookingExternal = isExternalUrl(bookingUrl);
         href={bookingUrl}
         target={bookingExternal ? "_blank" : undefined}
         rel={bookingExternal ? "noopener noreferrer" : undefined}
-        class={buttonVariants({ variant: "main-light" })}
+        class={cn(
+          buttonVariants({ variant: "main-light" }),
+          "reveal-on-scroll animate-fade-up",
+        )}
+        style="--reveal-delay: 240ms"
       >
         {cta.label}
       </a>

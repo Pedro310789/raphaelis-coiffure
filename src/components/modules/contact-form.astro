@@ -50,6 +50,7 @@ const fieldClass = "flex flex-col gap-[17px]";
           as="h2"
           size="h3"
           balance={false}
+          animation="fade-up"
           class="text-[30px]/none md:text-[38px]/none lg:text-[46px]/none"
         >
           {heading}
@@ -63,7 +64,8 @@ const fieldClass = "flex flex-col gap-[17px]";
         data-contact-form
         data-success={success}
         data-error={error}
-        class="flex w-full flex-col gap-14 lg:w-159 lg:pt-6"
+        style="--reveal-delay: 120ms"
+        class="reveal-on-scroll animate-fade-up flex w-full flex-col gap-14 lg:w-159 lg:pt-6"
       >
         {/* Web3Forms config */}
         <input type="hidden" name="access_key" value={accessKey} />

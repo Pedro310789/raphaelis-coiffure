@@ -60,6 +60,7 @@ const items = await Promise.all(
           as="h2"
           size="h2"
           balance={false}
+          animation="fade-up"
           class="text-center text-[36px]/none md:text-[46px]/none xl:text-[56px]/none"
         >
           {heading}
@@ -68,12 +69,12 @@ const items = await Promise.all(
 
       <div
         id="gallery-grid"
-        class="grid w-full grid-cols-1 sm:grid-cols-2 gap-6 lg:grid-cols-4"
+        class="animate-stagger grid w-full grid-cols-1 sm:grid-cols-2 gap-6 lg:grid-cols-4"
       >
         {
           items.map((item, i) => (
             <figure
-              class="flex flex-col gap-4"
+              class="reveal-on-scroll animate-fade-up flex flex-col gap-4"
               data-overflow={i >= initialCount ? "" : null}
             >
               <button
