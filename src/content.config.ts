@@ -87,7 +87,7 @@ export const contactFormSchema = z.object({
 export const commitmentsSchema = z.object({
   overline: z.string(),
   heading: z.string(),
-  body: z.string(),
+  body: z.array(z.string()),
 });
 
 export const servicesVipSchema = z.object({

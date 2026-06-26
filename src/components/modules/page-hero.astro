@@ -23,9 +23,19 @@ export interface Props {
   image: ImageMetadata;
   /** Optional extra classes for the background image, e.g. `object-[50%_30%]`. */
   imageClass?: string;
+  heroContentClass?: string;
+  heroParagraphClass?: string;
 }
 
-const { heading, body: bodyProp, discover, image, imageClass } = Astro.props;
+const {
+  heading,
+  body: bodyProp,
+  discover,
+  image,
+  imageClass,
+  heroContentClass,
+  heroParagraphClass,
+} = Astro.props;
 const body = Array.isArray(bodyProp) ? bodyProp : [bodyProp];
 ---
 
@@ -55,7 +65,12 @@ const body = Array.isArray(bodyProp) ? bodyProp : [bodyProp];
   <div
     class="relative z-10 flex flex-1 flex-col items-center justify-between gap-32 px-5 pt-37 pb-4 md:pt-17 md:pb-0"
   >
-    <div class="flex w-full max-w-117 flex-col items-center gap-8">
+    <div
+      class:list={[
+        "flex w-full max-w-117 flex-col items-center gap-8",
+        heroContentClass,
+      ]}
+    >
       {/* Title group: H2 + divider */}
       <div class="flex w-full flex-col items-center gap-8">
         <Heading
@@ -72,7 +87,10 @@ const body = Array.isArray(bodyProp) ? bodyProp : [bodyProp];
 
       {/* Intro paragraph */}
       <div
-        class="reveal-on-scroll animate-fade-up flex flex-col gap-4"
+        class:list={[
+          "reveal-on-scroll animate-fade-up flex flex-col gap-4",
+          heroParagraphClass,
+        ]}
         style="--reveal-delay: 120ms"
       >
         {

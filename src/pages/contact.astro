@@ -27,7 +27,14 @@ const { heading, body, discover } = hero.data;
   image={seo.data.image}
   imageAlt={seo.data.imageAlt}
 >
-  <PageHero {heading} {body} {discover} image={heroImage} />
+  <PageHero
+    {heading}
+    {body}
+    {discover}
+    image={heroImage}
+    heroContentClass="max-w-157"
+    heroParagraphClass="max-w-117"
+  />
   <ContactForm {...form.data} />
   <VisitCta
     overline={visitCta.data.overline}

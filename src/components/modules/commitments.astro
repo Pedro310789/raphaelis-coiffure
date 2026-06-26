@@ -14,14 +14,15 @@ import Heading from "@/components/primitives/heading.astro";
 export interface Props {
   overline: string;
   heading: string;
-  body: string;
+  body: string[];
 }
 
-const { overline, heading, body } = Astro.props;
+const { overline, heading, body: bodyProp } = Astro.props;
+const body = Array.isArray(bodyProp) ? bodyProp : [bodyProp];
 ---
 
 <section class="bg-secondary">
-  <Container size="page" class="py-16 md:py-20 xl:py-[92px]">
+  <Container size="page" class="py-16 md:py-20 xl:py-23">
     <div class="flex flex-col items-center gap-10 md:gap-14">
       {/* Heading block: overline + divider + H2 */}
       <div class="flex flex-col items-center gap-6 text-center">
@@ -45,12 +46,18 @@ const { overline, heading, body } = Astro.props;
       </div>
 
       {/* Body: centered, capped at the Figma 856px measure */}
-      <p
-        class="reveal-on-scroll animate-fade-up w-full max-w-[856px] text-center text-base/[1.5] text-body-foreground"
+      <div
+        class="reveal-on-scroll animate-fade-up flex flex-col gap-4"
         style="--reveal-delay: 120ms"
       >
-        {body}
-      </p>
+        {
+          body.map((paragraph) => (
+            <p class="w-full max-w-214 text-center text-base/normal text-body-foreground">
+              {paragraph}
+            </p>
+          ))
+        }
+      </div>
     </div>
   </Container>
 </section>
