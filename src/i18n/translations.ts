@@ -4,8 +4,8 @@ export type Lang = 'fr' | 'en';
 export const ui = {
   fr: {
     'nav.home': 'Accueil',
-    'nav.maison': 'Maison',
-    'nav.services': 'Services',
+    'nav.maison': 'Maison Raphaelis',
+    'nav.services': 'Prestations',
     'nav.collection': 'Collection',
     'nav.contact': 'Contact',
     'nav.label': 'Navigation principale',
@@ -23,7 +23,7 @@ export const ui = {
   },
   en: {
     'nav.home': 'Home',
-    'nav.maison': 'Our House',
+    'nav.maison': 'Maison Raphaelis',
     'nav.services': 'Services',
     'nav.collection': 'Collection',
     'nav.contact': 'Contact',
