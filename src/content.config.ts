@@ -110,7 +110,7 @@ export const maisonAboutSchema = z.object({
 export const maisonVisionSchema = z.object({
   overline: z.string(),
   heading: z.string(),
-  body: z.string(),
+  body: z.array(z.string()),
   leftImageAlt: z.string(),
   rightImageAlt: z.string(),
 });

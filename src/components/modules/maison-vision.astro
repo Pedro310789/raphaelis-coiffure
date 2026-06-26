@@ -16,7 +16,7 @@ import Heading from "@/components/primitives/heading.astro";
 export interface Props {
   overline: string;
   heading: string;
-  body: string;
+  body: string[];
   monogram: ImageMetadata;
   leftImage: ImageMetadata;
   leftImageAlt: string;
@@ -57,9 +57,7 @@ const imageWidths = [430, 660, 900];
       </div>
 
       {/* Center editorial column */}
-      <div
-        class="flex flex-col items-center gap-10 text-center lg:gap-12 lg:px-4"
-      >
+      <div class="flex flex-col items-center gap-10 text-center lg:gap-12">
         {/* Brand monogram watermark — decorative */}
         <Image
           src={monogram}
@@ -89,17 +87,23 @@ const imageWidths = [430, 660, 900];
               animation="fade-up"
               class="text-center text-[32px]/none md:text-[40px]/none lg:text-[46px]/none"
             >
-              {heading}
+              <span set:html={heading} />
             </Heading>
           </div>
 
           {/* Body */}
-          <p
-            class="reveal-on-scroll animate-fade-up max-w-prose text-sm/normal tracking-[0.01em] text-body-foreground"
+          <div
+            class="reveal-on-scroll animate-fade-up flex flex-col gap-4"
             style="--reveal-delay: 120ms"
           >
-            {body}
-          </p>
+            {
+              body.map((paragraph) => (
+                <p class=" max-w-prose text-sm/normal tracking-[0.01em] text-body-foreground">
+                  {paragraph}
+                </p>
+              ))
+            }
+          </div>
         </div>
       </div>
 
