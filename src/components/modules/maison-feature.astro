@@ -13,7 +13,8 @@ import { Image } from "astro:assets";
 import { buttonVariants } from "@/components/primitives/button.astro";
 import Container from "@/components/primitives/container.astro";
 import Heading from "@/components/primitives/heading.astro";
-import { cn } from "@/lib/utils";
+import settings from "@/data/settings.json";
+import { cn, isExternalUrl } from "@/lib/utils";
 import rightIcon from "@/assets/icons/right-icon.svg?raw";
 
 export interface Props {
@@ -37,6 +38,9 @@ const {
   cta,
   class: className,
 } = Astro.props;
+
+const bookingUrl = settings.bookingUrl;
+const bookingExternal = isExternalUrl(bookingUrl);
 ---
 
 <section class="bg-muted">
@@ -115,7 +119,9 @@ const {
         {
           cta && (
             <a
-              href={cta.href}
+              href={bookingUrl}
+              target={bookingExternal ? "_blank" : undefined}
+              rel={bookingExternal ? "noopener noreferrer" : undefined}
               class={cn(
                 buttonVariants({ variant: "tertiary" }),
                 "self-start px-0 reveal-on-scroll animate-fade-up",
