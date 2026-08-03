@@ -3,17 +3,50 @@ import type { ImageMetadata } from "astro";
 import { Image } from "astro:assets";
 import Container from "@/components/primitives/container.astro";
 
+/*
+ * Raster formats only. A bare `*` glob eagerly imports every file in the folder
+ * — including ones no logo references — and Vite then emits them all into the
+ * build.
+ */
 const partnerImages = import.meta.glob<{ default: ImageMetadata }>(
-  "/src/assets/images/partners/*",
+  "/src/assets/images/partners/*.{png,jpg,jpeg,webp,avif}",
   { eager: true },
 );
 
 export interface Props {
   overline: string;
-  logos: Array<{ src: string; alt: string }>;
+  logos: { src: string; alt: string }[];
 }
 
 const { overline, logos } = Astro.props;
+
+/*
+ * Square logo boxes, one size per breakpoint. Every partner mark is square or
+ * landscape, so `object-contain` always fits it to the box width — the rendered
+ * CSS width is the box width for all of them.
+ */
+const LOGO_BOX = { base: 64, md: 80, lg: 96 } as const;
+
+const LOGO_SIZES = `(min-width: 1024px) ${LOGO_BOX.lg}px, (min-width: 768px) ${LOGO_BOX.md}px, ${LOGO_BOX.base}px`;
+
+/*
+ * `widths` emits `w` descriptors only — Astro does not add DPR variants on its
+ * own — so each box width is multiplied out to 3x for retina/iOS Safari.
+ * Requesting only the 1x widths is what left the logos blurry on iPhone.
+ */
+function widthsFor(img: ImageMetadata) {
+  const targets = Object.values(LOGO_BOX).flatMap((w) => [w, w * 2, w * 3]);
+  const largest = Math.max(...targets);
+  return [
+    ...new Set(
+      targets
+        // Anything past the source's intrinsic width would just be an upscale.
+        .filter((w) => w <= img.width)
+        // Only worth shipping the source at full size when it cannot reach 3x.
+        .concat(img.width < largest ? [img.width] : []),
+    ),
+  ].sort((a, b) => a - b);
+}
 ---
 
 <section class="bg-secondary overflow-hidden">
@@ -33,7 +66,13 @@ const { overline, logos } = Astro.props;
 
     <!-- Mobile marquee -->
     <div class="md:hidden -mx-5 w-screen overflow-hidden">
-      <ul class="flex list-none w-max animate-marquee gap-8">
+      {/*
+        The track is the logo list duplicated once. `--marquee-gap` drives both
+        the flex gap and the keyframe distance, so the loop stays seamless.
+      */}
+      <ul
+        class="flex list-none w-max animate-marquee gap-(--marquee-gap) [--marquee-gap:--spacing(8)]"
+      >
         {
           [...logos, ...logos].map((logo, i) => {
             const key = `/${logo.src}`;
@@ -48,8 +87,8 @@ const { overline, logos } = Astro.props;
                     src={imgData}
                     alt={logo.alt}
                     class="h-full w-full object-contain"
-                    widths={[64]}
-                    sizes="64px"
+                    widths={widthsFor(imgData)}
+                    sizes={LOGO_SIZES}
                     loading="lazy"
                   />
                 ) : (
@@ -82,8 +121,8 @@ const { overline, logos } = Astro.props;
                   src={imgData}
                   alt={logo.alt}
                   class="h-full w-full object-contain"
-                  widths={[80, 96]}
-                  sizes="(min-width: 1024px) 96px, 80px"
+                  widths={widthsFor(imgData)}
+                  sizes={LOGO_SIZES}
                   loading="lazy"
                 />
               ) : (

@@ -4,7 +4,7 @@ import { Image } from "astro:assets";
 import { useTranslations } from "@/i18n/utils";
 import type { Lang } from "@/i18n/translations";
 import { alternateLocalePath, localizedPath } from "@/i18n/routes";
-import logoRaphaelis from "@/assets/icons/logo.svg";
+import logoRaphaelis from "@/assets/icons/logo.png";
 
 const locale = (Astro.currentLocale ?? "fr") as Lang;
 const t = useTranslations(locale);
@@ -37,8 +37,9 @@ const enHref = alternateLocalePath(Astro.url.pathname, locale, "en");
       <Image
         src={logoRaphaelis}
         alt="Raphaeli's"
-        width={72}
-        height={55}
+        width={88}
+        height={67}
+        densities={[1, 2, 3]}
         class="h-[55px] w-[72px] object-contain"
       />
     </a>
@@ -135,6 +136,7 @@ const enHref = alternateLocalePath(Astro.url.pathname, locale, "en");
         alt="Raphaeli's"
         width={88}
         height={67}
+        densities={[1, 2, 3]}
         class="h-[55px] w-[72px] object-contain md:h-[67px] md:w-[88px]"
       />
     </a>

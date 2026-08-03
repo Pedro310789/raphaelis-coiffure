@@ -157,9 +157,16 @@
   --animate-marquee: marquee 20s linear infinite;
 }
 
+/*
+ * Marquee track = the item list duplicated once, laid out with `--marquee-gap`.
+ * A seamless loop travels one full set plus the gap that follows it, but 50% of
+ * the track width lands half a gap short (the track has 2n-1 gaps, not 2n), so
+ * the extra half-gap is added back here. The consumer must set --marquee-gap to
+ * the same value it uses for the flex gap.
+ */
 @keyframes marquee {
   from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  to   { transform: translateX(calc(-50% - var(--marquee-gap, 0px) / 2)); }
 }
 
 /*
