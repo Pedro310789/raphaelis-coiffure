@@ -15,7 +15,8 @@ const galleryImages = import.meta.glob<{ default: ImageMetadata }>(
 interface GalleryImage {
   src: string;
   alt: string;
-  caption: string;
+  title: string;
+  description: string;
 }
 
 export interface Props {
@@ -84,7 +85,8 @@ const items = await Promise.all(
                 data-index={i}
                 data-full={item.fullSrc}
                 data-alt={item.alt}
-                data-caption={item.caption}
+                data-title={item.title}
+                data-description={item.description}
               >
                 {item.imgData ? (
                   <Image
@@ -105,8 +107,13 @@ const items = await Promise.all(
                 )}
                 <div class="absolute inset-0 bg-black/10" aria-hidden="true" />
               </button>
-              <figcaption class="text-[10px]/[1.3] md:text-xs/[1.3] font-normal uppercase tracking-wider text-muted-foreground">
-                {item.caption}
+              <figcaption class="flex flex-col gap-2 text-muted-foreground">
+                <p class="text-[10px]/[1.3] md:text-xs/[1.3] font-normal uppercase tracking-wider">
+                  {item.title}
+                </p>
+                <p class="text-sm/[1.5] tracking-[0.01em]">
+                  {item.description}
+                </p>
               </figcaption>
             </figure>
           ))
@@ -205,11 +212,17 @@ const items = await Promise.all(
       </button>
     </div>
 
-    <div class="flex h-16 items-center justify-center gap-4 px-4 text-white/80">
-      <figcaption
-        data-lightbox-caption
-        class="text-[10px]/[1.3] md:text-xs/[1.3] font-normal uppercase tracking-wider"
-      >
+    <div
+      class="flex flex-col items-center gap-2 px-4 py-4 text-center text-white/80 md:flex-row md:justify-center"
+    >
+      <figcaption class="flex flex-col items-center gap-2">
+        <p
+          data-lightbox-title
+          class="text-[10px]/[1.3] md:text-xs/[1.3] font-normal uppercase tracking-wider"
+        >
+        </p>
+        <p data-lightbox-description class="max-w-xl text-sm/[1.5] tracking-[0.01em]">
+        </p>
       </figcaption>
       <span
         data-lightbox-counter
@@ -249,12 +262,14 @@ const items = await Promise.all(
     const slides = triggers.map((el) => ({
       full: el.dataset.full ?? "",
       alt: el.dataset.alt ?? "",
-      caption: el.dataset.caption ?? "",
+      title: el.dataset.title ?? "",
+      description: el.dataset.description ?? "",
     }));
 
     const img = dialog.querySelector<HTMLImageElement>("[data-lightbox-image]");
-    const caption = dialog.querySelector<HTMLElement>(
-      "[data-lightbox-caption]",
+    const title = dialog.querySelector<HTMLElement>("[data-lightbox-title]");
+    const description = dialog.querySelector<HTMLElement>(
+      "[data-lightbox-description]",
     );
     const counter = dialog.querySelector<HTMLElement>(
       "[data-lightbox-counter]",
@@ -277,7 +292,8 @@ const items = await Promise.all(
         img.src = slide.full;
         img.alt = slide.alt;
       }
-      if (caption) caption.textContent = slide.caption;
+      if (title) title.textContent = slide.title;
+      if (description) description.textContent = slide.description;
       if (counter) counter.textContent = `${current + 1} / ${slides.length}`;
     }
 

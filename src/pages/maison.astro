@@ -9,12 +9,12 @@ import {
 } from "@/components/modules";
 import { getSection } from "@/lib/content";
 import type { Lang } from "@/i18n/translations";
-import heroImage from "@/assets/images/hero_about.jpg";
+import heroImage from "@/assets/images/hero_about.png";
 import aboutImage from "@/assets/images/founders.jpg";
 import foundersImage from "@/assets/images/founders_about.jpg";
 import monogram from "@/assets/images/monogram.png";
 import visionLeftImage from "@/assets/images/atmosphere_about.jpg";
-import visionRightImage from "@/assets/images/atmosphere_1_about.jpg";
+import visionRightImage from "@/assets/images/atmosphere_1_about.png";
 
 const locale = (Astro.currentLocale ?? "fr") as Lang;
 const seo = await getSection("seo", locale, "maison");

@@ -48,7 +48,7 @@ const body = Array.isArray(bodyProp) ? bodyProp : [bodyProp];
       loading="eager"
       fetchpriority="high"
       class:list={[
-        "reveal-on-scroll animate-scale-in absolute inset-0 size-full object-cover object-[75%_50%] md:object-[50%_25%]",
+        "reveal-on-scroll animate-scale-in absolute inset-0 size-full object-cover object-center",
         imageClass,
       ]}
     />
@@ -67,7 +67,7 @@ const body = Array.isArray(bodyProp) ? bodyProp : [bodyProp];
   >
     <div
       class:list={[
-        "flex w-full max-w-117 flex-col items-center gap-8",
+        "flex w-full max-w-150 flex-col items-center gap-8",
         heroContentClass,
       ]}
     >
@@ -88,14 +88,14 @@ const body = Array.isArray(bodyProp) ? bodyProp : [bodyProp];
       {/* Intro paragraph */}
       <div
         class:list={[
-          "reveal-on-scroll animate-fade-up flex flex-col gap-4",
+          "reveal-on-scroll animate-fade-up flex flex-col gap-4 max-w-117",
           heroParagraphClass,
         ]}
         style="--reveal-delay: 120ms"
       >
         {
           body.map((paragraph) => (
-            <p class="text-center text-sm/normal font-normal text-primary-foreground/60">
+            <p class="text-center text-base/normal font-normal text-primary-foreground/60">
               {paragraph}
             </p>
           ))

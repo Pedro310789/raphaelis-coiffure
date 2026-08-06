@@ -8,7 +8,7 @@ import {
 } from "@/components/modules";
 import { getSection } from "@/lib/content";
 import type { Lang } from "@/i18n/translations";
-import heroImage from "@/assets/images/hero_collection.jpg";
+import heroImage from "@/assets/images/hero_collection.png";
 
 const locale = (Astro.currentLocale ?? "en") as Lang;
 const seo = await getSection("seo", locale, "collection");
@@ -30,7 +30,7 @@ const { heading, body, discover } = hero.data;
     {body}
     {discover}
     image={heroImage}
-    imageClass="md:object-center"
+    imageClass="!object-[50%_25%]"
   />
   <CollectionGallery
     overline={gallery.data.overline}

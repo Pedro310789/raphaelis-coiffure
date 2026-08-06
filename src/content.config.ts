@@ -231,7 +231,8 @@ export const collectionGallerySchema = z.object({
     z.object({
       src: z.string(),
       alt: z.string(),
-      caption: z.string(),
+      title: z.string(),
+      description: z.string(),
     }),
   ),
 });

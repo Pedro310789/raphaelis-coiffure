@@ -9,7 +9,7 @@ import {
 } from "@/components/modules";
 import { getSection } from "@/lib/content";
 import type { Lang } from "@/i18n/translations";
-import heroImage from "@/assets/images/hero_contact.jpg";
+import heroImage from "@/assets/images/hero_contact.png";
 
 const locale = (Astro.currentLocale ?? "fr") as Lang;
 const seo = await getSection("seo", locale, "contact");
@@ -32,6 +32,7 @@ const { heading, body, discover } = hero.data;
     {body}
     {discover}
     image={heroImage}
+    imageClass="!object-[50%_35%]"
     heroContentClass="max-w-157"
     heroParagraphClass="max-w-117"
   />
