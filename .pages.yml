@@ -45,10 +45,12 @@ content:
             label: Meta title
             description: Browser tab title and social share headline.
             type: string
+            required: true
           - name: description
             label: Meta description
             description: Search-result and social-share summary (~155 characters).
             type: text
+            required: true
           - name: image
             label: Featured image (social share)
             description: >-
@@ -270,26 +272,32 @@ content:
           - name: overline
             label: Overline
             type: string
+            required: true
           - name: heading
             label: Heading
             type: string
+            required: true
           - name: images
             label: Gallery images
             type: object
             list: true
+            required: true
             fields:
               - name: src
                 label: File
                 type: image
+                required: true
                 options:
                   path: src/assets/images/collections
               - name: alt
                 label: Alt text
                 type: string
+                required: true
               - name: caption
                 label: Caption
                 description: Short label shown below the image (e.g. "Coupe · Carré net").
                 type: string
+                required: true
       - name: collection_gallery_en
         label: Collection gallery (EN)
         type: file
