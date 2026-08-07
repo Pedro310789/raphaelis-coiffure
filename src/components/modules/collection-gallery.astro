@@ -107,7 +107,7 @@ const items = await Promise.all(
                 )}
                 <div class="absolute inset-0 bg-black/10" aria-hidden="true" />
               </button>
-              <figcaption class="flex flex-col gap-2 text-muted-foreground">
+              <figcaption class="flex flex-col gap-1 text-muted-foreground">
                 <p class="text-[10px]/[1.3] md:text-xs/[1.3] font-normal uppercase tracking-wider">
                   {item.title}
                 </p>
@@ -221,7 +221,10 @@ const items = await Promise.all(
           class="text-[10px]/[1.3] md:text-xs/[1.3] font-normal uppercase tracking-wider"
         >
         </p>
-        <p data-lightbox-description class="max-w-xl text-sm/[1.5] tracking-[0.01em]">
+        <p
+          data-lightbox-description
+          class="max-w-xl text-sm/[1.5] tracking-[0.01em]"
+        >
         </p>
       </figcaption>
       <span

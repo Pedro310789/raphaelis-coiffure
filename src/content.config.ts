@@ -211,11 +211,13 @@ export const partnersSchema = z.object({
 export const collectionSchema = z.object({
   overline: z.string(),
   heading: z.string(),
+  body: z.array(z.string()),
   images: z.array(
     z.object({
       src: z.string(),
       alt: z.string(),
-      caption: z.string(),
+      title: z.string(),
+      description: z.string(),
     }),
   ),
   cta: z.object({

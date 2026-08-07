@@ -15,17 +15,19 @@ const collectionImages = import.meta.glob<{ default: ImageMetadata }>(
 interface CollectionImage {
   src: string;
   alt: string;
-  caption: string;
+  title: string;
+  description: string;
 }
 
 export interface Props {
   overline: string;
   heading: string;
+  body: string[];
   images: CollectionImage[];
   cta: CTALink;
 }
 
-const { overline, heading, images, cta } = Astro.props;
+const { overline, heading, body, images, cta } = Astro.props;
 ---
 
 <section class="bg-muted">
@@ -50,19 +52,37 @@ const { overline, heading, images, cta } = Astro.props;
         >
           {heading}
         </Heading>
+        <div
+          class="reveal-on-scroll animate-fade-up flex w-full max-w-[856px] flex-col gap-4 text-center text-base/[1.5] text-body-foreground"
+          style="--reveal-delay: 120ms"
+        >
+          {body.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
       </div>
 
       {/* Image grid + CTA */}
       <div class="flex w-full flex-col items-center gap-10 xl:gap-14">
         <div
-          class="animate-stagger grid w-full grid-cols-1 sm:grid-cols-2 gap-6 lg:grid-cols-4"
+          class="animate-stagger grid w-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4"
         >
           {
-            images.map((item) => {
+            /*
+             * Two curated images (Figma node 3336-6709) sit centered in what
+             * used to be a 4-up row: placing them in the middle two columns
+             * at `lg` keeps their size identical to the old quarter-width
+             * layout, with the outer two columns left empty as equal
+             * left/right margins.
+             */
+            images.map((item, index) => {
               const imgKey = `/${item.src}`;
               const imgData = collectionImages[imgKey]?.default;
               return (
-                <figure class="reveal-on-scroll animate-fade-up flex flex-col gap-4">
+                <figure
+                  class={cn(
+                    "reveal-on-scroll animate-fade-up flex flex-col gap-4",
+                    index === 0 ? "lg:col-start-2" : "lg:col-start-3",
+                  )}
+                >
                   <div class="group relative aspect-3/4 w-full overflow-hidden">
                     {imgData ? (
                       <Image
@@ -82,8 +102,13 @@ const { overline, heading, images, cta } = Astro.props;
                       />
                     )}
                   </div>
-                  <figcaption class="text-[10px]/[1.3] md:text-xs/[1.3] font-normal uppercase tracking-wider text-muted-foreground">
-                    {item.caption}
+                  <figcaption class="flex flex-col gap-1 text-muted-foreground">
+                    <p class="text-[10px]/[1.3] md:text-xs/[1.3] font-normal uppercase tracking-wider">
+                      {item.title}
+                    </p>
+                    <p class="text-sm/[1.5] tracking-[0.01em]">
+                      {item.description}
+                    </p>
                   </figcaption>
                 </figure>
               );
